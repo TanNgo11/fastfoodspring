@@ -1,0 +1,337 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 18, 2023, 4:10:43 PM
+    Author     : TAN
+*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ul li {
+    list-style: none
+}
+
+a,
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.top-nav {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-nav ul {
+    margin-bottom: 0;
+}
+
+.top-nav ul li {
+    display: inline-block;
+    color: aliceblue;
+    padding: 10px
+}
+
+.top-nav ul li a {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+
+}
+
+.nav-header {
+    position: fixed;
+    top: 0;
+    z-index: 9999 !important;
+    width: 100%;
+    background-color: white;
+    -webkit-box-shadow: 3px 4px 9px -3px rgba(0, 0, 0, 0.69);
+    -moz-box-shadow: 3px 4px 9px -3px rgba(0, 0, 0, 0.69);
+    box-shadow: 3px 4px 9px -3px rgba(0, 0, 0, 0.69);
+    text-align: center;
+
+}
+
+.fa-search {
+    line-height: 30px;
+}
+
+.title {
+    padding-left: 4px;
+    background-color: rgba(241, 235, 238, 0.8);
+    border-left: 8px #890b17 solid;
+    color: #890b17;
+}
+
+.slider {
+    margin-top: 48px;
+}
+
+.copyright {
+    padding: 15px 0;
+    text-align: center;
+    background-color: #f4e533;
+    color: black;
+    border-top: 1px solid #ccc;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+
+}
+.card img:hover{
+    scale: 1.1;
+    transition: all 0.5s ease-out;
+
+}
+
+
+.userName{
+    line-height: 42px;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.info-footer {
+    background-color: #f4e533;
+    padding: 30px 0;
+}
+
+.addToCart {
+    position: absolute;
+    display: block;
+    left: 15px;
+    right: 15px;
+    bottom: 5px;
+    padding: 10px;
+    margin: auto;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    background-color:  #890b17;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.card-text {
+    margin-bottom: 60px;
+}
+
+.logo img {
+    width: 100px;
+}
+
+.user {
+   margin-right: 8px;
+    position: relative;
+    display: inline-block;
+}
+.user:hover .userMenu{
+    display: block;
+}
+.userMenu::before{
+    content: "";
+    display: block;
+    width: 100%;
+    position: absolute;
+    height: 10px;
+    top: -10px;
+}
+.userMenu ul{
+    margin-bottom: unset;
+    padding-bottom: 10px;
+}
+.userMenu{
+    display: none;
+    color: black;
+    background-color: white;
+    position: absolute;
+    top: 30px;
+    width: 150px;
+    left: -58px;
+    box-shadow: 0px 0px 0px 2px rgba(193,185,185,0.11);
+    -webkit-box-shadow: 0px 0px 0px 2px rgba(193,185,185,0.11);
+    -moz-box-shadow: 0px 0px 0px 2px rgba(193,185,185,0.11);
+
+}
+.userMenu li{
+    padding-top: 10px;
+}
+
+.logout-btn{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+
+
+.iframe-map iframe {
+    width: 450px;
+    height: 300px;
+}
+
+.nav-mobile {
+    margin-top: 10px;
+}
+
+.logo-mobile img {
+    width: 50px;
+    display: block;
+    margin: auto;
+}
+
+.logo-mobile a {
+    display: block;
+    margin: auto;
+}
+
+.goToTopBtn {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    background-color: #890b17;
+    border-radius: 50%;
+    right: 10px;
+    bottom: 10px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* detail product */
+
+.cc_cart_count_child {
+    line-height: 15px;
+    text-align: center;
+    content: "2";
+    height: 15px;
+    width: 15px;
+    top: -11px;
+    right: -6px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 10px;
+
+}
+
+.cc_cart_count{
+    position: relative;
+}
+
+@media (max-width: 768px) {
+
+    .iframe-map iframe {
+        width: 100%;
+        height: 200px;
+    }
+
+    .nav-header {
+        display: none;
+    }
+
+    .slider {
+        margin-top: 20px;
+    }
+    .addToCart{
+        margin-top: 10px;
+        position: unset;
+    }
+    
+    
+}
+
+
+
+.overlay-mobile-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    display: none;
+    z-index: 10000;
+}
+
+.overlay-mobile-menu .menu-mobile {
+    margin-top: 40px;
+}
+
+.overlay-mobile-menu ul li a {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    display: block;
+    font-style: 24px;
+    padding: 10px 8px;
+    border-bottom: 1px dashed rgba(125, 125, 122, 0.33);
+}
+
+.overlay-mobile-menu ul li:last-child a {
+    border-bottom: none;
+}
+
+.close-btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(125, 125, 122, 0.33);
+    line-height: 40px;
+    text-align: center;
+    top: 10px;
+    right: 15px;
+    font-weight: bold;
+}
+
+.menu-mobile-icon {
+    color: black;
+    border: 2px solid black;
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    margin-right: 20px;
+
+}
+.menu-mobile-icon i{
+    line-height: 40px;
+    font-size: 20px;
+}
+
+.menu-mobile li:hover .sub-menu-mobile {
+    display: block;
+    margin-left: 10px;
+}
+
+.sub-menu-mobile {
+    display: none;
+}
+.angle-right-icon {
+    float: right;
+    font-size: 10px;
+    padding-top: 8px;
+}
+.icon-mobile-menu{
+    width: 25px;
+    height: 30px;
+    margin: 0 28px;
+}
