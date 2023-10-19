@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ItemDTO;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.dto.ProductDTO;
@@ -35,11 +36,10 @@ public class ProductAPI {
 
 		ProductDTO result = new ProductDTO();
 		Pageable pageable = new PageRequest(page, 4);
-		result.setListResult(productService.findByCategory_id(category_id, pageable));
+		result.setListResult(
+				productService.findByCategory_idAndStatus(category_id, pageable, SystemConstant.ACTIVE_STATUS));
 
 		return result;
 	}
-
-	
 
 }

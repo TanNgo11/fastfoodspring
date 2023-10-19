@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.fastfood.constant.SystemConstant;
 import com.fastfood.converter.ProductConverter;
 import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.ProductDTO;
@@ -48,9 +49,9 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public List<ProductDTO> findByCategory_id(long category_id, Pageable pageable) {
+	public List<ProductDTO> findByCategory_idAndStatus(long category_id, Pageable pageable, int status) {
 		List<ProductDTO> models = new ArrayList<ProductDTO>();
-		List<ProductEntity> entities = productRepository.findByCategory_id(category_id, pageable);
+		List<ProductEntity> entities = productRepository.findByCategory_idAndStatus(category_id, pageable, status);
 
 		for (ProductEntity item : entities) {
 			ProductDTO product = productConverter.toDTO(item);
@@ -61,8 +62,11 @@ public class ProductService implements IProductService {
 
 	@Override
 	public ProductDTO findById(long id) {
-		ProductDTO product = productConverter.toDTO(productRepository.findOne(id));
-		return product;
+		ProductEntity product = productRepository.findByIdAndStatus(id, SystemConstant.ACTIVE_STATUS)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + id));
+		ProductDTO productDTO = productConverter.toDTO(product);
+		return productDTO;
+
 	}
 
 	@Override
@@ -72,14 +76,35 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public ApiResponse delete(long productId) {
-		if (productRepository.exists(productId)) {
-			productRepository.delete(productId);
+	public ApiResponse softDelete(long productId) {
+
+		ProductEntity entity = productRepository.findByIdAndStatus(productId, SystemConstant.ACTIVE_STATUS)
+				.orElseThrow(() -> new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + productId));
+
+		if (entity != null) {
+			entity.setStatus(SystemConstant.INACTIVE_STATUS);
+			productRepository.save(entity);
 			return new ApiResponse(Boolean.TRUE, MessageUtil.DELETE_SUCCESS, HttpStatus.OK);
-			
 		}
+
 		return new ApiResponse(Boolean.FALSE, MessageUtil.DELETE_FAILURE, HttpStatus.OK);
 
+	}
+
+	@Override
+	public List<ProductDTO> findAllByStatus(Pageable pageable, int status) {
+		List<ProductEntity> entities = productRepository.findByStatus(pageable, status);
+		if (entities.isEmpty()) {
+			throw new ResourceNotFoundException("Can not found current page");
+		}
+		return entities.stream().map(product -> productConverter.toDTO(product)).collect(Collectors.toList());
+
+	}
+
+	@Override
+	public ProductDTO save(ProductDTO dto) {
+		ProductEntity entity = productRepository.save(productConverter.toEntity(dto));
+		return productConverter.toDTO(entity);
 	}
 
 }

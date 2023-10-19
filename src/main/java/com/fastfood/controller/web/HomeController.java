@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ItemDTO;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.dto.ProductDTO;
@@ -42,8 +43,8 @@ public class HomeController {
 
 	@Autowired
 	private IOrderService orderService;
-	
-	@Autowired 
+
+	@Autowired
 	IAccountService accountService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -51,9 +52,9 @@ public class HomeController {
 			@ModelAttribute("drinkModel") ProductDTO drinkModel) {
 		Pageable pageable = new PageRequest(0, 4);
 		ModelAndView mav = new ModelAndView("web/home");
-		foodModel.setListResult(productService.findByCategory_id(1, pageable));
+		foodModel.setListResult(productService.findByCategory_idAndStatus(1, pageable, SystemConstant.ACTIVE_STATUS));
 		foodModel.splitImg();
-		drinkModel.setListResult(productService.findByCategory_id(2, pageable));
+		drinkModel.setListResult(productService.findByCategory_idAndStatus(2, pageable, SystemConstant.ACTIVE_STATUS));
 		drinkModel.splitImg();
 		mav.addObject("foodModel", foodModel);
 		mav.addObject("drinkModel", drinkModel);
@@ -94,7 +95,7 @@ public class HomeController {
 		}
 		if (orderSession.getItems().size() == 0) {
 			request.setAttribute("msg", MessageUtil.ERROR_EMPTYCART);
-		}else {
+		} else {
 			orderSession.setAccountDTO(accountService.findByUsername(SecurityUtils.getPrincipal().getUsername()));
 			orderService.save(orderSession);
 		}

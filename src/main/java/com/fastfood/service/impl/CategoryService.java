@@ -1,6 +1,7 @@
 package com.fastfood.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,9 @@ public class CategoryService implements ICategoryService {
 
 	@Override
 	public List<CategoryDTO> findAll() {
-		 List<CategoryEntity> categories = categoryRepository.findAll();
-		 List<CategoryDTO> result= (List<CategoryDTO>) categories.stream().map(i-> converter.toDTO(i));
+		List<CategoryEntity> categories = categoryRepository.findAll();
+		List<CategoryDTO> result = categories.stream().map(i -> converter.toDTO(i)).collect(Collectors.toList());
 		return result;
 	}
-	
 
 }

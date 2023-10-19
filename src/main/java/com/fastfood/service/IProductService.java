@@ -9,10 +9,13 @@ import com.fastfood.dto.ProductDTO;
 
 public interface IProductService {
 	List<ProductDTO> findAll(Pageable pageable);
-	List<ProductDTO> findByCategory_id(long category_id, Pageable pageable);
+	List<ProductDTO> findAllByStatus(Pageable pageable , int status);
+	List<ProductDTO> findByCategory_idAndStatus(long category_id, Pageable pageable, int status);
 	ProductDTO findById(long id);
 	int countByCategoryId(long categoryId);
-	ApiResponse delete(long productId);
+	ApiResponse softDelete(long productId);
+	ProductDTO save(ProductDTO dto);
 	int getTotalItem();
+	
 	
 }

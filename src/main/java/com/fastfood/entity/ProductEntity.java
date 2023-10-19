@@ -30,6 +30,17 @@ public class ProductEntity extends BaseEntity {
 
 	@Column(name = "saleprice")
 	private double salePrice;
+	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	@Column(name = "status")
+	private int status;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")

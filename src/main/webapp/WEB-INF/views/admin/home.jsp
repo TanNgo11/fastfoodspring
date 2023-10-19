@@ -67,6 +67,8 @@
 			</div>
 		</div>
 	</main>
+	<script src= "/template/js/adminRenderProduct.js"></script>
+	
 	<script>
 	
 	

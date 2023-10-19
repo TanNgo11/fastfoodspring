@@ -31,6 +31,9 @@
 	integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+
+
 <title>AdminPage</title>
 <style>
 a, a:hover {
@@ -104,46 +107,8 @@ ul li {
 	display: none
 }
 </style>
-<script type="text/javascript">
-	window.onload = function() {
 
-		var dps = [ [] ];
-		var chart = new CanvasJS.Chart("chartContainer", {
-			exportEnabled : true,
-			animationEnabled : true,
-			theme : "light2", // "light1", "dark1", "dark2"
-			title : {
-				text : "Category Demographics of a Website"
-			},
-			subtitles : [ {
-				text : "Type of Products"
-			} ],
-			data : [ {
-				type : "pie",
-				yValueFormatString : "#,##0\"%\"",
-				indexLabel : "{label} - {y}",
-				dataPoints : dps[0]
-			} ]
-		});
 
-		var yValue;
-		var label;
-
-		<c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
-		<c:forEach items="${dataPoints}" var="dataPoint">
-		yValue = parseFloat("${dataPoint.y}");
-		label = "${dataPoint.label}";
-		dps[parseInt("${loop.index}")].push({
-			label : label,
-			y : yValue,
-		});
-		</c:forEach>
-		</c:forEach>
-
-		chart.render();
-
-	}
-</script>
 </head>
 
 <body>
@@ -164,47 +129,7 @@ ul li {
 
 
 		<footer>
-			<div class="overlay">
-				<span class="closeBtn">&times;</span>
-				<form method="POST" action="add-product"
-					enctype="multipart/form-data">
-					<div class="form-group">
-						<label for="name">Name of product</label> <input
-							name="productName" type="text" class="form-control" id="name"
-							placeholder="Enter name of product">
-					</div>
-					<div class="form-group">
-						<label for="name">Description</label>
-						<textarea rows="5" name="description" class="form-control"
-							id="name" placeholder="Enter name of product"></textarea>
-					</div>
-					<div class="form-group">
-						<label for="price">Price</label> <input name="productPrice"
-							type="text" class="form-control" id="price"
-							placeholder="Enter the price...">
-					</div>
-					<div class="form-group">
-						<label for="quantity">Sale Price</label> <input
-							name="productSalePrice" type="text" class="form-control"
-							id="quantity" placeholder="Enter the Sale Price">
-					</div>
-					<div class="form-group">
-						<label for="quantity">Categories</label>
-						<div class="btn-group btn-group-toggle ml-2" data-toggle="buttons">
-							<label class="btn btn-primary active"> <input value="1"
-								type="radio" name="category" id="option1" checked> Food
-							</label> <label class="btn btn-primary"> <input Value="2"
-								type="radio" name="category" id="option2"> Drink
-							</label>
-
-						</div>
-					</div>
-					<div class="form-group">
-						<input type="file" name="fileX">
-					</div>
-					<button type="submit" class="btn btn-primary">Add</button>
-				</form>
-			</div>
+			
 
 		</footer>
 		<section>
@@ -264,12 +189,14 @@ ul li {
 		<div id="toasts">
 			<input id="message" type="hidden" value="${msg}">
 		</div>
+
+
 		<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
 
 		<script
 			src="<c:url value='/template/paging/jquery.twbsPagination.js'/>"></script>
 		<script src="<c:url value='/template/js/admin_home.js'/>"></script>
-		<script src="<c:url value='/template/js/adminRenderProduct.js'/>"></script>
+		
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 		<script

@@ -12,10 +12,4 @@ import lombok.ToString;
 public class CategoryDTO  extends AbstractDTO<CategoryDTO>{
  
 	private String type;
-
-
-
-	
-	
-	
 }

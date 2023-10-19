@@ -21,6 +21,7 @@ public class ProductConverter {
 		product.setCategoryDTO(categoryConverter.toDTO(productEntity.getCategory()));
 		product.setSalePrice(productEntity.getSalePrice());
 		product.setDescription(productEntity.getDescription());
+		product.setStatus(productEntity.getStatus());
 		if (productEntity.getCreatedBy() != null) {
 			product.setCreatedBy(productEntity.getCreatedBy());
 		}
@@ -45,6 +46,7 @@ public class ProductConverter {
 		entity.setCategory(categoryConverter.toEntity(dto.getCategoryDTO()));
 		entity.setSalePrice(dto.getSalePrice());
 		entity.setDescription(dto.getDescription());
+		entity.setStatus(dto.getStatus());
 		if (dto.getCreatedBy() != null) {
 			entity.setCreatedBy(dto.getCreatedBy());
 		}
