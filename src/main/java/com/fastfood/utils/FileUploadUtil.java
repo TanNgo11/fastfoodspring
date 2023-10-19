@@ -35,6 +35,7 @@ public class FileUploadUtil {
 			numberOfPic++;
 
 		}
+		System.out.println("hehe");
 
 		return imgs;
 	}
