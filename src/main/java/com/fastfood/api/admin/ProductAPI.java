@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,9 +34,9 @@ public class ProductAPI {
 
 	@Autowired
 	FileUploadUtil fileUploadUtil;
-	
+
 	@Autowired
-	CategoryService CategoryService;
+	CategoryService categoryService;
 
 	@GetMapping
 	public ResponseEntity<ProductDTO> getAllProducts(@RequestParam("page") int page, @RequestParam("limit") int limit) {
@@ -66,19 +65,27 @@ public class ProductAPI {
 
 	@PostMapping()
 	public ResponseEntity<ProductDTO> addNewProduct(@RequestParam("files") MultipartFile[] files,
-			HttpServletRequest request, @RequestParam("productName") String name) {
-		ApiResponse response = fileUploadUtil.saveFiles(files, request, 100);
+			HttpServletRequest request, @RequestParam("productName") String productName,
+			@RequestParam("price") double price, @RequestParam("salePrice") double salePrice,
+			@RequestParam("description") String description, @RequestParam("category") String category) {
 
-		if (!response.getSuccess()) {
-			return null;
+		ProductDTO result = new ProductDTO();
+		CategoryDTO cateDTO = categoryService.findByType(category);
+
+		result.setProductName(productName);
+		result.setCategoryDTO(cateDTO);
+		result.setPrice(price);
+		result.setSalePrice(salePrice);
+		result.setDescription(description);
+		result.setStatus(SystemConstant.ACTIVE_STATUS);
+		result = productService.save(result);
+
+		if (result != null) {
+			String img = fileUploadUtil.saveFiles(files, request, result.getId());
+			result.setImg(img);
+			System.out.println(img);
+			productService.save(result);
 		}
-		ProductDTO dto = new ProductDTO();
-		CategoryDTO cate = CategoryService.findAll().get(0);
-		dto.setProductName(name);
-		dto.setPrice(10);
-		dto.setSalePrice(20);
-		dto.setCategoryDTO(cate);
-		ProductDTO result = productService.save(dto);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 

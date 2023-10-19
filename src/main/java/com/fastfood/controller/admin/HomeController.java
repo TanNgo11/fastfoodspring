@@ -54,7 +54,8 @@ public class HomeController {
 		}
 
 		mav.addObject("product", product);
-		mav.addObject("categories", categoryService.findAll());
+		mav.addObject("categories",
+				categoryService.findAll().stream().map(cate -> cate.getType()).collect(Collectors.toList()));
 		return mav;
 	}
 

@@ -28,4 +28,11 @@ public class CategoryService implements ICategoryService {
 		return result;
 	}
 
+	@Override
+	public CategoryDTO findByType(String type) {
+		CategoryEntity entity = categoryRepository.findByType(type);
+		CategoryDTO dto = converter.toDTO(entity);
+		return dto;
+	}
+
 }

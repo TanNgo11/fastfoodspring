@@ -146,15 +146,15 @@
 
 		$('#btnAddOrUpdateNew').click(function(e) {
 			e.preventDefault();
-			var product = {};
-			product["productName"] = $("#productName").val();
-			product["price"] = $("#price").val();
-			product["salePrice"] = $("#salePrice").val();
-			product["categoryDTO"] = $("#categoryDTO").val();
+			
+			formData.append("productName", $("#productName").val()) 
+			formData.append("price", $("#price").val()) 
+			formData.append("salePrice", $("#salePrice").val()) 
+			formData.append("category", $("#category").val()) 
+			formData.append("description", $("#description").val()) 
 			var id = $('#id').val();
-			formData.append("product", product)
-			console.log(product)
-			console.log(formData)
+			console.log($("#category").val())
+			
 
 			if (id === "") {
 				addNew(formData);
@@ -174,8 +174,6 @@
 				success : function(result) {
 					console.log("oke")
 				},
-				
-				
 				error : function(error) {
 					console.log("error")
 				}
