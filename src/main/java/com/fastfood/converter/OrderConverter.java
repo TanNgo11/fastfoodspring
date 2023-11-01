@@ -33,6 +33,7 @@ public class OrderConverter {
 		dto.setEmail(entity.getEmail());
 		dto.setPhonenumber(entity.getPhonenumber());
 		dto.setTotalPay(entity.getTotalPay());
+		dto.setCustomerName(entity.getCustomerName());
 		dto.setAccountDTO(accountConverter.toDTO(entity.getAccountEntity()));
 		List<ItemDTO> listItem = new ArrayList<ItemDTO>();
 		List<ItemEntity> entities = entity.getItems();
@@ -67,6 +68,7 @@ public class OrderConverter {
 		entity.setEmail(dto.getEmail());
 		entity.setPhonenumber(dto.getPhonenumber());
 		entity.setTotalPay(dto.getTotalPay());
+		entity.setCustomerName(accountEntity.getFullName());
 		entity.setAccountEntity(accountConverter.toEntity(accountEntity,dto.getAccountDTO()));
 
 		List<ItemDTO> dtos = dto.getItems();

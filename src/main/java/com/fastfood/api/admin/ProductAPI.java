@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,9 +84,36 @@ public class ProductAPI {
 		if (result != null) {
 			String img = fileUploadUtil.saveFiles(files, request, result.getId());
 			result.setImg(img);
-			System.out.println(img);
 			productService.save(result);
 		}
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+
+	}
+
+	@PutMapping()
+	public ResponseEntity<ProductDTO> updateProduct(
+			@RequestParam(value = "files") MultipartFile[] files,
+			HttpServletRequest request, @RequestParam("productName") String productName, @RequestParam("id") long id,
+			@RequestParam("price") double price, @RequestParam("salePrice") double salePrice,
+			@RequestParam("description") String description, @RequestParam("category") String category) {
+
+		ProductDTO result = new ProductDTO();
+		CategoryDTO cateDTO = categoryService.findByType(category);
+		result.setId(id);
+		result.setProductName(productName);
+		result.setCategoryDTO(cateDTO);
+		result.setPrice(price);
+		result.setSalePrice(salePrice);
+		result.setDescription(description);
+		result.setStatus(SystemConstant.ACTIVE_STATUS);
+
+		if (files != null) {
+			String img = fileUploadUtil.saveFiles(files, request, id);
+			result.setImg(img);
+		}
+
+		productService.save(result);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 

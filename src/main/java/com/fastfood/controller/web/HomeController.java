@@ -1,37 +1,32 @@
 package com.fastfood.controller.web;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fastfood.constant.SystemConstant;
-import com.fastfood.dto.ItemDTO;
+import com.fastfood.converter.AccountConverter;
+import com.fastfood.dto.AccountDTO;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.dto.ProductDTO;
+import com.fastfood.entity.AccountEntity;
+import com.fastfood.repository.UserRepository;
 import com.fastfood.service.IAccountService;
 import com.fastfood.service.IOrderService;
 import com.fastfood.service.IProductService;
-import com.fastfood.service.impl.AccountService;
 import com.fastfood.utils.MessageUtil;
 import com.fastfood.utils.SecurityUtils;
 
@@ -46,6 +41,12 @@ public class HomeController {
 
 	@Autowired
 	IAccountService accountService;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	AccountConverter accountConverter;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView homePage(@ModelAttribute("foodModel") ProductDTO foodModel,
@@ -63,10 +64,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public ModelAndView detailPage(@RequestParam(name = "pid") long pid,
-			@ModelAttribute("productDetail") ProductDTO productDetail) {
+			@ModelAttribute("productDetail") ProductDTO productDetail,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("web/detail");
 		productDetail = productService.findById(pid);
 		mav.addObject("productDetail", productDetail);
+		
 		return mav;
 	}
 
@@ -74,13 +76,27 @@ public class HomeController {
 	public ModelAndView cartPage() {
 		ModelAndView mav = new ModelAndView("web/cart");
 
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		AccountDTO account = null;
+		if (authentication instanceof AnonymousAuthenticationToken) {
+			account = new AccountDTO();
+		}else {
+			AccountEntity userEntity = userRepository.findOneByUserNameAndStatus(
+					SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
+			account = accountConverter.toDTO(userEntity);
+		}
+		
+			
+		
+
+		mav.addObject("account", account);
 		return mav;
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public ModelAndView cart(HttpServletRequest request, HttpSession session) {
+	public ModelAndView cart(HttpServletRequest request, HttpSession session,
+			@ModelAttribute("account") AccountDTO account) {
 		ModelAndView mav = new ModelAndView();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		session = request.getSession();
 		OrderDTO orderSession = (OrderDTO) session.getAttribute("cart");
@@ -90,13 +106,18 @@ public class HomeController {
 
 		}
 		// check login and empty cart
-		if (authentication instanceof AnonymousAuthenticationToken) {
+		if (account.getUsername() == null) {
 			request.setAttribute("msg", MessageUtil.ERROR_LOGIN);
 		}
 		if (orderSession.getItems().size() == 0) {
 			request.setAttribute("msg", MessageUtil.ERROR_EMPTYCART);
 		} else {
-			orderSession.setAccountDTO(accountService.findByUsername(SecurityUtils.getPrincipal().getUsername()));
+			orderSession.setAccountDTO(account);
+			orderSession.setEmail(account.getEmail());
+			orderSession.setAddress(account.getAddress());
+			orderSession.setPhonenumber(account.getPhoneNumber());
+			orderSession.setCustomerName(account.getFullName());
+			request.setAttribute("msg", MessageUtil.SUCCESS_ORDER);
 			orderService.save(orderSession);
 		}
 		session.removeAttribute("cart");

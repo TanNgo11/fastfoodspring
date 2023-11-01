@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fastfood.constant.SystemConstant;
 import com.fastfood.converter.ProductConverter;
@@ -55,6 +56,7 @@ public class ProductService implements IProductService {
 
 		for (ProductEntity item : entities) {
 			ProductDTO product = productConverter.toDTO(item);
+			product.doSplitImg();
 			models.add(product);
 		}
 		return models;
@@ -84,7 +86,7 @@ public class ProductService implements IProductService {
 		if (entity != null) {
 			entity.setStatus(SystemConstant.INACTIVE_STATUS);
 			productRepository.save(entity);
-			return new ApiResponse(Boolean.TRUE, MessageUtil.DELETE_SUCCESS, HttpStatus.OK);
+			return new ApiResponse(Boolean.TRUE, MessageUtil.SUCCESS_DELETE, HttpStatus.OK);
 		}
 
 		return new ApiResponse(Boolean.FALSE, MessageUtil.DELETE_FAILURE, HttpStatus.OK);
@@ -103,8 +105,20 @@ public class ProductService implements IProductService {
 
 	@Override
 	public ProductDTO save(ProductDTO dto) {
-		ProductEntity entity = productRepository.save(productConverter.toEntity(dto));
-		return productConverter.toDTO(entity);
+		ProductEntity entity = new ProductEntity();
+		if (dto.getId() != null) {
+			ProductEntity oldEntity = productRepository.findOne(dto.getId());
+			entity = productConverter.toEntity(oldEntity, dto);
+		} else {
+			entity = productConverter.toEntity(dto);
+		}
+		return productConverter.toDTO(productRepository.save(entity));
+	}
+
+	@Override
+	public ProductDTO update(ProductDTO dto) {
+
+		return null;
 	}
 
 }

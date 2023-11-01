@@ -22,6 +22,11 @@ const toasts = {
         msg: 'Change successful !',
         alert: 'success'
     },
+    success_order: {
+        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
+        msg: 'Order successful !',
+        alert: 'success'
+    },
     success: {
         icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
         msg: 'Buy successful !',
@@ -44,7 +49,17 @@ const toasts = {
     },
     error_delete: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'Sign up unsuccess !',
+        msg: 'Delete unsuccess !',
+        alert: 'error'
+    },
+    error_add: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Add new product unsuccess !',
+        alert: 'error'
+    },
+    error_update: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'update product unsuccess !',
         alert: 'error'
     }
 }

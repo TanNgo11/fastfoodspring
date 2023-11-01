@@ -20,6 +20,7 @@ public class AccountConverter {
 		account.setId(accountEntity.getId());
 		account.setFullName(accountEntity.getFullName());
 		account.setUsername(accountEntity.getUsername());
+		account.setPhoneNumber(accountEntity.getPhoneNumber());
 		account.setAddress(accountEntity.getAddress());
 		account.setEmail(accountEntity.getEmail());
 		account.setStatus(accountEntity.getStatus());
@@ -53,14 +54,10 @@ public class AccountConverter {
 	}
 	
 	public AccountEntity toEntity(AccountEntity result,AccountDTO dto) {
-
 		
-		result.setFullName(dto.getFullName());
-		result.setUsername(dto.getUsername());
-		result.setPassword(dto.getPassword());
+		result.setPhoneNumber(dto.getPhoneNumber());
 		result.setAddress(dto.getAddress());
 		result.setEmail(dto.getEmail());
-		result.setStatus(SystemConstant.ACTIVE_STATUS);
 		return result;
 	}
 

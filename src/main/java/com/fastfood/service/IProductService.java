@@ -16,6 +16,7 @@ public interface IProductService {
 	ApiResponse softDelete(long productId);
 	ProductDTO save(ProductDTO dto);
 	int getTotalItem();
+	ProductDTO update(ProductDTO dto);
 	
 	
 }

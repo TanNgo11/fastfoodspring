@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/common/taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,35 +15,32 @@
 			<ul class="breadcrumb">
 				<li><a href="#">Dashboard</a></li>
 				<li><i class='bx bx-chevron-right'></i></li>
-				<li><a class="active" href="#">Home</a></li>
+				<li><a class="active" href="#">Bill</a></li>
 			</ul>
 		</div>
-		<a href="#" class="btn-download"> <i class='bx bxs-cloud-download'></i>
-			<span class="text">Download PDF</span>
+		<a href="/admin/api/v1/orders/excel" class="btn-download"> <i
+			class='bx bxs-cloud-download'></i> <span class="text">Export
+				to excel</span>
 		</a>
 	</div>
 
-	<ul class="box-info">
-		<li><i class='bx bxs-calendar-check'></i> <span class="text">
-				<h3>1020</h3>
-				<p>New Order</p>
-		</span></li>
-		<li><i class='bx bxs-group'></i> <span class="text">
-				<h3>2834</h3>
-				<p>Visitors</p>
-		</span></li>
-		<li><i class='bx bxs-dollar-circle'></i> <span class="text">
-				<h3>$2543</h3>
-				<p>Total Sales</p>
-		</span></li>
-	</ul>
 
 
 	<div class="table-data">
 		<div class="order">
 			<div class="head">
 				<h3>Product list</h3>
-				<i class='bx bx-search'></i> <i class='bx bx-filter'></i>
+				<i class='bx bx-search'></i>
+
+				<div class="col-auto my-1">
+
+					<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+						<option selected>Sort By</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+				</div>
 				<!-- add Product -->
 				<a href="#" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
 					<span>Add new product</span>
@@ -53,15 +51,15 @@
 
 
 
-			<table >
+			<table>
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
-						<th>Image</th>
-						<th>Price</th>
-						<th>Sale Price</th>
-
+						<th>Customer Name</th>
+						<th>Address</th>
+						<th>Email</th>
+						<th>PhoneNumber</th>
+						<th>Total Pay</th>
 						<th>Functions</th>
 					</tr>
 				</thead>
@@ -87,7 +85,7 @@
 	</div>
 
 	</main>
-	<script src="/template/js/adminRenderProduct.js"></script>
+	<script src="/template/js/adminRenderOrder.js"></script>
 
 	<script>
 		function deleteProduct(id) {

@@ -31,7 +31,11 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
 		for (ProductDTO item : this.getListResult()) {
 			item.setImg(item.getImg().split("_")[0]);
 		}
-		
+	}
+	
+	public void doSplitImg() {
+		this.setImg(this.getImg().split("_")[0]);
+		System.out.println(this.getImg().split("_")[0]);
 		
 	}
 

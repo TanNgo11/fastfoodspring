@@ -76,33 +76,28 @@
 										</div>
 
 										<div class="form-row">
-											<div class="form-group col-md-4 file">
-												<label for="exampleFormControlFile1">Picture 1</label> <input
-													type="file" class="form-control-file" accept="image/*"
-													onchange="loadFile(this)" name="files" id="file1">
-												<img class="output" src="" alt=""
-													style="width: 300px; margin-top: 10px">
+											<c:forEach items="${listImg}" var="img">
+												<div class="form-group col-md-4 file">
+													<label for="exampleFormControlFile1">Picture</label> <input
+														type="file" class="form-control-file" accept="image/*"
+														onchange="loadFile(this)" name="files"> <img
+														class="output" src="http://localhost:8080/${img}" alt=""
+														style="width: 300px; margin-top: 10px">
+												</div>
+											</c:forEach>
+											<c:if test="${listImg==null}">
+												<c:forEach var="i" begin="1" end="3">
+													<div class="form-group col-md-4 file">
+														<label for="exampleFormControlFile1">Picture ${i}</label>
+														<input type="file" class="form-control-file"
+															accept="image/*" onchange="loadFile(this)" name="files">
+														<img class="output" src="" alt=""
+															style="width: 300px; margin-top: 10px">
+													</div>
+												</c:forEach>
+											</c:if>
 
-											</div>
 
-											<div class="form-group col-md-4 file">
-												<label for="exampleFormControlFile1">Picture 1</label> <input
-													type="file" class="form-control-file" accept="image/*"
-													onchange="loadFile(this)" name="files" id="file2">
-												<img class="output" src="" alt=""
-													style="width: 300px; margin-top: 10px">
-
-											</div>
-
-
-											<div class="form-group col-md-4 file">
-												<label for="exampleFormControlFile1">Picture 1</label> <input
-													type="file" class="form-control-file" accept="image/*"
-													onchange="loadFile(this)" name="files" id="file3">
-												<img class="output" src="" alt=""
-													style="width: 300px; margin-top: 10px">
-
-											</div>
 
 										</div>
 
@@ -112,6 +107,8 @@
 											class="btn btn-primary" value="Submit">
 									</form:form>
 								</div>
+
+
 
 
 
@@ -146,22 +143,23 @@
 
 		$('#btnAddOrUpdateNew').click(function(e) {
 			e.preventDefault();
+
+			formData.append("productName", $("#productName").val())
+			formData.append("price", $("#price").val())
+			formData.append("salePrice", $("#salePrice").val())
+			formData.append("category", $("#category").val())
+			formData.append("description", $("#description").val())
 			
-			formData.append("productName", $("#productName").val()) 
-			formData.append("price", $("#price").val()) 
-			formData.append("salePrice", $("#salePrice").val()) 
-			formData.append("category", $("#category").val()) 
-			formData.append("description", $("#description").val()) 
 			var id = $('#id').val();
-			console.log($("#category").val())
-			
 
 			if (id === "") {
-				addNew(formData);
+				addProduct(formData);
+			} else {
+				updateProduct(formData);
 			}
 		});
 
-		function addNew(formData) {
+		function addProduct(formData) {
 
 			$.ajax({
 				url : '/admin/api/v1/products',
@@ -172,12 +170,33 @@
 				contentType : false,
 				processData : false,
 				success : function(result) {
-					console.log("oke")
+					window.location.href = "/admin/product/edit?id="
+							+ result.id + "&msg=add_success";
 				},
 				error : function(error) {
-					console.log("error")
+					window.location.href = "/admin/product/edit?msg=add_error";
 				}
 			});
+		}
+
+		function updateProduct(formData) {
+
+			$.ajax({
+						url : '/admin/api/v1/products',
+						type : 'PUT',
+						data : formData,
+						enctype : 'multipart/form-data',
+						cache : false,
+						contentType : false,
+						processData : false,
+						success : function(result) {
+							window.location.href = "/admin/product/edit?id="
+									+ result.id + "&msg=update_success";
+						},
+						error : function(result) {
+							window.location.href = "/admin/product/edit?msg=update_error";
+						}
+					});
 		}
 	</script>
 </body>

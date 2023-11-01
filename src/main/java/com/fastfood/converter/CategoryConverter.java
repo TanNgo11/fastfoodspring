@@ -11,7 +11,6 @@ public class CategoryConverter {
 	public CategoryDTO toDTO(CategoryEntity enitity) {
 		CategoryDTO dto = new CategoryDTO();
 		dto.setType(enitity.getType());
-
 		dto.setId(enitity.getId());
 
 		return dto;

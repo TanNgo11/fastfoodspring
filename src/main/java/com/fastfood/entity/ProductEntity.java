@@ -3,7 +3,6 @@ package com.fastfood.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,12 +24,12 @@ public class ProductEntity extends BaseEntity {
 	@Column(name = "price")
 	private double price;
 
-	@Column(name = "img")
+	@Column(name = "img", columnDefinition = "TEXT")
 	private String img;
 
 	@Column(name = "saleprice")
 	private double salePrice;
-	
+
 	public int getStatus() {
 		return status;
 	}

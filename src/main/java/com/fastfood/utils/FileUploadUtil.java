@@ -19,14 +19,15 @@ public class FileUploadUtil {
 		ServletContext servletctx = request.getServletContext();
 		String ctxFullPath = servletctx.getRealPath("\\");
 		int numberOfPic = 1;
-		String imgs = "";
+		String imgs = "upload\\product";
+		String result = "";
 		for (MultipartFile multipartFile : files) {
 			try {
-				String fileName = "Product" + id + "_" + numberOfPic + ".png";
-				System.out.println(ctxFullPath + SystemConstant.UPLOAD_PRODUCT_DIRECTORY);
+				String fileName = "Product" + id + "-" + numberOfPic + ".png";
 				File file = new File(ctxFullPath + SystemConstant.UPLOAD_PRODUCT_DIRECTORY, fileName);
 				multipartFile.transferTo(file);
-				imgs += fileName + "_";
+				result+=imgs;
+				result += "\\" + fileName + "_";
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -35,8 +36,7 @@ public class FileUploadUtil {
 			numberOfPic++;
 
 		}
-		System.out.println("hehe");
 
-		return imgs;
+		return result.substring(0, result.length() - 1);
 	}
 }

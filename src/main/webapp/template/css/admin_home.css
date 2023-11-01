@@ -15,7 +15,6 @@ li {
 }
 a.active{
     font-weight: bold;
-    background-color: #3C91E6;
     color: white;
 }
 
@@ -525,13 +524,14 @@ a:hover {
 #content main .table-data .order table th {
 	padding-bottom: 12px;
 	font-size: 13px;
-	text-align: left;
+	text-align: center;
 	border-bottom: 1px solid var(--grey);
 }
 
-/*#content main .table-data .order table td {
+*#content main .table-data .order table td {
 	padding: 16px 0;
-}*/
+	text-align: center;
+}*
 
 #content main .table-data .order table td i {
 	cursor: pointer;
@@ -602,6 +602,7 @@ a:hover {
 #content main .table-data .todo .todo-list li:last-child {
 	margin-bottom: 0;
 }
+
 
 /* MAIN */
 /* CONTENT */
@@ -674,11 +675,12 @@ a:hover {
 	}
 
 	#content main .table-data .head {
-		min-width: 420px;
+		min-width: 700px;
 	}
 
 	#content main .table-data .order table {
-		min-width: 420px;
+		min-width: 700px;
+		text-align: center;
 	}
 
 	#content main .table-data .todo .todo-list {
