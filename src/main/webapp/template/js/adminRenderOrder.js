@@ -2,18 +2,34 @@ var homeConfig = {
 		pageSize : 10,
 		currentPage : 1
 }
+const date = new Date();
 
-window.onload= renderProducts();
+const year = date.getFullYear();
+const month = getMonthName(date.getMonth() + 1);
+
+function getMonthName(monthNumber) {
+	 
+	  return date.toLocaleString('en-US', {
+	    month: 'long',
+	  });
+	}
 
 
- function renderProducts() {
+window.onload= renderProducts(month,year);
+
+
+ function renderProducts(month,year) {
+	 
 	
 						$.ajax({
 								url : "/admin/api/v1/orders",
 								type : "GET",
 								data:{
+									month:month,
+									year:year,
 									page:homeConfig.currentPage,
 									limit:homeConfig.pageSize
+									
 								},
 								success : function(data) {
 									var totalPages = data.totalPage;
@@ -65,6 +81,23 @@ function paging(totalPages,currentPage,callback) {
 		});
 	
 }
+$("#inlineFormCustomSelect").on("change", function() {
+	var str = "";
+	$("select option:selected").each(function() {
+		str += $(this).text() + " ";
+	});
+	const monthAndYear = str.split(" ");
+	renderProducts(monthAndYear[0],monthAndYear[1]);
+	
+	const exportExcelLink = document.getElementById('exportExcelLink');
+
+
+	exportExcelLink.href = `/admin/api/v1/orders/excel?month=${monthAndYear[0]}&year=${monthAndYear[1]}`;
+	
+}).trigger("change");
+
+
+
 
 
 

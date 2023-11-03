@@ -25,6 +25,7 @@ import com.fastfood.service.IOrderService;
 import com.fastfood.service.impl.CategoryService;
 import com.fastfood.service.impl.PieChartService;
 import com.fastfood.service.impl.ProductService;
+import com.fastfood.utils.DateUtil;
 import com.fastfood.utils.MessageUtil;
 import com.fastfood.utils.OrderExcelExporter;
 
@@ -48,7 +49,8 @@ public class HomeController {
 
 	@Autowired
 	IOrderService orderService;
-
+	
+	
 	@RequestMapping(value = "/admin/home", method = RequestMethod.GET)
 	public ModelAndView homePage() {
 		ModelAndView mav = new ModelAndView("admin/home");
@@ -64,8 +66,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/admin/order", method = RequestMethod.GET)
-	public ModelAndView billPage() {
+	public ModelAndView orderPage() {
 		ModelAndView mav = new ModelAndView("admin/order");
+		DateUtil dateUtil = new DateUtil();
+		dateUtil.populateMonthsAndYears();
+		List<String> listMonthAndYear = dateUtil.getMonthsAndYears();
+		mav.addObject("listMonthAndYear", listMonthAndYear);
 		return mav;
 	}
 

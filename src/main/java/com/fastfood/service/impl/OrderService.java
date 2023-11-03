@@ -44,4 +44,31 @@ public class OrderService implements IOrderService {
 		return (int) orderRepository.count();
 	}
 
+	@Override
+	public List<OrderDTO> findAllByMonthAndYear(int month, int year, Pageable pageable) {
+		List<OrderEntity> entities = orderRepository.findAllOrdersByMonthAndYear(month, year, pageable);
+		if (entities.isEmpty()) {
+			throw new ResourceNotFoundException("Can not found current page");
+		}
+		return entities.stream().map(order -> orderConverter.toDTO(order)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<OrderDTO> findAll() {
+		List<OrderEntity> entities = orderRepository.findAll();
+		if (entities.isEmpty()) {
+			throw new ResourceNotFoundException("Can not found current page");
+		}
+		return entities.stream().map(order -> orderConverter.toDTO(order)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<OrderDTO> findAllByMonthAndYear(int month, int year) {
+		List<OrderEntity> entities = orderRepository.findAllOrdersByMonthAndYear(month, year);
+		if (entities.isEmpty()) {
+			throw new ResourceNotFoundException("Can not found current page");
+		}
+		return entities.stream().map(order -> orderConverter.toDTO(order)).collect(Collectors.toList());
+	}
+
 }

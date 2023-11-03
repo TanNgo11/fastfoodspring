@@ -18,7 +18,7 @@
 				<li><a class="active" href="#">Bill</a></li>
 			</ul>
 		</div>
-		<a href="/admin/api/v1/orders/excel" class="btn-download"> <i
+		<a href="/admin/api/v1/orders/excel" class="btn-download" id="exportExcelLink"> <i
 			class='bx bxs-cloud-download'></i> <span class="text">Export
 				to excel</span>
 		</a>
@@ -35,10 +35,9 @@
 				<div class="col-auto my-1">
 
 					<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-						<option selected>Sort By</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+						<c:forEach items="${listMonthAndYear}" var="item">
+							<option>${item}</option>
+						</c:forEach>
 					</select>
 				</div>
 				<!-- add Product -->
@@ -130,7 +129,11 @@
 				}
 			});
 		}
+		
+		
 	</script>
+
+	
 
 </body>
 </html>
