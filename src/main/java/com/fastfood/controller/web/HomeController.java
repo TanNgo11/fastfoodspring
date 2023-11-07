@@ -1,5 +1,7 @@
 package com.fastfood.controller.web;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +33,7 @@ import com.fastfood.service.IAccountService;
 import com.fastfood.service.IOrderService;
 import com.fastfood.service.IProductService;
 import com.fastfood.utils.MessageUtil;
+import com.fastfood.utils.RestFB;
 import com.fastfood.utils.SecurityUtils;
 
 @Controller(value = "homeControllerOfWeb")
@@ -48,6 +54,9 @@ public class HomeController {
 	@Autowired
 	AccountConverter accountConverter;
 
+	@Autowired
+	private RestFB restFB;
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView homePage(@ModelAttribute("foodModel") ProductDTO foodModel,
 			@ModelAttribute("drinkModel") ProductDTO drinkModel) {
@@ -64,11 +73,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public ModelAndView detailPage(@RequestParam(name = "pid") long pid,
-			@ModelAttribute("productDetail") ProductDTO productDetail,HttpServletRequest request) {
+			@ModelAttribute("productDetail") ProductDTO productDetail, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("web/detail");
 		productDetail = productService.findById(pid);
 		mav.addObject("productDetail", productDetail);
-		
+
 		return mav;
 	}
 
@@ -80,14 +89,11 @@ public class HomeController {
 		AccountDTO account = null;
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			account = new AccountDTO();
-		}else {
+		} else {
 			AccountEntity userEntity = userRepository.findOneByUserNameAndStatus(
 					SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
 			account = accountConverter.toDTO(userEntity);
 		}
-		
-			
-		
 
 		mav.addObject("account", account);
 		return mav;
@@ -126,6 +132,30 @@ public class HomeController {
 
 		return mav;
 
+	}
+
+	@RequestMapping("/AccessFacebook/login-facebook")
+	public String loginFacebook(HttpServletRequest request) {
+		String code = request.getParameter("code");
+		String accessToken = "";
+		try {
+			accessToken = restFB.getToken(code);
+		} catch (IOException e) {
+			
+			return "login?facebook=error";
+		}
+		
+		com.restfb.types.User user = restFB.getUserInfo(accessToken);
+		UserDetails userDetail = restFB.buildUser(user);
+		
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail, null,
+				userDetail.getAuthorities());
+		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		
+		
+		return "redirect:/home";
 	}
 
 }

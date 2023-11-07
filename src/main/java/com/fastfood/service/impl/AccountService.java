@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +28,7 @@ public class AccountService implements IAccountService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private PasswordEncoder BCryptPasswordEncoder;
 
@@ -39,7 +37,7 @@ public class AccountService implements IAccountService {
 	public AccountDTO save(AccountDTO dto) {
 		AccountEntity accountEntity = userRepository.findOneByUserNameAndStatus(dto.getUsername(),
 				SystemConstant.ACTIVE_STATUS);
-		if(accountEntity==null) {
+		if (accountEntity == null) {
 			accountEntity = accountConverter.toEntity(dto);
 			List<RoleEntity> roles = new ArrayList<RoleEntity>();
 			roles.add(roleRepository.findByName("USER"));
@@ -48,10 +46,7 @@ public class AccountService implements IAccountService {
 			return accountConverter.toDTO(userRepository.save(accountEntity));
 		}
 		return null;
-		
-		
 
-		
 	}
 
 	@Override
@@ -59,6 +54,22 @@ public class AccountService implements IAccountService {
 		AccountEntity entity = userRepository.findOneByUserNameAndStatus(userName, SystemConstant.ACTIVE_STATUS);
 		AccountDTO dto = accountConverter.toDTO(entity);
 		return dto;
+	}
+
+	@Override
+	@Transactional
+	public AccountDTO saveFBAccount(AccountDTO dto) {
+		AccountEntity accountEntity = userRepository.findOneByUserNameAndStatus(dto.getUsername(),
+				SystemConstant.ACTIVE_STATUS);
+		if (accountEntity == null) {
+			accountEntity = accountConverter.toEntity(dto);
+			List<RoleEntity> roles = new ArrayList<RoleEntity>();
+			roles.add(roleRepository.findByName("USER"));
+			accountEntity.setRoles(roles);
+			accountEntity.setPassword(BCryptPasswordEncoder.encode("hdhsiuh2"));
+			return accountConverter.toDTO(userRepository.save(accountEntity));
+		}
+		return null;
 	}
 
 }

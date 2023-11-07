@@ -9,8 +9,8 @@
 </head>
 <body>
 
-
 	<div id="logreg-forms">
+
 		<c:if test="${param.incorrectAccount != null}">
 			<div class="alert alert-danger">Username or password incorrect
 			</div>
@@ -24,6 +24,21 @@
 
 			<h1 class="h3 mb-3 font-weight-normal" style="text-align: center">
 				Sign in</h1>
+			<div class="social-login" style="display: flex">
+				<a style="margin-right: 2px;" class="btn facebook-btn social-btn"
+					href="https://www.facebook.com/dialog/oauth?client_id=3549214752035027&redirect_uri=https://localhost:8443/AccessFacebook/login-facebook"><span><i
+						class="fab fa-facebook-f"></i> Sign in with Facebook</span> </a> 
+						
+						
+						<a
+					class="btn google-btn social-btn" style="margin-left: 2px;"
+					href="https://www.facebook.com/dialog/oauth?client_id=3549214752035027&redirect_uri=https://localhost:8443/AccessFacebook/login-facebook"><span><i
+						class="fab fa-google-plus-g"></i> Sign in with Google+</span> </a>
+
+
+
+			</div>
+			<p style="text-align: center">OR</p>
 			<span class="errorMessage">${msgError}</span> <input
 				value="${usernameC}" type="text" id="inputEmail"
 				class="form-control" placeholder="Account" required="" autofocus=""
@@ -46,7 +61,7 @@
 				id="btn-signup">
 				<i class="fas fa-user-plus"></i> Sign up New Account
 			</button>
-			
+
 		</form>
 
 		<form action="reset-password" class="form-reset" method="POST">

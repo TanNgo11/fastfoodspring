@@ -5,4 +5,5 @@ import com.fastfood.dto.AccountDTO;
 public interface IAccountService {
 	AccountDTO save(AccountDTO dto);
 	AccountDTO findByUsername(String userName);
+	AccountDTO saveFBAccount(AccountDTO dto);
 }

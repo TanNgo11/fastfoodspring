@@ -21,7 +21,7 @@ public class LoginController {
 	@Autowired
 	private IProductService productService;
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	public ModelAndView loginPage() {
 		ModelAndView mav = new ModelAndView("login");
 		return mav;
