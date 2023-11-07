@@ -153,7 +153,7 @@ public class HomeController {
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		
+//		haha
 		
 		return "redirect:/home";
 	}
