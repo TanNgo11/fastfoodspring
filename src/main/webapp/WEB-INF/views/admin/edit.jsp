@@ -68,7 +68,7 @@
 											<div class="form-group col-md-12">
 												<label for="description">Description</label>
 
-												<form:textarea path="description" rows="5" cols="10"
+												<form:textarea path="description" rows="20" cols="10"
 													cssClass="form-control" id="description" />
 											</div>
 
@@ -198,6 +198,19 @@
 						}
 					});
 		}
+		
+		 ClassicEditor
+         .create( document.querySelector( '#description' ) )
+         .then( editor => {
+             console.log( editor );
+         })
+         .catch( error => {
+             console.error( error );
+         });
+
+     CKEDITOR.replace( 'editor', {
+         extraAllowedContent: 'style;*[id,rel](*){*}'
+     });
 	</script>
 </body>
 </html>

@@ -5,6 +5,8 @@
 --%>
 <%@ include file="/common/taglib.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="com.fastfood.utils.SecurityUtils"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,13 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 <link rel="stylesheet" href="<c:url value='/template/css/style.css'/>">
 <link rel="stylesheet" href="<c:url value='/template/css/detail.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/css/toastmsg.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/template/css/toastmsg.css'/>">
+<script
+	src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+	
+	
 
 <c:if
 	test="${pageContext.request.localName =='http://localhost:8080/cart'}">
@@ -48,26 +56,61 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
 	rel="stylesheet">
+	
+	<c:choose>
+		
+
+		<c:when
+			test="${fn:startsWith(pageContext.request.requestURI, '/category')}">
+		<link rel="stylesheet" href="<c:url value='/template/css/category.css'/>">
+
+		</c:when>
+
+
+
+	</c:choose>
 
 
 </head>
 <body onload="renderProducts(), renderSumary()">
-	<%@ include file="/common/web/header.jsp"%>
+
+	
+<c:choose>
+		<c:when
+			test="${pageContext.request.requestURL eq 'http://localhost:8080/home'}">
+			<%@ include file="/common/web/header.jsp"%>
+
+		</c:when>
+
+		<c:when
+			test="${fn:startsWith(pageContext.request.requestURI, '/category')}">
+			<%@ include file="/common/web/header_withoutslider.jsp"%>
+
+		</c:when>
+
+
+
+	</c:choose>
+
+
 
 
 	<dec:body />
-	
-	
+
+	<div id="toasts">
+		<input id="message" type="hidden" value="${msg}">
+	</div>
+
+
 	<%@ include file="/common/web/footer.jsp"%>
 	<div class="goToTopBtn">^</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 	<script>
-	
-	
 		$(document).ready(function() {
 			$('.goToTopBtn').click(function() {
 				$('html , body').animate({
@@ -84,13 +127,59 @@
 			})
 
 		});
+		
+	
+
+		// filter functions
+		var filterFns = {
+			// show if number is greater than 50
+			numberGreaterThan50 : function() {
+				var number = $(this).find('.number').text();
+				return parseInt(number, 10) > 50;
+			},
+			// show if name ends with -ium
+			ium : function() {
+				var name = $(this).find('.name').text();
+				return name.match(/ium$/);
+			}
+		};
+
+		// bind filter button click
+		$('#filters').on('click', 'button', function() {
+			var filterValue = $(this).attr('data-filter');
+			// use filterFn if matches value
+			filterValue = filterFns[filterValue] || filterValue;
+			$grid.isotope({
+				filter : filterValue
+			});
+		});
+
+		
+
+		// change is-checked class on buttons
+		$('.button-group').each(function(i, buttonGroup) {
+			var $buttonGroup = $(buttonGroup);
+			$buttonGroup.on('click', 'button', function() {
+				$buttonGroup.find('.is-checked').removeClass('is-checked');
+				$(this).addClass('is-checked');
+			});
+		});
+		
+		
+
+
+	
+
+		
 	</script>
+		
+	
 	<script src="<c:url value='/template/js/loadmore.js'/>"></script>
 	<script src="<c:url value='/template/js/loadimgs.js'/>"></script>
 	<script src="<c:url value='/template/js/cart.js'/>"></script>
 	<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
-	
+
 	<!--  <script src="resources/js/loadmore.js"></script>
         <script src="resources/js/addToCart.js"></script>
         <script src="resources/js/loadsumary.js"></script>

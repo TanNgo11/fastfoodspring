@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fastfood.converter.CategoryConverter;
 import com.fastfood.dto.CategoryDTO;
 import com.fastfood.entity.CategoryEntity;
+import com.fastfood.mapper.CategoryMapper;
 import com.fastfood.repository.CategoryRepository;
 import com.fastfood.service.ICategoryService;
 
@@ -16,22 +16,23 @@ import com.fastfood.service.ICategoryService;
 public class CategoryService implements ICategoryService {
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 
 	@Autowired
-	CategoryConverter converter;
+	private CategoryMapper categoryMapper;
 
 	@Override
 	public List<CategoryDTO> findAll() {
 		List<CategoryEntity> categories = categoryRepository.findAll();
-		List<CategoryDTO> result = categories.stream().map(i -> converter.toDTO(i)).collect(Collectors.toList());
+		List<CategoryDTO> result = categories.stream().map(categoryEntity -> categoryMapper.mapToDTO(categoryEntity))
+				.collect(Collectors.toList());
 		return result;
 	}
 
 	@Override
 	public CategoryDTO findByType(String type) {
-		CategoryEntity entity = categoryRepository.findByType(type);
-		CategoryDTO dto = converter.toDTO(entity);
+		CategoryEntity categoryEntity = categoryRepository.findByType(type);
+		CategoryDTO dto = categoryMapper.mapToDTO(categoryEntity);
 		return dto;
 	}
 

@@ -8,6 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "category")
 public class CategoryEntity extends BaseEntity {
@@ -18,20 +27,6 @@ public class CategoryEntity extends BaseEntity {
 	@OneToMany(mappedBy = "category")
 	private List<ProductEntity> products = new ArrayList<>();
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public List<ProductEntity> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<ProductEntity> products) {
-		this.products = products;
-	}
+	
 
 }

@@ -81,7 +81,7 @@ public class CartAPI {
 
 		if (listItem != null) {
 			for (ItemDTO obj : listItem) {
-				obj.splitImg();
+//				obj.splitImg();
 			}
 		}
 

@@ -13,6 +13,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fastfood.dto.CategoryDTO;
+import com.fastfood.dto.ImageDTO;
+import com.fastfood.dto.ProductDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
@@ -32,68 +45,18 @@ public class OrderEntity extends BaseEntity {
 	@Column(name = "totalpay")
 	private Double totalPay;
 
+	@JoinColumn(name = "status")
+	private int status;
+
+	@JoinColumn(name = "type")
+	private int type;
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "orders_item", joinColumns = @JoinColumn(name = "orderid"), inverseJoinColumns = @JoinColumn(name = "itemid"))
 	private List<ItemEntity> items = new ArrayList<ItemEntity>();
 
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "userid")
 	private AccountEntity accountEntity;
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhonenumber() {
-		return phonenumber;
-	}
-
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public Double getTotalPay() {
-		return totalPay;
-	}
-
-	public void setTotalPay(Double totalPay) {
-		this.totalPay = totalPay;
-	}
-
-	public List<ItemEntity> getItems() {
-		return items;
-	}
-
-	public void setItems(List<ItemEntity> items) {
-		this.items = items;
-	}
-
-	public AccountEntity getAccountEntity() {
-		return accountEntity;
-	}
-
-	public void setAccountEntity(AccountEntity accountEntity) {
-		this.accountEntity = accountEntity;
-	}
 
 }

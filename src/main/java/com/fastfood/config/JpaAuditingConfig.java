@@ -26,4 +26,7 @@ public class JpaAuditingConfig {
 			return authentication.getName();
 		}
 	}
+
+	
+
 }

@@ -17,6 +17,11 @@ const toasts = {
         msg: 'Delete successful !',
         alert: 'success',
     },
+    success_update: {
+        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
+        msg: 'Update successful !',
+        alert: 'success',
+    },
     success_change: {
         icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
         msg: 'Change successful !',
@@ -50,6 +55,11 @@ const toasts = {
     error_delete: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
         msg: 'Delete unsuccess !',
+        alert: 'error'
+    },
+    error_change: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Change user information unsuccess !',
         alert: 'error'
     },
     error_add: {

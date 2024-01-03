@@ -8,6 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fastfood.dto.CategoryDTO;
+import com.fastfood.dto.ImageDTO;
+import com.fastfood.dto.ProductDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "role")
 public class RoleEntity extends BaseEntity {
@@ -18,20 +31,6 @@ public class RoleEntity extends BaseEntity {
 	@ManyToMany(mappedBy = "roles")
 	private List<AccountEntity> accounts = new ArrayList<AccountEntity>();
 
-	public String getName() {
-		return name;
-	}
 
-	public List<AccountEntity> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(List<AccountEntity> accounts) {
-		this.accounts = accounts;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 }

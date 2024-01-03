@@ -3,9 +3,6 @@ package com.fastfood.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fastfood.entity.AccountEntity;
-import com.fastfood.entity.ItemEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +23,5 @@ public class OrderDTO extends AbstractDTO<OrderDTO> {
 	private AccountDTO accountDTO;
 	
 	
-
-	
-	
-
 
 }

@@ -8,7 +8,7 @@
 				<div class="col-md-5 text-center">
 					<nav class="top-nav">
 						<ul>
-							<li class=""><a title="Home" href="home">Home</a></li>
+							<li class=""><a title="Home" href="/home">Home</a></li>
 							<li class=""><a href="tel:+0929234798" title="Booking">Booking</a></li>
 							<li class="nav-item dropdown"><a
 								class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -23,7 +23,7 @@
 				</div>
 				<div class="col-md-3 text-center">
 					<h1 class="logo">
-						<a title="CrispTrek" href="home"> <img
+						<a title="CrispTrek" href="/home"> <img
 							src="<c:url value='/inc/FoodTakeAwayRestaurantLogo.png'/>"
 							alt="CrispTrek">
 						</a>
@@ -60,7 +60,7 @@
 
 										<ul>
 											<li><a href="">View Cart</a></li>
-											<li><a href="user-view?mode=view">Edit profile</a></li>
+											<li><a href="/user/<%=SecurityUtils.getPrincipal().getId()%>">Edit profile</a></li>
 											<li><a href="view-bill">View bills</a></li>
 											<li><a href="/logout">Logout</a></li>
 										</ul>

@@ -50,7 +50,7 @@ public class ProductAPI {
 		result.setListResult(productService.findAllByStatus(pageable, SystemConstant.ACTIVE_STATUS));
 		result.setTotalItem(productService.getTotalItem());
 		result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
-		result.splitImg();
+
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -83,7 +83,7 @@ public class ProductAPI {
 
 		if (result != null) {
 			String img = fileUploadUtil.saveFiles(files, request, result.getId());
-			result.setImg(img);
+//			result.setImg(img);
 			productService.save(result);
 		}
 
@@ -110,7 +110,7 @@ public class ProductAPI {
 
 		if (files != null) {
 			String img = fileUploadUtil.saveFiles(files, request, id);
-			result.setImg(img);
+//			result.setImg(img);
 		}
 
 		productService.save(result);

@@ -24,7 +24,8 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
+<script
+	src="<c:url value='/template/ckeditor5-build-classic/build/ckeditor.js'/>"></script>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
@@ -55,11 +56,11 @@
 
 
 
-		
-		
 
 
-		
+
+
+
 
 
 
@@ -76,6 +77,7 @@
 	<div id="toasts">
 		<input id="message" type="hidden" value="${msg}">
 	</div>
+	
 
 
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>

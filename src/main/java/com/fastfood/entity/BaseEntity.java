@@ -1,6 +1,7 @@
 package com.fastfood.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -15,6 +16,20 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fastfood.dto.CategoryDTO;
+import com.fastfood.dto.ImageDTO;
+import com.fastfood.dto.ProductDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
@@ -38,45 +53,5 @@ public abstract class BaseEntity {
 	@Column(name = "modifiedby")
 	@LastModifiedBy
 	private String modifiedBy;
-
-	public long getId() {
-		return id;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
 
 }

@@ -32,14 +32,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 			return null;
 			
 		}
-		System.out.println("loi ne ba2");
+		
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		for (RoleEntity role : userEntity.getRoles()) {
 			authorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
-		MyUser myUser = new MyUser(userEntity.getUsername(), userEntity.getPassword(), true, true, true, true,
+		MyUser myUser = new MyUser(userEntity.getId(), userEntity.getFullName(),username, userEntity.getPassword(), true, true, true, true,
 				authorities);
-		myUser.setFullName(userEntity.getFullName());
+		
+	
 		return myUser;
 	}
 

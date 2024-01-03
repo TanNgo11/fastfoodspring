@@ -79,11 +79,11 @@ public class HomeController {
 	public ModelAndView createPage(@RequestParam(value = "id", required = false) Long id, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("admin/edit");
 		ProductDTO product = new ProductDTO();
-		if (id != null) {
-			product = productService.findById(id);
-			String[] listImg = product.getImg().split("_");
-			mav.addObject("listImg", listImg);
-		}
+//		if (id != null) {
+//			product = productService.findById(id);
+//			String[] listImg = product.getImg().split("_");
+//			mav.addObject("listImg", listImg);
+//		}
 
 		if (request.getParameter("msg") != null) {
 			if (request.getParameter("msg").equals("add_success"))

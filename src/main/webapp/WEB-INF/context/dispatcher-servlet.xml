@@ -40,9 +40,9 @@
 
 	</bean>
 
-	
-	
 
+
+	
 
 	<mvc:resources mapping="/template/**"
 		location="/template/" />

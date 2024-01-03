@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fastfood.constant.SystemConstant;
-import com.fastfood.converter.ProductConverter;
 import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.ProductDTO;
 import com.fastfood.entity.ProductEntity;
 import com.fastfood.exception.ResourceNotFoundException;
+import com.fastfood.mapper.ProductMapper;
 import com.fastfood.repository.ProductRepository;
 import com.fastfood.repository.UserRepository;
 import com.fastfood.service.IProductService;
@@ -28,7 +28,7 @@ public class ProductService implements IProductService {
 	private ProductRepository productRepository;
 
 	@Autowired
-	ProductConverter productConverter;
+	ProductMapper productMapper;
 
 	@Autowired
 	UserRepository userRepository;
@@ -40,7 +40,7 @@ public class ProductService implements IProductService {
 		if (entities.isEmpty()) {
 			throw new ResourceNotFoundException("Can not found current page");
 		}
-		return entities.stream().map(product -> productConverter.toDTO(product)).collect(Collectors.toList());
+		return entities.stream().map(product -> productMapper.mapToDTO(product)).collect(Collectors.toList());
 
 	}
 
@@ -55,8 +55,8 @@ public class ProductService implements IProductService {
 		List<ProductEntity> entities = productRepository.findByCategory_idAndStatus(category_id, pageable, status);
 
 		for (ProductEntity item : entities) {
-			ProductDTO product = productConverter.toDTO(item);
-			product.doSplitImg();
+			ProductDTO product = productMapper.mapToDTO(item);
+		
 			models.add(product);
 		}
 		return models;
@@ -66,7 +66,7 @@ public class ProductService implements IProductService {
 	public ProductDTO findById(long id) {
 		ProductEntity product = productRepository.findByIdAndStatus(id, SystemConstant.ACTIVE_STATUS)
 				.orElseThrow(() -> new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + id));
-		ProductDTO productDTO = productConverter.toDTO(product);
+		ProductDTO productDTO = productMapper.mapToDTO(product);
 		return productDTO;
 
 	}
@@ -99,7 +99,7 @@ public class ProductService implements IProductService {
 		if (entities.isEmpty()) {
 			throw new ResourceNotFoundException("Can not found current page");
 		}
-		return entities.stream().map(product -> productConverter.toDTO(product)).collect(Collectors.toList());
+		return entities.stream().map(product -> productMapper.mapToDTO(product)).collect(Collectors.toList());
 
 	}
 
@@ -108,17 +108,30 @@ public class ProductService implements IProductService {
 		ProductEntity entity = new ProductEntity();
 		if (dto.getId() != null) {
 			ProductEntity oldEntity = productRepository.findOne(dto.getId());
-			entity = productConverter.toEntity(oldEntity, dto);
+			entity = productMapper.mapToEntity(dto);
 		} else {
-			entity = productConverter.toEntity(dto);
+			entity = productMapper.mapToEntity(dto);
 		}
-		return productConverter.toDTO(productRepository.save(entity));
+		return productMapper.mapToDTO(productRepository.save(entity));
 	}
 
 	@Override
 	public ProductDTO update(ProductDTO dto) {
 
 		return null;
+	}
+
+	@Override
+	public List<ProductDTO> findByCategory_idAndStatus(long category_id, int status) {
+		List<ProductDTO> models = new ArrayList<ProductDTO>();
+		List<ProductEntity> entities = productRepository.findByCategory_idAndStatus(category_id, status);
+
+		for (ProductEntity item : entities) {
+			ProductDTO product = productMapper.mapToDTO(item);
+		
+			models.add(product);
+		}
+		return models;
 	}
 
 }

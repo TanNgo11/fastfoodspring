@@ -20,25 +20,9 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
 	private String productName;
 	private String description;
 	private double price;
-	private String img;
+	private List<ImageDTO> listImage;
 	private CategoryDTO categoryDTO;
 	private double salePrice;
 	private int status;
-
-	
-	
-	public void splitImg() {
-		for (ProductDTO item : this.getListResult()) {
-			item.setImg(item.getImg().split("_")[0]);
-		}
-	}
-	
-	public void doSplitImg() {
-		this.setImg(this.getImg().split("_")[0]);
-		System.out.println(this.getImg().split("_")[0]);
-		
-	}
-
-	
 
 }

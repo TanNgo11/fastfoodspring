@@ -32,7 +32,8 @@
 						
 						<a
 					class="btn google-btn social-btn" style="margin-left: 2px;"
-					href="https://www.facebook.com/dialog/oauth?client_id=3549214752035027&redirect_uri=https://localhost:8443/AccessFacebook/login-facebook"><span><i
+					href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/login-google&response_type=code
+    &client_id=203434021313-q6ukgr4gjiuc1e0l9a17v6vuk2d1fgt1.apps.googleusercontent.com&approval_prompt=force"><span><i
 						class="fab fa-google-plus-g"></i> Sign in with Google+</span> </a>
 
 

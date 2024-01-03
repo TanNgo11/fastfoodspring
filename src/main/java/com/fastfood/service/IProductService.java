@@ -11,6 +11,7 @@ public interface IProductService {
 	List<ProductDTO> findAll(Pageable pageable);
 	List<ProductDTO> findAllByStatus(Pageable pageable , int status);
 	List<ProductDTO> findByCategory_idAndStatus(long category_id, Pageable pageable, int status);
+	List<ProductDTO> findByCategory_idAndStatus(long category_id, int status);
 	ProductDTO findById(long id);
 	int countByCategoryId(long categoryId);
 	ApiResponse softDelete(long productId);
