@@ -27,7 +27,7 @@
               http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan
-		base-package="com.fastfood.controller, com.fastfood.api" />
+		base-package="com.fastfood.controller, com.fastfood.api,com.fastfood.mongo.controller" />
 
 	<mvc:annotation-driven />
 
@@ -42,7 +42,7 @@
 
 
 
-	
+
 
 	<mvc:resources mapping="/template/**"
 		location="/template/" />

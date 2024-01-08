@@ -56,6 +56,7 @@ public class HomeController {
 			@ModelAttribute("productDetail") ProductDTO productDetail, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("web/detail");
 		productDetail = productService.findById(pid);
+		
 		mav.addObject("productDetail", productDetail);
 
 		return mav;
@@ -65,6 +66,15 @@ public class HomeController {
 	public ModelAndView categoryPage(@ModelAttribute("foodModel") ProductDTO foodModel) {
 		Pageable pageable = new PageRequest(0, 4);
 		ModelAndView mav = new ModelAndView("web/category");
+		
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/comment", method = RequestMethod.GET)
+	public ModelAndView categoryPage() {
+		
+		ModelAndView mav = new ModelAndView("web/testcomment");
 		
 		
 		return mav;

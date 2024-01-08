@@ -15,6 +15,7 @@ public class MessageUtil {
 	
 	
 	public static final String USER_ID_NOT_FOUND = "Not found user with ID: ";
+	public static final String CHATROOM_NOT_FOUND = "Not found chat room!";
 	public static final String PRODUCT_ID_NOT_FOUND = "Not found product with id: ";
 	
 	

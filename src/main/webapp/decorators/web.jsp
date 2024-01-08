@@ -26,13 +26,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 <link rel="stylesheet" href="<c:url value='/template/css/style.css'/>">
 <link rel="stylesheet" href="<c:url value='/template/css/detail.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/css/boxchat.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/template/css/toastmsg.css'/>">
 <script
 	src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
-	
-	
+
+
 
 <c:if
 	test="${pageContext.request.localName =='http://localhost:8080/cart'}">
@@ -56,26 +57,39 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
 	rel="stylesheet">
-	
-	<c:choose>
-		
 
-		<c:when
-			test="${fn:startsWith(pageContext.request.requestURI, '/category')}">
-		<link rel="stylesheet" href="<c:url value='/template/css/category.css'/>">
-
-		</c:when>
+<c:choose>
 
 
+	<c:when
+		test="${fn:startsWith(pageContext.request.requestURI, '/category')}">
+		<link rel="stylesheet"
+			href="<c:url value='/template/css/category.css'/>">
 
-	</c:choose>
+	</c:when>
+
+	<c:when
+		test="${fn:startsWith(pageContext.request.requestURI, '/detail')}">
+		<link rel="stylesheet" type="text/css" href="<c:url value='/template/jquery-comments'/>/css/jquery-comments.css">
+		<link rel="stylesheet" type="text/css"
+			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<script type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script type="text/javascript" src="<c:url value='/template/jquery-comments'/>/js/jquery-comments.js"></script>
+
+	</c:when>
+
+
+
+</c:choose>
 
 
 </head>
 <body onload="renderProducts(), renderSumary()">
 
-	
-<c:choose>
+
+	<c:choose>
 		<c:when
 			test="${pageContext.request.requestURL eq 'http://localhost:8080/home'}">
 			<%@ include file="/common/web/header.jsp"%>
@@ -101,8 +115,15 @@
 		<input id="message" type="hidden" value="${msg}">
 	</div>
 
+	<security:authorize access="isAuthenticated()">
+		<input id="userId" type="hidden"
+			value="<%=SecurityUtils.getPrincipal().getId()%>">
+	</security:authorize>
+
+
 
 	<%@ include file="/common/web/footer.jsp"%>
+	<%@ include file="/common/web/boxchat.jsp"%>
 	<div class="goToTopBtn">^</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
@@ -127,58 +148,19 @@
 			})
 
 		});
-		
-	
-
-		// filter functions
-		var filterFns = {
-			// show if number is greater than 50
-			numberGreaterThan50 : function() {
-				var number = $(this).find('.number').text();
-				return parseInt(number, 10) > 50;
-			},
-			// show if name ends with -ium
-			ium : function() {
-				var name = $(this).find('.name').text();
-				return name.match(/ium$/);
-			}
-		};
-
-		// bind filter button click
-		$('#filters').on('click', 'button', function() {
-			var filterValue = $(this).attr('data-filter');
-			// use filterFn if matches value
-			filterValue = filterFns[filterValue] || filterValue;
-			$grid.isotope({
-				filter : filterValue
-			});
-		});
-
-		
-
-		// change is-checked class on buttons
-		$('.button-group').each(function(i, buttonGroup) {
-			var $buttonGroup = $(buttonGroup);
-			$buttonGroup.on('click', 'button', function() {
-				$buttonGroup.find('.is-checked').removeClass('is-checked');
-				$(this).addClass('is-checked');
-			});
-		});
-		
-		
-
-
-	
-
-		
 	</script>
-		
-	
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 	<script src="<c:url value='/template/js/loadmore.js'/>"></script>
+	<script src="<c:url value='/template/js/boxchat.js'/>"></script>
 	<script src="<c:url value='/template/js/loadimgs.js'/>"></script>
 	<script src="<c:url value='/template/js/cart.js'/>"></script>
 	<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
+
 
 	<!--  <script src="resources/js/loadmore.js"></script>
         <script src="resources/js/addToCart.js"></script>

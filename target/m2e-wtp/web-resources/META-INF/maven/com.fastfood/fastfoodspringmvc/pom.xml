@@ -235,6 +235,40 @@
 			<version>4.20</version>
 		</dependency>
 
+		<!--connect mongodb -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.12.14</version>
+		</dependency>
+
+		<!-- Spring data mongodb -->
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.10.7.RELEASE</version>
+		</dependency>
+
+		<!-- websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- spring messasing -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
+		
+
+
+
+
 
 
 	</dependencies>

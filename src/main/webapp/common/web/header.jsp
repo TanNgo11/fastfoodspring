@@ -44,7 +44,7 @@
 								</div>
 
 								<security:authorize access="isAuthenticated()">
-									<div class="userName"><%=SecurityUtils.getPrincipal().getFullName()%></div>
+									<div id="username" class="userName"><%=SecurityUtils.getPrincipal().getFullName()%></div>
 								</security:authorize>
 
 

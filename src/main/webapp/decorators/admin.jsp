@@ -19,6 +19,8 @@
 <!-- My CSS -->
 <link rel="stylesheet"
 	href="<c:url value='/template/css/admin_home.css'/>">
+	<link rel="stylesheet"
+	href="<c:url value='/template/css/chat.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/template/css/toastmsg.css'/>">
 

@@ -64,6 +64,13 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView("admin/chart");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/admin/chat", method = RequestMethod.GET)
+	public ModelAndView chatPage() {
+		
+		ModelAndView mav = new ModelAndView("admin/chat");
+		return mav;
+	}
 
 	@RequestMapping(value = "/admin/order", method = RequestMethod.GET)
 	public ModelAndView orderPage() {
