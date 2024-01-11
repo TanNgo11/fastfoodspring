@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class ProductService implements IProductService {
 
 		for (ProductEntity item : entities) {
 			ProductDTO product = productMapper.mapToDTO(item);
-		
+
 			models.add(product);
 		}
 		return models;
@@ -125,10 +126,10 @@ public class ProductService implements IProductService {
 	public List<ProductDTO> findByCategory_idAndStatus(long category_id, int status) {
 		List<ProductDTO> models = new ArrayList<ProductDTO>();
 		List<ProductEntity> entities = productRepository.findByCategory_idAndStatus(category_id, status);
-
+		
 		for (ProductEntity item : entities) {
 			ProductDTO product = productMapper.mapToDTO(item);
-		
+
 			models.add(product);
 		}
 		return models;

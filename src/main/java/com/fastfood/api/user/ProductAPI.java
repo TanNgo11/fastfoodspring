@@ -1,6 +1,7 @@
 package com.fastfood.api.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,11 +46,22 @@ public class ProductAPI {
 		}
 
 		ProductDTO result = new ProductDTO();
-		
-		result.setListResult(
-				productService.findByCategory_idAndStatus(category_id, SystemConstant.ACTIVE_STATUS));
+
+		result.setListResult(productService.findByCategory_idAndStatus(category_id, SystemConstant.ACTIVE_STATUS));
 
 		return result;
 	}
+
+//	@GetMapping("/products")
+//	@Cacheable("test")
+//	public ProductDTO getAll() {
+//		System.out.println("hehe");
+//
+//		ProductDTO result = new ProductDTO();
+//		PageRequest pageable = new PageRequest(1, 10);
+//		result.setListResult(productService.findAll(pageable));
+//
+//		return result;
+//	}
 
 }

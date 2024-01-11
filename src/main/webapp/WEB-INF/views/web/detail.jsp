@@ -53,66 +53,7 @@
 
 
 
-	<script>
-		$('#comments-container')
-				.comments(
-						{
-							profilePictureURL : 'https://cdn-icons-png.flaticon.com/512/9131/9131529.png',
-							currentUserIsAdmin : true,
-							textareaPlaceholderText : 'Leave a comment',
-							popularText : 'Most popular',
-							sendText : 'Comment',
-							oldestText : 'Old',
-							youText : 'Me',
-							highlightColor : '#23A6F0',
-							currentUserIsAdmin : true,
-							forceResponsive : true,
-
-							refresh : function() {
-								$('#comments-container').addClass('rendered');
-							},
-							getComments : function(success, error) {
-								var commentsArray = [ {
-									id : 1,
-									created : '2015-10-01',
-									content : 'Lorem ipsum dolort sit amet',
-									fullname : 'Simon Powell',
-									upvote_count : 2,
-									user_has_upvoted : false,
-									userId : 1
-
-								},
-
-								{
-									id : 2,
-									parent:1,
-									createdByAdmin : 'created_by_admin',
-									created : '2015-10-01',
-									content : 'Lorem ipsum dolort sit amet',
-									fullname : 'test',
-							
-									upvote_count : 2,
-									user_has_upvoted : false
-								} ,
-								
-								{
-									id : 5,
-									parent:2,
-									createdByAdmin : 'created_by_admin',
-									created : '2015-10-01',
-									content : 'Lorem ipsum dolort sit amet',
-									fullname : 'test',
-									created_by_admin : true,
-									upvote_count : 2,
-									user_has_upvoted : false
-								}
-								];
-								success(commentsArray);
-							}
-						}
-
-				);
-	</script>
+	<script src="/template/js/comment.js"></script>
 
 </body>
 </html>

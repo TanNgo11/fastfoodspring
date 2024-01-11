@@ -71,10 +71,10 @@ public class HomeController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/comment", method = RequestMethod.GET)
+	@RequestMapping(value = "/about-us", method = RequestMethod.GET)
 	public ModelAndView categoryPage() {
 		
-		ModelAndView mav = new ModelAndView("web/testcomment");
+		ModelAndView mav = new ModelAndView("web/aboutus");
 		
 		
 		return mav;
