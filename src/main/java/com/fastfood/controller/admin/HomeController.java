@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fastfood.dto.OrderDTO;
@@ -37,6 +40,9 @@ import java.util.List;
 
 @Controller(value = "homeControllerOfAdmin")
 public class HomeController {
+	
+	@Autowired
+     JavaMailSender emailSender;
 
 	@Autowired
 	PieChartService chart;
@@ -105,6 +111,23 @@ public class HomeController {
 				categoryService.findAll().stream().map(cate -> cate.getType()).collect(Collectors.toList()));
 		return mav;
 	}
+	
+	@ResponseBody
+    @RequestMapping("/sendSimpleEmail")
+    public String sendSimpleEmail() {
+
+        // Create a Simple MailMessage.
+        SimpleMailMessage message = new SimpleMailMessage();
+        
+        message.setTo("tan.ngo.cit20@eiu.edu.vn");
+        message.setSubject("Test Simple Email");
+        message.setText("Hello, Im testing Simple Email");
+
+        // Send Message!
+        this.emailSender.send(message);
+
+        return "Email Sent!";
+    }
 
 	
 
