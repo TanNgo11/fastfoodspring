@@ -6,16 +6,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fastfood.dto.CategoryDTO;
-import com.fastfood.dto.ImageDTO;
-import com.fastfood.dto.ProductDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,5 +57,15 @@ public class OrderEntity extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "userid")
 	private AccountEntity accountEntity;
+
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
+	
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "payment_id", referencedColumnName = "id")
+	private PaymentDetail paymentDetail;
+
+	
 
 }

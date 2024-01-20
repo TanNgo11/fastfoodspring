@@ -181,7 +181,7 @@
 				<div class="col-md-3 col-12 mt-4">
 
 					<div class="card h-100 foodCard">
-						<a href="detail?pid=${o.id}"> <img class="card-img-top"
+						<a href="/detail/${o.slug}"> <img class="card-img-top"
 							src="${o.listImage[0].imageURL}" alt="Card image cap">
 
 						</a>
@@ -219,7 +219,7 @@
 				<div class="col-md-3 col-12 mt-4">
 
 					<div class="card h-100 drinkCard">
-						<a href="detail?pid=${o.id}"> <img class="card-img-top"
+						<a href="/detail/${o.slug}"> <img class="card-img-top"
 							src="${o.listImage[0].imageURL}" alt="Card image cap">
 						</a>
 
@@ -327,6 +327,9 @@
 		</div>
 	</div>
 
+
 	</main>
+		<script src="<c:url value='/template/js/loadmore.js'/>"></script>
+
 </body>
 </html>

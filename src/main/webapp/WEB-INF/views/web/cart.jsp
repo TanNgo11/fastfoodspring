@@ -130,10 +130,10 @@
 											</div>
 
 
-											<button type="submit" class="btn btn-dark btn-block btn-lg"
+											<button id="submitOrder" type="submit" class="btn btn-dark btn-block btn-lg"
 												data-mdb-ripple-color="dark">Buy Now</button>
 
-											<form:input type="hidden" path="username" />
+											<form:input type="hidden" path="id" />
 										</form:form>
 									</div>
 
@@ -151,6 +151,7 @@
 		</div>
 	</section>
 	</main>
+	<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
 	
 
 </body>

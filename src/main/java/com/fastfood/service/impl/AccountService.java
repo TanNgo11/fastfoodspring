@@ -48,6 +48,9 @@ public class AccountService implements IAccountService {
 			List<RoleEntity> roles = new ArrayList<RoleEntity>();
 			roles.add(roleRepository.findByName("USER"));
 			accountEntity.setRoles(roles);
+			if (dto.getOauth2Id() == null)
+				accountEntity.setOauth2Id(SystemConstant.WEB_USER);
+			accountEntity.setStatus(SystemConstant.ACTIVE_STATUS);
 			accountEntity.setPassword(BCryptPasswordEncoder.encode(dto.getPassword()));
 			return accountMapper.mapToDTO(userRepository.save(accountEntity));
 		}
@@ -63,25 +66,9 @@ public class AccountService implements IAccountService {
 	}
 
 	@Override
-	@Transactional
-	public AccountDTO saveFBAccount(AccountDTO dto) {
-		AccountEntity accountEntity = userRepository.findOneByUserNameAndStatus(dto.getUsername(),
-				SystemConstant.ACTIVE_STATUS);
-		if (accountEntity == null) {
-			accountEntity = accountMapper.mapToEntity(dto);
-			List<RoleEntity> roles = new ArrayList<RoleEntity>();
-			roles.add(roleRepository.findByName("USER"));
-			accountEntity.setRoles(roles);
-			accountEntity.setPassword(BCryptPasswordEncoder.encode("hdhsiuh2"));
-			return accountMapper.mapToDTO(userRepository.save(accountEntity));
-		}
-		return null;
-	}
-
-	@Override
 	public AccountDTO findById(long id) {
 		AccountEntity accountEntity = userRepository.findOne(id);
-		
+
 		return accountMapper.mapToDTO(userRepository.save(accountEntity));
 	}
 
@@ -99,6 +86,12 @@ public class AccountService implements IAccountService {
 
 		return mapper.map(userRepository.save(accountEntity), AccountDTO.class);
 
+	}
+
+	@Override
+	public AccountDTO findByOauth2Id(String oauth2Id) {
+		return accountMapper
+				.mapToDTO(userRepository.findOneByOauth2IdAndStatus(oauth2Id, SystemConstant.ACTIVE_STATUS));
 	}
 
 }

@@ -70,13 +70,15 @@
 
 	<c:when
 		test="${fn:startsWith(pageContext.request.requestURI, '/detail')}">
-		<link rel="stylesheet" type="text/css" href="<c:url value='/template/jquery-comments'/>/css/jquery-comments.css">
+		<link rel="stylesheet" type="text/css"
+			href="<c:url value='/template/jquery-comments'/>/css/jquery-comments.css">
 		<link rel="stylesheet" type="text/css"
 			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 		<script type="text/javascript"
 			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-		<script type="text/javascript" src="<c:url value='/template/jquery-comments'/>/js/jquery-comments.js"></script>
+		<script type="text/javascript"
+			src="<c:url value='/template/jquery-comments'/>/js/jquery-comments.js"></script>
 
 	</c:when>
 
@@ -86,6 +88,7 @@
 
 
 </head>
+
 <body onload="renderProducts(), renderSumary()">
 
 
@@ -98,6 +101,24 @@
 
 		<c:when
 			test="${fn:startsWith(pageContext.request.requestURI, '/category')}">
+			<%@ include file="/common/web/header_withoutslider.jsp"%>
+
+		</c:when>
+
+		<c:when
+			test="${fn:startsWith(pageContext.request.requestURI, '/detail')}">
+			<%@ include file="/common/web/header_withoutslider.jsp"%>
+
+		</c:when>
+
+		<c:when
+			test="${fn:startsWith(pageContext.request.requestURI, '/cart')}">
+			<%@ include file="/common/web/header_withoutslider.jsp"%>
+
+		</c:when>
+
+		<c:when
+			test="${fn:startsWith(pageContext.request.requestURI, '/about-us')}">
 			<%@ include file="/common/web/header_withoutslider.jsp"%>
 
 		</c:when>
@@ -154,11 +175,11 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-	<script src="<c:url value='/template/js/loadmore.js'/>"></script>
+	
 	<script src="<c:url value='/template/js/boxchat.js'/>"></script>
-	<script src="<c:url value='/template/js/loadimgs.js'/>"></script>
+	
 	<script src="<c:url value='/template/js/cart.js'/>"></script>
-	<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
+	
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
 
 

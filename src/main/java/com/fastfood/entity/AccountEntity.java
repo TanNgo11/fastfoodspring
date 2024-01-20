@@ -46,17 +46,18 @@ public class AccountEntity extends BaseEntity {
 
 	@Column(name = "status")
 	private int status;
+	
+	@Column(name = "oauth2_Id")
+	private String oauth2Id;
 
-	@ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "accountid"), inverseJoinColumns = @JoinColumn(name = "roleid"))
 	private List<RoleEntity> roles = new ArrayList<RoleEntity>();
-	
-	@OneToMany(mappedBy = "accountEntity")
+
+	@OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL)
 	private List<OrderEntity> orders = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "accountEntity")
+
+	@OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL)
 	private List<NewsEntity> news = new ArrayList<>();
-	
-	
 
 }

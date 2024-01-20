@@ -15,6 +15,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 	int countByCategory_id(long category_id);
 	List<ProductEntity> findByCategory_idAndStatus(long category_id,int status);
 	Optional<ProductEntity> findByIdAndStatus(long id , int status);
+	ProductEntity findBySlug(String slug);
 	
 	
 	

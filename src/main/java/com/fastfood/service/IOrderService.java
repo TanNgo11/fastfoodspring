@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.fastfood.dto.OrderDTO;
+import com.fastfood.entity.PaymentDetail;
 
 public interface IOrderService {
-	OrderDTO save(OrderDTO order);
+	OrderDTO save(OrderDTO order, PaymentDetail paymentDetail);
 
 	List<OrderDTO> findAll();
 

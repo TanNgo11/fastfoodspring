@@ -16,6 +16,38 @@ function addToCart(id) {
 	});
 
 }
+var totalPayment = 0;
+
+function usdToVnd(usdAmount, exchangeRate) {
+    if (usdAmount < 0 || exchangeRate <= 0) {
+        return "Invalid input. Amount and exchange rate must be positive numbers.";
+    }
+
+    const vndAmount = usdAmount * exchangeRate;
+    return vndAmount;
+}
+
+
+
+
+
+
+$("#submitOrder").on("click", function(e){
+    e.preventDefault();
+    $.ajax({
+        url: "/api/v1/payment/neworder",
+        type: "POST",
+        data: {
+            amount: totalPayment
+        },
+        success: function(href) {
+        	
+        	window.location.href = href;
+          
+        }
+    });
+});
+
 
 function minusCountInCart() {
     
@@ -70,6 +102,7 @@ function  doFunctionInCartByMode(id, mode) {
              doRenderSummary(listItem)
         	 renderTotalPayment(data)
         	 doRenderProduct(listItem)
+        	 totalPayment = usdToVnd(data.totalPay,24000);
 
         }
     });
@@ -148,6 +181,8 @@ function doRenderProduct(listProduct) {
 	}
 	
 }
+
+
 
 
 

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.ProductDTO;
+import com.fastfood.entity.ImageEntity;
 import com.fastfood.entity.ProductEntity;
 import com.fastfood.exception.ResourceNotFoundException;
 import com.fastfood.mapper.ProductMapper;
@@ -107,12 +108,13 @@ public class ProductService implements IProductService {
 	@Override
 	public ProductDTO save(ProductDTO dto) {
 		ProductEntity entity = new ProductEntity();
-		if (dto.getId() != null) {
-			ProductEntity oldEntity = productRepository.findOne(dto.getId());
-			entity = productMapper.mapToEntity(dto);
-		} else {
-			entity = productMapper.mapToEntity(dto);
-		}
+
+		entity = productMapper.mapToEntity(dto);
+
+		entity = productRepository.save(entity);
+		
+		entity.setSlug(createSlug(entity.getId(), entity.getProductName()));
+
 		return productMapper.mapToDTO(productRepository.save(entity));
 	}
 
@@ -126,13 +128,30 @@ public class ProductService implements IProductService {
 	public List<ProductDTO> findByCategory_idAndStatus(long category_id, int status) {
 		List<ProductDTO> models = new ArrayList<ProductDTO>();
 		List<ProductEntity> entities = productRepository.findByCategory_idAndStatus(category_id, status);
-		
+
 		for (ProductEntity item : entities) {
 			ProductDTO product = productMapper.mapToDTO(item);
 
 			models.add(product);
 		}
 		return models;
+	}
+
+	@Override
+	public ProductDTO findBySlug(String slug) {
+
+		return productMapper.mapToDTO(productRepository.findBySlug(slug));
+	}
+
+	private String createSlug(long id, String title) {
+
+		String lowercaseString = title.toLowerCase();
+
+		String stringWithHyphens = lowercaseString.replace(" ", "-");
+
+		String slug = stringWithHyphens + "-" + id;
+
+		return slug;
 	}
 
 }

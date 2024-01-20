@@ -58,40 +58,42 @@ public class CartController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public ModelAndView cart(HttpServletRequest request, HttpSession session,
-			@ModelAttribute("account") AccountDTO account) {
-		
-		ModelAndView mav = new ModelAndView();
-
-		session = request.getSession();
-		OrderDTO orderSession = (OrderDTO) session.getAttribute("cart");
-
-		if (orderSession == null) {
-			orderSession = new OrderDTO();
-
-		}
-		// check login and empty cart
-		if (account.getUsername() == null) {
-			request.setAttribute("msg", MessageUtil.ERROR_LOGIN);
-		}
-		if (orderSession.getItems().size() == 0) {
-			request.setAttribute("msg", MessageUtil.ERROR_EMPTYCART);
-		} else {
-			orderSession.setAccountDTO(account);
-			orderSession.setEmail(account.getEmail());
-			orderSession.setAddress(account.getAddress());
-			orderSession.setPhonenumber(account.getPhoneNumber());
-			orderSession.setCustomerName(account.getFullName());
-			request.setAttribute("msg", MessageUtil.SUCCESS_ORDER);
-			orderService.save(orderSession);
-		}
-		session.removeAttribute("cart");
-
-		mav.setViewName("web/cart");
-
-		return mav;
-
-	}
+//	@RequestMapping(value = "/cart", method = RequestMethod.POST)
+//	public ModelAndView cart(HttpServletRequest request, HttpSession session,
+//			@ModelAttribute("account") AccountDTO account) {
+//		
+//		ModelAndView mav = new ModelAndView();
+//
+//		session = request.getSession();
+//		OrderDTO orderSession = (OrderDTO) session.getAttribute("cart");
+//
+//		if (orderSession == null) {
+//			orderSession = new OrderDTO();
+//
+//		}
+//		
+//		System.out.println(account.toString());
+//		// check login and empty cart
+//		if (account.getUsername() == null) {
+//			request.setAttribute("msg", MessageUtil.ERROR_LOGIN);
+//		}
+//		if (orderSession.getItems().size() == 0) {
+//			request.setAttribute("msg", MessageUtil.ERROR_EMPTYCART);
+//		} else {
+//			orderSession.setAccountDTO(account);
+//			orderSession.setEmail(account.getEmail());
+//			orderSession.setAddress(account.getAddress());
+//			orderSession.setPhonenumber(account.getPhoneNumber());
+//			orderSession.setCustomerName(account.getFullName());
+//			request.setAttribute("msg", MessageUtil.SUCCESS_ORDER);
+//			orderService.save(orderSession);
+//		}
+//		session.removeAttribute("cart");
+//
+//		mav.setViewName("web/cart");
+//
+//		return mav;
+//
+//	}
 
 }

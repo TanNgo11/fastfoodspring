@@ -18,6 +18,8 @@
 			</button>
 
 		</div>
+		
+		<span style="border-top:1px;border-style:solid; border-top-color:black"></span>
 		<ul class="messages" id="chat-messages">
 
 

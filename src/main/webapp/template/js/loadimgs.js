@@ -1,9 +1,13 @@
-var listImg = $("#listimg").val().split("_");
+var listImgValues = $(".listimg").map(function() {
+  return $(this).val();
+}).get();
+
 var strThumbList ="";
 var strFeaturedList=""
 var strDots=""
 var i =1;
-for (let img of listImg) {
+for (let img of listImgValues) {
+	
 	strFeaturedList+=`<li>
 								<figure>
 									<img

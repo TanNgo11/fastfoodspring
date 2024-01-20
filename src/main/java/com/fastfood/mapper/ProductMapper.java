@@ -1,16 +1,25 @@
 package com.fastfood.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fastfood.dto.ImageDTO;
 import com.fastfood.dto.ProductDTO;
+import com.fastfood.entity.ImageEntity;
 import com.fastfood.entity.ProductEntity;
+import com.sun.mail.handlers.image_gif;
 
 @Component
 public class ProductMapper {
 
 	private final ModelMapper modelMapper;
+
+	@Autowired
+	private ImageMapper imageMapper;
 
 	@Autowired
 	public ProductMapper(ModelMapper modelMapper) {
@@ -30,7 +39,16 @@ public class ProductMapper {
 	}
 
 	public ProductEntity mapToEntity(ProductDTO productDTO) {
-		return modelMapper.map(productDTO, ProductEntity.class);
+		ProductEntity result = modelMapper.map(productDTO, ProductEntity.class);
+
+		if (result.getImageEntities() != null) {
+			List<ImageEntity> listImage = result.getImageEntities();
+			for (ImageEntity imageEntity : listImage) {
+				imageEntity.setProductEntity(result);
+			}
+		}
+
+		return result;
 	}
 
 }

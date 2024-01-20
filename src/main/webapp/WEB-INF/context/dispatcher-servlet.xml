@@ -51,6 +51,7 @@
 	<mvc:resources mapping="/inc/**" location="/inc/" />
 	<mvc:resources mapping="/upload/**"
 		location="/WEB-INF/upload/product" />
+	
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

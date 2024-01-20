@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.entity.OrderEntity;
+import com.fastfood.entity.PaymentDetail;
 import com.fastfood.exception.ResourceNotFoundException;
 import com.fastfood.mapper.OrderMapper;
 import com.fastfood.repository.OrderRepository;
@@ -24,8 +26,10 @@ public class OrderService implements IOrderService {
 	private OrderMapper orderMapper;
 
 	@Override
-	public OrderDTO save(OrderDTO dto) {
+	@Transactional
+	public OrderDTO save(OrderDTO dto ,PaymentDetail paymentDetail) {
 		OrderEntity entity = orderMapper.mapToEntity(dto);
+		entity.setPaymentDetail(paymentDetail);
 		return orderMapper.mapToDTO(orderRepository.save(entity));
 	}
 

@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.fastfood.constant.SystemConstant;
+
 @Configuration
 public class MailConfig {
 
@@ -16,8 +18,8 @@ public class MailConfig {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 
-		mailSender.setUsername("cuong.nguyen.cit20@eiu.edu.vn");
-		mailSender.setPassword("gcvg ossz rtle xnta");
+		mailSender.setUsername(SystemConstant.MY_EMAIL);
+		mailSender.setPassword(SystemConstant.MY_PASSWORD);
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");
@@ -25,6 +27,7 @@ public class MailConfig {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.debug", "true");
+		props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 
 		return mailSender;
 	}

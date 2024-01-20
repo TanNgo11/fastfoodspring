@@ -9,6 +9,9 @@ import com.fastfood.entity.AccountEntity;
 
 public interface UserRepository extends JpaRepository<AccountEntity, Long> {
 	AccountEntity findOneByUserNameAndStatus(String name, int status);
-	
-	
+
+	AccountEntity findOneByOauth2IdAndStatus(String oauth2Id, int status);
+
+	AccountEntity findTopByUserNameStartingWithOrderByUserNameDesc(String username);
+
 }

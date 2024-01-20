@@ -54,10 +54,12 @@ function signUp(data) {
         data: JSON.stringify(data),
         dataType: 'json',
         success: function (result) {
-        	window.location.href = "/login?msg=success_signUp";
+        	console.log(result)
+//        	window.location.href = "/login?msg=success_signUp";
         },
         error: function (error) {
-        	window.location.href = "/login?msg=error_signUp";
+        	console.log(error)
+//        	window.location.href = "/login?msg=error_signUp";
         }
     });
 }

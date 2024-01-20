@@ -41,7 +41,10 @@ public class ProductEntity extends BaseEntity {
 	private int status;
 	
 	@Column(name = "in_stock")
-	private int in_stock;
+	private int inStock;
+	
+	@Column(name = "slug")
+	private String slug;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")

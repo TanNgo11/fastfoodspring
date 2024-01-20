@@ -1,8 +1,6 @@
 package com.fastfood.oauth2;
+
 import java.io.IOException;
-import java.text.Normalizer;
-import java.util.Random;
-import java.util.regex.Pattern;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
@@ -14,6 +12,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.AccountDTO;
+import com.fastfood.entity.AccountEntity;
+import com.fastfood.repository.UserRepository;
 import com.fastfood.service.IAccountService;
 import com.fastfood.service.impl.CustomUserDetailsService;
 import com.restfb.DefaultFacebookClient;
@@ -28,6 +28,9 @@ public class RestFB {
 
 	@Autowired
 	private IAccountService accountService;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	public static String FACEBOOK_APP_ID = "3549214752035027";
 	public static String FACEBOOK_APP_SECRET = "27af78d2ad059aa4458d6b2494ac16ec";
@@ -49,46 +52,35 @@ public class RestFB {
 	}
 
 	public UserDetails buildUser(com.restfb.types.User user) {
-		boolean enabled = true;
-		boolean accountNonExpired = true;
-		boolean credentialsNonExpired = true;
-		boolean accountNonLocked = true;
 
-		String username = user.getUsername() == null ? removeAccents(SystemConstant.FACEBOOK+createAccount(user.getName())) : user.getUsername();
-
-		UserDetails fbUser = customUserDetailsService.loadUserByUsername(username);
+		AccountEntity fbUser = userRepository.findOneByOauth2IdAndStatus(user.getId(), SystemConstant.ACTIVE_STATUS);
+		String username = userRepository.findTopByUserNameStartingWithOrderByUserNameDesc("FB").getUserName();
+		String newUserName = generateNextUserId(username);
 
 		if (fbUser == null) {
-			AccountDTO accDTO = new AccountDTO();
-			accDTO.setUsername(username);
-			accDTO = accountService.saveFBAccount(accDTO);
+			AccountDTO newFbUser = new AccountDTO();
+			newFbUser.setUsername(newUserName);
+			newFbUser.setOauth2Id(user.getId());
+			newFbUser.setFullName(user.getName());
+			newFbUser.setPassword(SystemConstant.DEFAULT_PASSWORD);
+
+			newFbUser = accountService.save(newFbUser);
+			return customUserDetailsService.loadUserByUsername(newUserName);
 
 		}
 
-		return customUserDetailsService.loadUserByUsername(username);
+		return customUserDetailsService.loadUserByUsername(fbUser.getUserName());
 	}
 
-	public static String createAccount(String fullName) {
+	public static String generateNextUserId(String existingUserId) {
 
-		String[] names = fullName.split(" ");
+		String numericalPart = existingUserId.substring(2);
 
-		if (names.length < 2) {
-			return "Invalid full name";
-		}
+		int nextNumericalPart = Integer.parseInt(numericalPart) + 1;
 
-		String username = names[0] + names[names.length - 1];
+		String nextUserId = String.format("FB%03d", nextNumericalPart);
 
-		Random random = new Random();
-		int randomNumber = random.nextInt(900) + 100;
-
-		username += randomNumber;
-
-		return username;
+		return nextUserId;
 	}
-	
-	public static String removeAccents(String input) {
-		String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(normalized).replaceAll("").replaceAll(" ", "");
-    }
+
 }

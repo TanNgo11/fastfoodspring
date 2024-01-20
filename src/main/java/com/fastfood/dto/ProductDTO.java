@@ -24,5 +24,7 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
 	private CategoryDTO categoryDTO;
 	private double salePrice;
 	private int status;
+	private String slug;
+	private int inStock;
 
 }

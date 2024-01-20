@@ -42,6 +42,20 @@
 													type="text" readOnly="true" />
 											</div>
 										</div>
+										<div class="form-row">
+
+											<div class="form-group col-md-6">
+												<label for="inStock">In Stock</label>
+												<form:input id="inStock" path="inStock"
+													cssClass="form-control" type="number" />
+											</div>
+											<div class="form-group col-md-6">
+												<label for="slug">Slug</label>
+												<form:input path="slug" id="slug" cssClass="form-control"
+													type="text" readOnly="true" />
+											</div>
+
+										</div>
 
 										<div class="form-row">
 											<div class="form-group col-md-4">
@@ -68,7 +82,7 @@
 											<div class="form-group col-md-12">
 												<label for="description">Description</label>
 
-												<form:textarea path="description" rows="20" cols="10"
+												<form:textarea path="description" rows="30" cols="10"
 													cssClass="form-control" id="description" />
 											</div>
 
@@ -81,17 +95,19 @@
 													<label for="exampleFormControlFile1">Picture</label> <input
 														type="file" class="form-control-file" accept="image/*"
 														onchange="loadFile(this)" name="files"> <img
-														class="output" src="http://localhost:8080/${img}" alt=""
+														class="output"
+														src="http://localhost:8080/${img.getImageURL()}" alt=""
 														style="width: 300px; margin-top: 10px">
 												</div>
 											</c:forEach>
-											<c:if test="${listImg==null}">
-												<c:forEach var="i" begin="1" end="3">
+											<c:if test="${listImg.size()!=3}">
+												<c:forEach var="i" begin="1" end="${3-listImg.size()}">
 													<div class="form-group col-md-4 file">
-														<label for="exampleFormControlFile1">Picture ${i}</label>
-														<input type="file" class="form-control-file"
-															accept="image/*" onchange="loadFile(this)" name="files">
-														<img class="output" src="" alt=""
+														<label for="exampleFormControlFile1">Picture
+															${3-listImg.size()-1+i}</label> <input type="file"
+															class="form-control-file" accept="image/*"
+															onchange="loadFile(this)" name="files"> <img
+															class="output" src="" alt=""
 															style="width: 300px; margin-top: 10px">
 													</div>
 												</c:forEach>
@@ -129,6 +145,43 @@
 	</main>
 
 	<script>
+	function setPredefinedFileFromUrl(url) {
+	    var inputElement = document.querySelector('input[type="file"]');
+
+	    fetch(url)
+	        .then(response => response.blob())
+	        .then(blob => {
+	            var filename = url.substring(url.lastIndexOf('/') + 1);
+	            var predefinedFile = new File([blob], filename, { type: "application/octet-stream" });
+
+	            // Create a new FileList
+	            var newFileList = new DataTransfer().files;
+	            newFileList[0] = predefinedFile;
+
+	            // Use the DataTransfer object to set the files
+	            inputElement.files = newFileList;
+
+	            // Trigger the change event on the file input
+	            var event = new Event('change', { bubbles: true });
+	            inputElement.dispatchEvent(event);
+	        })
+	        .catch(error => {
+	            console.error('Error fetching the file:', error);
+	        });
+	}
+
+	window.onload = function() {
+	    var imageUrl = '/file/productImages/43';
+	    setPredefinedFileFromUrl(imageUrl);
+	};
+</script>
+
+
+	<script>
+		var myEditor = CKEDITOR.replace("description");
+		CKFinder.setupCKEditor(myEditor,
+				'${pageContext.request.contextPath}/template/ckfinder');
+
 		var formData = new FormData();
 		var loadFile = function(obj) {
 			var obj = obj.parentElement.getElementsByClassName("output")
@@ -136,27 +189,31 @@
 			output.src = URL.createObjectURL(event.target.files[0]);
 			formData.append("files", event.target.files[0])
 			output.onload = function() {
-				URL.revokeObjectURL(output.src) // free memory
+				URL.revokeObjectURL(output.src)
 
 			}
 		};
 
 		$('#btnAddOrUpdateNew').click(function(e) {
 			e.preventDefault();
-
+			const editorData = myEditor.getData();
 			formData.append("productName", $("#productName").val())
 			formData.append("price", $("#price").val())
 			formData.append("salePrice", $("#salePrice").val())
 			formData.append("category", $("#category").val())
-			formData.append("description", $("#description").val())
-			
+			formData.append("inStock", $("#inStock").val())
+			formData.append("description", editorData)
+
 			var id = $('#id').val();
 
 			if (id === "") {
 				addProduct(formData);
 			} else {
-				updateProduct(formData);
+
+				updateProduct(formData, id);
+
 			}
+
 		});
 
 		function addProduct(formData) {
@@ -170,47 +227,39 @@
 				contentType : false,
 				processData : false,
 				success : function(result) {
+
 					window.location.href = "/admin/product/edit?id="
 							+ result.id + "&msg=add_success";
 				},
 				error : function(error) {
+
 					window.location.href = "/admin/product/edit?msg=add_error";
 				}
 			});
 		}
 
-		function updateProduct(formData) {
+		function updateProduct(formData, id) {
 
 			$.ajax({
-						url : '/admin/api/v1/products',
-						type : 'PUT',
-						data : formData,
-						enctype : 'multipart/form-data',
-						cache : false,
-						contentType : false,
-						processData : false,
-						success : function(result) {
-							window.location.href = "/admin/product/edit?id="
-									+ result.id + "&msg=update_success";
-						},
-						error : function(result) {
-							window.location.href = "/admin/product/edit?msg=update_error";
-						}
-					});
-		}
-		
-		 ClassicEditor
-         .create( document.querySelector( '#description' ) )
-         .then( editor => {
-             console.log( editor );
-         })
-         .catch( error => {
-             console.error( error );
-         });
+				url : '/admin/api/v1/products/product/' + id,
+				type : 'POST',
+				data : formData,
+				enctype : 'multipart/form-data',
+				cache : false,
+				contentType : false,
+				processData : false,
+				success : function(result) {
+					window.location.href = "/admin/product/edit?id="
+							+ result.id + "&msg=update_success";
+				},
+				error : function(error) {
+					console.log(error)
 
-     CKEDITOR.replace( 'editor', {
-         extraAllowedContent: 'style;*[id,rel](*){*}'
-     });
+					//window.location.href = "/admin/product/edit?msg=update_error";
+				}
+			});
+		}
 	</script>
+
 </body>
 </html>
