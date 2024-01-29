@@ -17,6 +17,8 @@
 
 	<decorator name="login" page="login.jsp">
 		<pattern>/login</pattern>
+		<pattern>/resetPassword*</pattern>
+		<pattern>/admin/login</pattern>
 	</decorator>
 
 </decorators>

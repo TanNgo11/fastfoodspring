@@ -41,7 +41,7 @@ public class CartController {
 	
 	
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public ModelAndView cartPage() {
+	public ModelAndView cartPage(HttpSession session) {
 		ModelAndView mav = new ModelAndView("web/cart");
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,7 +53,13 @@ public class CartController {
 					SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
 			account = accountMapper.mapToDTO(userEntity);
 		}
-
+		
+		
+		OrderDTO orderSession = (OrderDTO) session.getAttribute("cart");
+		if(orderSession==null) {
+			orderSession = new OrderDTO();
+		}
+		mav.addObject("cartItem", orderSession.getItems().size());
 		mav.addObject("account", account);
 		return mav;
 	}

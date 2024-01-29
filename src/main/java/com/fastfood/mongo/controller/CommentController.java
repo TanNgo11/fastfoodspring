@@ -30,6 +30,12 @@ public class CommentController {
 	public List<Comment> loadComment() {
 		return commentService.findAll();
 	}
+	
+	@GetMapping("/api/v1/comments/productId/{productId}")
+	public List<Comment> loadCommentByProductID(@PathVariable String productId) {
+		
+		return commentService.findByProductId(productId);
+	}
 
 	@PutMapping("/api/v1/comment/{id}")
 	public Comment updateComment(@PathVariable String id, @RequestBody Comment comment) {

@@ -11,7 +11,11 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
 	AccountEntity findOneByUserNameAndStatus(String name, int status);
 
 	AccountEntity findOneByOauth2IdAndStatus(String oauth2Id, int status);
+	
+	AccountEntity findOneByUserNameAndEmail(String username, String email);
 
 	AccountEntity findTopByUserNameStartingWithOrderByUserNameDesc(String username);
+	
+	AccountEntity  findOneByUserName(String email);
 
 }

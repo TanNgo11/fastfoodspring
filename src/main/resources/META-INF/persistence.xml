@@ -12,6 +12,7 @@
 		<class>com.fastfood.entity.ItemEntity</class>
 		<class>com.fastfood.entity.ImageEntity</class>
 		<class>com.fastfood.entity.NewsEntity</class>
+		<class>com.fastfood.entity.PasswordResetToken</class>
 	</persistence-unit>
 </persistence>
 

@@ -44,10 +44,10 @@ public class OrderEntity extends BaseEntity {
 	@Column(name = "totalpay")
 	private Double totalPay;
 
-	@JoinColumn(name = "status")
+	@Column(name = "status")
 	private int status;
 
-	@JoinColumn(name = "type")
+	@Column(name = "type")
 	private int type;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

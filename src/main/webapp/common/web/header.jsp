@@ -21,46 +21,59 @@
 						</ul>
 					</nav>
 				</div>
-				<div class="col-md-3 text-center">
+				<div class="col-md-2 text-center">
 					<h1 class="logo">
 						<a title="CrispTrek" href="/home"> <img
 							src="<c:url value='/inc/FoodTakeAwayRestaurantLogo.png'/>"
 							alt="CrispTrek">
 						</a>
 					</h1>
+					
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-5">
 
 					<div class="row h-100">
 
-						<div class="col-md-9 align-self-lg-center">
+						<div class="col-md-8 align-self-lg-center">
 							<div class="input-group">
-								<input oninput="searchByName(this)" type="text"
-									class="form-control" placeholder=""
-									aria-label="Recipient's username"
-									aria-describedby="basic-addon2">
-								<div class="input-group-append">
-									<i class="fa fa-search btn btn-outline-success" type="submit"></i>
+								<div class="searchInput">
+									<input type="text" placeholder="Search your food">
+									<div class="resultBox">
+										
+									</div>
+									
+									<div class="icon">
+									<a id="searchLink" href="/search?q="><i class="fa fa-search" aria-hidden="true"></i></a>
+										
+									</div>
 								</div>
-
-								<security:authorize access="isAuthenticated()">
-									<div id="username" class="userName"><%=SecurityUtils.getPrincipal().getFullName()%></div>
-								</security:authorize>
+								
+								
 
 
 
 							</div>
 						</div>
 
-						<div class="col-md-3 align-self-lg-center">
+						<div class="col-md-4 align-self-lg-center">
 							<div href="" class="user">
-								<i class="fa fa-2x fa-user"></i>
+								
+								<security:authorize access="isAuthenticated()">
+									<div id="username" class="userName"><%=SecurityUtils.getPrincipal().getFullName()%><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+									
+								</security:authorize>
+								<security:authorize access="isAnonymous()">
+										<i class="fa fa-2x fa-user"></i>
+									</security:authorize>
+								
 								<div class="userMenu">
 									<security:authorize access="isAuthenticated()">
 
 										<ul>
 											<li><a href="">View Cart</a></li>
-											<li><a href="/user/<%=SecurityUtils.getPrincipal().getId()%>">Edit profile</a></li>
+											<li><a
+												href="/user/<%=SecurityUtils.getPrincipal().getId()%>">Edit
+													profile</a></li>
 											<li><a href="view-bill">View bills</a></li>
 											<li><a href="/logout">Logout</a></li>
 										</ul>

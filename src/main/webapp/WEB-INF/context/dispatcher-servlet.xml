@@ -30,8 +30,8 @@
 		base-package="com.fastfood.controller, com.fastfood.api,com.fastfood.mongo.controller" />
 
 	<mvc:annotation-driven />
-	
-	
+
+
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -49,9 +49,11 @@
 	<mvc:resources mapping="/template/**"
 		location="/template/" />
 	<mvc:resources mapping="/inc/**" location="/inc/" />
-	<mvc:resources mapping="/upload/**"
-		location="/WEB-INF/upload/product" />
-	
+	<mvc:resources mapping="/upload/product/**"
+		location="/WEB-INF/upload/product/" />
+	<mvc:resources mapping="/upload/news/**"
+		location="/WEB-INF/upload/newsThumnail/" />
+
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

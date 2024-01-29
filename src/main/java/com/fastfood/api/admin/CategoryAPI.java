@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,23 +30,28 @@ public class CategoryAPI {
 		return new ResponseEntity<>(cateService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/category/{name}")
+	@GetMapping("/category/name/{name}")
 	public ResponseEntity<CategoryDTO> findByName(@PathVariable String name) {
 		return new ResponseEntity<>(cateService.findByType(name), HttpStatus.OK);
 	}
 
-//	@PostMapping("/category")
-//	public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO) {
-//		return new ResponseEntity<>(cateService.save(categoryDTO), HttpStatus.OK);
-//	}
-//
-//	@DeleteMapping("/category/{type}")
-//	public ResponseEntity<ApiResponse> disableCategoryByType(@PathVariable String type) {
-//		return new ResponseEntity<>(cateService.disableCategory(type), HttpStatus.OK);
-//	}
-//
-//	@PostMapping("/category/{type}")
-//	public ResponseEntity<ApiResponse> activeCategoryByType(@PathVariable String type) {
-//		return new ResponseEntity<>(cateService.activeCategory(type), HttpStatus.OK);
-//	}
+	@GetMapping("/category/id/{id}")
+	public ResponseEntity<CategoryDTO> findByID(@PathVariable Long id) {
+		return new ResponseEntity<>(cateService.findByID(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/category")
+	public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO) {
+		return new ResponseEntity<>(cateService.save(categoryDTO), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/category/{id}")
+	public ResponseEntity<ApiResponse> disableCategoryByID(@PathVariable Long id) {
+		return new ResponseEntity<>(cateService.softDeleteCategory(id), HttpStatus.OK);
+	}
+
+	@PutMapping("/category/{id}")
+	public ResponseEntity<ApiResponse> activeCategoryByID(@PathVariable Long id) {
+		return new ResponseEntity<>(cateService.activeCategory(id), HttpStatus.OK);
+	}
 }

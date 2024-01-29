@@ -2,9 +2,11 @@ package com.fastfood.service;
 
 import javax.mail.MessagingException;
 
+import com.fastfood.entity.AccountEntity;
+
 public interface IMailService {
 	
-	String sendSimpleMail();
-	String sendTemplateMail() throws MessagingException;
+	String sendReSetPasswordMail(AccountEntity account);
+	String sendReSetPasswordTemplateMail(AccountEntity account) throws MessagingException;
 
 }

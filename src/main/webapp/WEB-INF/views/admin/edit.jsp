@@ -143,7 +143,7 @@
 			</div>
 		</div>
 	</main>
-
+<!-- 
 	<script>
 	function setPredefinedFileFromUrl(url) {
 	    var inputElement = document.querySelector('input[type="file"]');
@@ -175,6 +175,8 @@
 	    setPredefinedFileFromUrl(imageUrl);
 	};
 </script>
+
+ -->
 
 
 	<script>

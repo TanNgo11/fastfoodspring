@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -59,5 +60,8 @@ public class AccountEntity extends BaseEntity {
 
 	@OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL)
 	private List<NewsEntity> news = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL)
+	private List<PasswordResetToken> listResetToken = new ArrayList<>();
 
 }

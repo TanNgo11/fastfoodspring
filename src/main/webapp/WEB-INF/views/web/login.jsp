@@ -65,10 +65,11 @@
 
 		</form>
 
-		<form action="reset-password" class="form-reset" method="POST">
-			<input name="reset_email" type="email" id="resetEmail"
+		<form action="/forgot-password" class="form-reset" method="POST">
+			<input name="email" type="email" id="resetEmail"
 				class="form-control" placeholder="Email address" required=""
-				autofocus=""> <input name="reset_account" type="text"
+				autofocus="">
+				 <input name="username" type="text"
 				class="form-control" placeholder="Account" required="" autofocus="">
 			<button class="btn btn-primary btn-block" type="submit">Reset
 				Password</button>

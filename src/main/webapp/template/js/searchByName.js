@@ -1,59 +1,60 @@
+var suggestions = [
+];
 
-function searchByName(param) {
-    var txtName = param.value;
+function callAPISearchProduct(searchQuery, callback) {
     $.ajax({
-        url: "/FastFoodRestaurant/search",
-        type: "get",
-        data: {
-            txt: txtName
-
-        },
-        success: function (data) {
-            console.log(data)
-            data = JSON.parse(data);
-            var rowFood = document.getElementById("rowFood");
-            var rowDrink = document.getElementById("rowDrink");
-            let strFood = "";
-            let strDrink = "";
-
-            for (var items of data) {
-                if (items.categoryID === 1) {
-                    strFood += `<div class="col-md-3 col-12 mt-4">
-                                <div class="card h-100 foodCard">
-                                    <a href="detail?pid=${items.id}">
-                                        <img class="card-img-top" src="${items.img}" alt="Card image cap">
-                                    </a>
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">${items.productName}</h5>
-                                        <p class="card-text">${items.price}$</p>
-                                       <button style="width: 90%" onClick="addToCart(${items.id})" class="btn btn-primary addToCart">Add to cart</button>
-                                    </div>
-                                </div>
-                            </div>`
-                } else if (items.categoryID === 2) {
-                    strDrink += `<div class="col-md-3 col-12 mt-4">
-                                <div class="card h-100 drinkCard">
-                                    <a href="detail?pid=${items.id}">
-                                        <img class="card-img-top" src="${items.img}" alt="Card image cap">
-                                    </a>
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">${items.productName}</h5>
-                                        <p class="card-text">${items.price}$</p>
-                                       <button style="width: 90%" onClick="addToCart(${items.id})" class="btn btn-primary addToCart">Add to cart</button>
-                                    </div>
-                                </div>
-                            </div>`
-                }
-
-            }
-
-            rowFood.innerHTML = strFood;
-            rowDrink.innerHTML = strDrink;
+        url: "/api/v1/products/search?q=" + searchQuery,
+        type: "GET",
+        success: function(data) {
+           
+            callback(data); 
         }
-
     });
-
-
 }
+	
+
+const searchInput = document.querySelector(".searchInput");
+const input = searchInput.querySelector("input");
+const resultBox = searchInput.querySelector(".resultBox");
+const icon = searchInput.querySelector(".icon");
+let linkTag = searchInput.querySelector("a");
+let webLink;
+
+// if user press any key and release
+input.onkeyup = (e)=>{
+    let userData = e.target.value; // user enetered data
+    let emptyArray = [];
+    if (userData) {
+        callAPISearchProduct(userData, function(suggestions) {
+            let suggestionArray = suggestions.map((data) => {
+            	let detailLink  = "/detail/"+ data.slug;
+                return '<li><a href="'+detailLink+'">' + data.productName + '</a></li>';
+            });
+            searchInput.classList.add("active");
+            showSuggestions(suggestionArray);
+            let allList = resultBox.querySelectorAll("li");
+            for (let i = 0; i < allList.length; i++) {
+                allList[i].setAttribute("onclick", "select(this)");
+            }
+        });
+    } else {
+        searchInput.classList.remove("active");
+    }
+}
+
+function showSuggestions(list){
+    let listData;
+    if(!list.length){
+        userValue = inputBox.value;
+        listData = '<li>'+ userValue +'</li>';
+    }else{
+        listData = list.join('');
+    }
+    resultBox.innerHTML = listData;
+}
+
+const searchLink = document.getElementById("searchLink");
+input.addEventListener('input', function() {
+  
+    searchLink.href = "/search?q=" + input.value;
+});

@@ -151,7 +151,8 @@
 		</div>
 	</section>
 	</main>
-	<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
+		<script src="<c:url value='/template/js/cart.js'/>"></script>
+
 	
 
 </body>

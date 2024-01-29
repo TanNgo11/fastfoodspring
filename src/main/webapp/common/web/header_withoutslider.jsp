@@ -6,7 +6,7 @@
                 <div class="col-md-5 text-center">
                     <nav class="top-nav">
                         <ul>
-                            <li class=""><a title="Home" href="home">Home</a></li>
+                            <li class=""><a title="Home" href="/home">Home</a></li>
                             <li class=""><a href="tel:+0929234798" title="Booking">Contact</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -21,28 +21,30 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                     <h1 class="logo">
-                        <a title="CrispTrek" href="home">
+                        <a title="CrispTrek" href="/home">
                             <img src="${pageContext.servletContext.contextPath}/inc/FoodTakeAwayRestaurantLogo.png" alt="CrispTrek">
                         </a>
                     </h1>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
 
                     <div class="row h-100">
 
-                        <div class="col-md-9 align-self-lg-center">
+                        <div class="col-md-8 align-self-lg-center">
                             <div class="input-group">
-                                <form style="display: flex" action="searchS" method="POST">
-                                    <input style="width: 80%" name="txt" type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button style="border:none;outline:none" type="submit" ><i  class="fa fa-search btn btn-outline-success"></i></button>
-                                    </div>
-                                    <c:if test="${sessionScope.logedUser!=null}">
-                                        <div  class="userName">${sessionScope.logedUser.username}</div>
-                                    </c:if>
-                                </form>
+                                <div class="searchInput">
+									<input type="text" placeholder="Search your product">
+									<div class="resultBox">
+										<!-- here list are inserted from javascript -->
+									</div>
+									
+									<div class="icon">
+									<a id="searchLink" href="/search?q="><i class="fa fa-search" aria-hidden="true"></i></a>
+										
+									</div>
+								</div>
 
 
 
@@ -50,9 +52,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 align-self-lg-center">
+                        <div class="col-md-4 align-self-lg-center">
                             <div href="" class="user">
-                                <i class="fa fa-2x fa-user"></i>
+                               <security:authorize access="isAuthenticated()">
+									<div id="username" class="userName"><%=SecurityUtils.getPrincipal().getFullName()%><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+									
+								</security:authorize>
+								<security:authorize access="isAnonymous()">
+										<i class="fa fa-2x fa-user"></i>
+									</security:authorize>
                                 <div class="userMenu">
                                     <c:if test="${sessionScope.logedUser!=null}">
                                         <ul>
@@ -69,17 +77,23 @@
                                     </c:if>
                                     <c:if test="${sessionScope.logedUser==null}">
                                         <ul>
-                                            <li><a href="login">Login</a></li>
+                                            <li><a href="/login">Login</a></li>
                                         </ul>
                                     </c:if>
 
 
                                 </div>
                             </div>
-                            <a href="cart-view" class="cart">
-                                <span class="cc_cart_count">
-                                    <span id="count_in_cart" class="cc_cart_count_child">${count}</span><i class="fa fa-2x fa-shopping-cart"></i></span> 
-                            </a>
+                            <a href="/cart" class="cart"> <span class="cc_cart_count">
+									<c:if test="${sessionScope.cart !=null }">
+										<span id="count_in_cart" class="cc_cart_count_child">${sessionScope.cart.items.size()}</span>
+										<i class="fa fa-2x fa-shopping-cart"></i>
+							</span> </c:if> <c:if test="${sessionScope.cart ==null }">
+									<span id="count_in_cart" class="cc_cart_count_child">0</span>
+									<i class="fa fa-2x fa-shopping-cart"></i>
+									</span>
+								</c:if>
+							</a>
                         </div>
 
                     </div>

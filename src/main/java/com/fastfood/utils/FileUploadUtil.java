@@ -18,7 +18,7 @@ import com.fastfood.dto.ImageDTO;
 @Component
 public class FileUploadUtil {
 
-	public static List<String> saveFiles(MultipartFile[] files, HttpServletRequest request, long id) {
+	public static List<String> saveProductFiles(MultipartFile[] files, HttpServletRequest request, long id) {
 		ServletContext servletctx = request.getServletContext();
 		String ctxFullPath = servletctx.getRealPath("\\");
 
@@ -30,6 +30,34 @@ public class FileUploadUtil {
 			try {
 				String fileName = "Product" + id + "-" + numberOfPic + ".png";
 				File file = new File(ctxFullPath + SystemConstant.UPLOAD_PRODUCT_DIRECTORY, fileName);
+				multipartFile.transferTo(file);
+				currentFilePath += imgs;
+				currentFilePath += "/" + fileName;
+				result.add(currentFilePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+
+			}
+			numberOfPic++;
+
+		}
+
+		return result;
+	}
+	
+	public static List<String> saveNewsFiles(MultipartFile[] files, HttpServletRequest request, long id) {
+		ServletContext servletctx = request.getServletContext();
+		String ctxFullPath = servletctx.getRealPath("\\");
+
+		int numberOfPic = 1;
+		String imgs = "/upload/news";
+		List<String> result = new ArrayList<String>();
+		for (MultipartFile multipartFile : files) {
+			String currentFilePath = "";
+			try {
+				String fileName = "News" + id + "-" + numberOfPic + ".png";
+				File file = new File(ctxFullPath + SystemConstant.UPLOAD_NEWS_DIRECTORY, fileName);
 				multipartFile.transferTo(file);
 				currentFilePath += imgs;
 				currentFilePath += "/" + fileName;

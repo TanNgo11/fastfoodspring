@@ -15,18 +15,18 @@ public class MailController {
 	@Autowired
 	private IMailService mailService;
 
-	@ResponseBody
-	@RequestMapping("/sendSimpleEmail")
-	public String sendSimpleEmail() {
-		return mailService.sendSimpleMail();
+//	@ResponseBody
+//	@RequestMapping("/sendSimpleEmail")
+//	public String sendSimpleEmail() {
+//		return mailService.sendReSetPasswordMail(account)();
+//
+//	}
 
-	}
-
-	@ResponseBody
-	@RequestMapping("/sendHtmlEmail")
-	public String sendHtmlEmail() throws MessagingException {
-
-		return mailService.sendTemplateMail();
-	}
+//	@ResponseBody
+//	@RequestMapping("/sendHtmlEmail")
+//	public String sendHtmlEmail() throws MessagingException {
+//
+//		return mailService.s();
+//	}
 
 }

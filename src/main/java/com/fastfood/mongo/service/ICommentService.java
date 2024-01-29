@@ -8,6 +8,7 @@ import com.fastfood.mongo.entity.Comment;
 public interface ICommentService {
 	Comment save(Comment comments);
 	List<Comment> findAll();
+	List<Comment> findByProductId(String productId);
 	Comment updateCommentById(Comment comments);
 	Comment findCommentById(String id);
 	ApiResponse deleteCommentById(String id);

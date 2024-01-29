@@ -20,6 +20,7 @@ public class Comment {
 	@Id
 	private String id;
 	private String userId;
+	private String productId;
 	private String parent;
 	private String content;
 	private Date created;

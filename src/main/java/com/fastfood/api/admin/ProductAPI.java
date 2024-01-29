@@ -91,7 +91,7 @@ public class ProductAPI {
 		result = productService.save(result);
 
 		if (result != null) {
-			List<String> imgs = fileUploadUtil.saveFiles(files, request, result.getId());
+			List<String> imgs = fileUploadUtil.saveProductFiles(files, request, result.getId());
 			List<ImageDTO> listImageDTO = new ArrayList<ImageDTO>();
 			
 			for (String imgURL : imgs) {
@@ -134,7 +134,7 @@ public class ProductAPI {
 		if (files != null) {
 			fileUploadUtil.removeExistingFiles(request, result.getListImage());
 			result.getListImage().forEach(image->imageService.deleteById(image.getId()));
-			List<String> imgs = fileUploadUtil.saveFiles(files, request, result.getId());
+			List<String> imgs = fileUploadUtil.saveProductFiles(files, request, result.getId());
 			List<ImageDTO> listImageDTO = new ArrayList<ImageDTO>();
 			for (String imgURL : imgs) {
 				ImageDTO imageDTO = new ImageDTO();

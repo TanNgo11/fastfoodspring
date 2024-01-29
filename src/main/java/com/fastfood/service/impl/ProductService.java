@@ -154,4 +154,16 @@ public class ProductService implements IProductService {
 		return slug;
 	}
 
+	@Override
+	public List<ProductDTO> findProductBySearchKeys(String searchQuery) {
+		List<ProductDTO> result = new ArrayList<>();
+		
+		List<ProductEntity> listEntities  = productRepository.findByProductNameOrDescriptionContainingIgnoreCase(searchQuery);
+		
+		for (ProductEntity productEntity : listEntities) {
+			result.add(productMapper.mapToDTO(productEntity));
+		}
+		return result;
+	}
+
 }

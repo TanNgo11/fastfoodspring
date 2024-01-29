@@ -34,29 +34,33 @@ public class CartAPI {
 		orderSession = (OrderDTO) session.getAttribute("cart");
 		boolean check = false;
 		List<ItemDTO> listItem = orderSession.getItems();
-		if (listItem == null) {
+		if (listItem.size() == 0) {
 			listItem = new ArrayList<>();
 			item.setQuantity(1);
 			item.setPrice(product.getPrice());
 			item.setProductDTO(product);
 			listItem.add(item);
-			orderSession.setItems(listItem);
+
 		} else {
 			for (ItemDTO itemDTO : listItem) {
-				if (itemDTO.getProductDTO().getId() == product.getId()) {
+
+				if (itemDTO.getProductDTO().getId().equals(product.getId())) {
 					itemDTO.setQuantity(itemDTO.getQuantity() + 1);
+
 					check = true;
 				}
+
 			}
 			if (check == false) {
 				item.setQuantity(1);
 				item.setPrice(product.getPrice());
 				item.setProductDTO(product);
 				listItem.add(item);
-				orderSession.setItems(listItem);
+
 			}
 
 		}
+		orderSession.setItems(listItem);
 
 		orderSession.setTotalPay(calculateTheTotal(listItem));
 
@@ -79,12 +83,6 @@ public class CartAPI {
 			doFunctionByMode(listItem, idP, mode);
 		}
 
-		if (listItem != null) {
-			for (ItemDTO obj : listItem) {
-//				obj.splitImg();
-			}
-		}
-
 		orderSession.setItems(listItem);
 		orderSession.setTotalPay(calculateTheTotal(listItem));
 
@@ -98,7 +96,12 @@ public class CartAPI {
 				break;
 			} else if (obj.getProductDTO().getId() == idP.longValue() && mode.equals("minusQuantity")
 					&& obj.getQuantity() > 0) {
-				obj.setQuantity(obj.getQuantity() - 1);
+				int quantity = obj.getQuantity() - 1;
+				if (quantity == 0)
+					listItem.remove(obj);
+				else
+
+					obj.setQuantity(quantity);
 				break;
 			} else if (obj.getProductDTO().getId() == idP.longValue() && mode.equals("delete")) {
 				listItem.remove(obj);

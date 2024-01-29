@@ -23,7 +23,19 @@ function openElement() {
  element.find('#sendMessage').click(sendMessage);
     messages.scrollTop(messages.prop("scrollHeight"));
     const notification = document.querySelector(`.chat-notification`);
-    notification.classList.add("hidden")
+    notification.classList.add("hidden");
+    
+    if(document.getElementById("chat-userId").value==null||document.getElementById("chat-userId").value==""){
+    	
+			document.getElementById("overlay").style.display = "block";
+		
+
+		
+			
+		
+    }else{
+    	document.getElementById("overlay").style.display = "none";
+    }
 }
 
 function closeElement() {

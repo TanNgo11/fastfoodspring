@@ -21,7 +21,8 @@
 			</ol>
 		</nav>
 
-	
+		
+
 
 
 
@@ -52,6 +53,13 @@
 
 	</div>
 	<script src="<c:url value='/template/js/category.js'/>"></script>
+
+ 
+  
+  
+ 
+	
+
 
 
 

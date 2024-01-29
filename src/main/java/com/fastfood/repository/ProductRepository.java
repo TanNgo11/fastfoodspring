@@ -5,19 +5,27 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.fastfood.entity.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
-	
+
 	List<ProductEntity> findByStatus(Pageable pageable, int status);
-	List<ProductEntity> findByCategory_idAndStatus(long category_id, Pageable pageable,int status);
+
+	List<ProductEntity> findByCategory_idAndStatus(long category_id, Pageable pageable, int status);
+
 	int countByCategory_id(long category_id);
-	List<ProductEntity> findByCategory_idAndStatus(long category_id,int status);
-	Optional<ProductEntity> findByIdAndStatus(long id , int status);
+
+	List<ProductEntity> findByCategory_idAndStatus(long category_id, int status);
+
+	Optional<ProductEntity> findByIdAndStatus(long id, int status);
+
 	ProductEntity findBySlug(String slug);
-	
-	
-	
+
+	@Query("SELECT p FROM ProductEntity p WHERE " + "LOWER(p.productName) LIKE LOWER(CONCAT('%',:keyword,'%')) OR "
+			+ "LOWER(p.description) LIKE LOWER(CONCAT('%',:keyword,'%'))")
+	List<ProductEntity> findByProductNameOrDescriptionContainingIgnoreCase(@Param("keyword") String keyword);
 
 }

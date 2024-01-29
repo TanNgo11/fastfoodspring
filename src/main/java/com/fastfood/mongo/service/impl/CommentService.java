@@ -50,4 +50,9 @@ public class CommentService implements ICommentService {
 					.build();
 	}
 
+	@Override
+	public List<Comment> findByProductId(String productId) {
+		return commentRepository.findByProductId(productId);
+	}
+
 }

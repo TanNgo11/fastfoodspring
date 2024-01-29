@@ -26,6 +26,15 @@ public class NewsEntity extends BaseEntity  {
 	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
 	
+	@Column(name = "status")
+	private int status;
+	
+	@Column(name = "slug")
+	private String slug;
+	
+	@Column(name = "imageURL")
+	private String imageURL;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_id")
 	private AccountEntity accountEntity;

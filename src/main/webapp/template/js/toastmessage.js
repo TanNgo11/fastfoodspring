@@ -22,9 +22,25 @@ const toasts = {
         msg: 'Update successful !',
         alert: 'success',
     },
+    success_reset: {
+        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
+        msg: 'Please check the email to confirm this reset!',
+        alert: 'success',
+    },
+    
+    success_resetpassword: {
+        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
+        msg: 'Reset password successful',
+        alert: 'success',
+    },
     success_change: {
         icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
         msg: 'Change successful !',
+        alert: 'success'
+    },
+    success_add_to_cart: {
+        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
+        msg: 'Add to cart successful !',
         alert: 'success'
     },
     success_order: {
@@ -40,6 +56,12 @@ const toasts = {
     error_login: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
         msg: 'You need to login !',
+        alert: 'error'
+    },
+    
+    error_reset: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Error!',
         alert: 'error'
     },
     error_empty: {
@@ -96,8 +118,11 @@ function createToast(status) {
 }
 
 let msg = document.getElementById("message");
-createToast(msg.value);
-msg.value = "";
+if(msg.value!==""){
+	createToast(msg.value);
+	msg.value = "";	
+}
+
 
 
 

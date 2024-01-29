@@ -1,5 +1,7 @@
 package com.fastfood.api.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +53,11 @@ public class ProductAPI {
 		return result;
 	}
 
+	@GetMapping("/products/search")
+	public List<ProductDTO> searchProductByKey(@RequestParam String q) {
+		List<ProductDTO> result = productService.findProductBySearchKeys(q);
 
+		return result;
+	}
 
 }

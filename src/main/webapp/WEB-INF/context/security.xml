@@ -9,29 +9,49 @@
             http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 
-	
+
 
 	<global-method-security
 		pre-post-annotations="enabled" />
+
 	<http auto-config="false" use-expressions="true"
 		disable-url-rewriting="true">
+		<intercept-url pattern="/admin/login**"
+			access="permitAll" />
+			
+			
+		<intercept-url pattern="/admin/api/v1/news/**"
+			access="hasRole('STAFF')" method="GET" />
+
+		<intercept-url pattern="/admin/**"
+			access="hasAnyRole('ADMIN','STAFF','SALES')" />
 
 
-		<!-- <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN')" /> -->
-		
-		  <intercept-url pattern="/user/**" access="isAuthenticated()"/>
+		<intercept-url pattern="/user/**"
+			access="isAuthenticated()" />
 
 		<access-denied-handler
-			error-page="/accessDenied" />
+			ref="customAccessDeniedHandler" />
+
 		<form-login login-page="/login"
 			username-parameter="j_username" password-parameter="j_password"
 			login-processing-url="/j_spring_security_check"
 			authentication-success-handler-ref="customSuccessHandler"
 			authentication-failure-url="/login?incorrectAccount" />
+
+
+		<form-login login-page="/admin/login"
+			username-parameter="j_username" password-parameter="j_password"
+			login-processing-url="/admin/j_spring_security_check"
+			authentication-success-handler-ref="customSuccessHandler"
+			authentication-failure-url="/admin/login?incorrectAccount" />
 		<session-management
-			invalid-session-url="/login?sessionTimeout" />
+			invalid-session-url="/admin/login?sessionTimeout" />
 		<logout delete-cookies="JSESSIONID" />
 	</http>
+
+
+
 
 	<authentication-manager>
 		<authentication-provider
@@ -48,5 +68,8 @@
 		class="com.fastfood.service.impl.CustomUserDetailsService" />
 	<beans:bean id="customSuccessHandler"
 		class="com.fastfood.security.CustomSuccessHandler" />
+		
+	<beans:bean id="customAccessDeniedHandler"
+		class="com.fastfood.security.CustomAccessDeniedHandler" />
 
 </beans:beans>

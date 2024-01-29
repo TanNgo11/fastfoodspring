@@ -53,14 +53,24 @@
 		<div style="margin-top: 100px" id="comments-container"></div>
 	</div>
 	</main>
+	<input id="productCommentId" type="hidden"
+		value="<c:out value='${productId}'/>">
 
 
+	<security:authorize access="isAuthenticated()">
+
+		<input id="commentUserId" type="hidden"
+			value="<%=SecurityUtils.getPrincipal().getId()%>">
+			
+			<input id="commentFullname" type="hidden"
+			value="<%=SecurityUtils.getPrincipal().getFullName()%>">
+	</security:authorize>
 
 	<script src="/template/js/comment.js"></script>
 	<script src="<c:url value='/template/js/loadimgs.js'/>"></script>
 
 
-</script>
+	</script>
 
 </body>
 </html>

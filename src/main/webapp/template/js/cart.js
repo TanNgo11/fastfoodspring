@@ -1,21 +1,4 @@
-function addToCart(id) {
 
-	$.ajax({
-		url : "api/cart",
-		type : "POST",
-		data : {
-			idP : id
-
-		},
-		success : function(data) {
-			console.log(data)
-			$('#count_in_cart').html(data.items.length)
-
-		}
-
-	});
-
-}
 var totalPayment = 0;
 
 function usdToVnd(usdAmount, exchangeRate) {
@@ -41,8 +24,27 @@ $("#submitOrder").on("click", function(e){
             amount: totalPayment
         },
         success: function(href) {
+        	if($("#cartItem").val()==0){
+        		let msg = document.getElementById("message");
+				msg.value= "error_empty"
+				if(msg.value!==""){
+					createToast(msg.value);
+					msg.value = "";	
+				}
+        	}
+        	else if($("#userId").val()!=""){
+        		window.location.href = href;
+        	}
         	
-        	window.location.href = href;
+        	else{
+        		
+				let msg = document.getElementById("message");
+				msg.value= "error_login"
+				if(msg.value!==""){
+					createToast(msg.value);
+					msg.value = "";	
+				}
+        	}
           
         }
     });
@@ -61,7 +63,7 @@ function minusCountInCart() {
 function renderSumary() {
     
     $.ajax({
-        url: "api/cart",
+        url: "/api/cart",
         type: "GET",
         success: function (data) {
             var listItem = data.items
@@ -90,7 +92,7 @@ function doRenderSummary(listItem) {
 
 function  doFunctionInCartByMode(id, mode) {
     $.ajax({
-        url: "api/cart",
+        url: "/api/cart",
         type: "get",
         data: {
             idP: id,
@@ -103,6 +105,7 @@ function  doFunctionInCartByMode(id, mode) {
         	 renderTotalPayment(data)
         	 doRenderProduct(listItem)
         	 totalPayment = usdToVnd(data.totalPay,24000);
+        		$('#count_in_cart').html(data.items.length)
 
         }
     });
@@ -120,11 +123,12 @@ function  renderTotalPayment(data){
 
 function renderProducts() {
 	$.ajax({
-		url : "api/cart",
+		url : "/api/cart",
 		type : "GET",
 	
 		success : function(data) {
 			var listProduct = data.items
+			
 			doRenderProduct(listProduct)
 		}
 	
@@ -144,7 +148,7 @@ function doRenderProduct(listProduct) {
 	
 			str+=`<div class="row mb-4 d-flex justify-content-between align-items-center customDetail">
             <div class="col-md-2 col-4 col-lg-2  col-xl-2">
-                <img src="${item.productDTO.img}" class="mb-3 img-fluid" alt="">
+                <img src="${item.productDTO.listImage[0].imageURL}" class="mb-3 img-fluid" alt="">
             </div>
             <div class="col-md-3 col-8 col-lg-3  col-xl-3 hrbefore">
                 <h6 class="text-muted cart-name">${type}</h6>
@@ -181,6 +185,12 @@ function doRenderProduct(listProduct) {
 	}
 	
 }
+window.onload = ()=>{
+	renderProducts()
+	renderSumary()
+}
+
+
 
 
 

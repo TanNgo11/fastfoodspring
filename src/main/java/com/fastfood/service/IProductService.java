@@ -29,5 +29,8 @@ public interface IProductService {
 	int getTotalItem();
 
 	ProductDTO update(ProductDTO dto);
+	
+	List<ProductDTO> findProductBySearchKeys(String searchQuery);
+
 
 }
