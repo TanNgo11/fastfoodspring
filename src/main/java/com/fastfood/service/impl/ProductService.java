@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.ProductDTO;
-import com.fastfood.entity.ImageEntity;
 import com.fastfood.entity.ProductEntity;
 import com.fastfood.exception.ResourceNotFoundException;
 import com.fastfood.mapper.ProductMapper;
@@ -165,5 +162,15 @@ public class ProductService implements IProductService {
 		}
 		return result;
 	}
+
+	@Override
+	public void decreaseStock(long productId, int amount) {
+		 int updatedRows = productRepository.decreaseStock(productId, amount);
+	        if (updatedRows == 0) {
+	            throw new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + productId);
+	        }
+	}
+	
+	
 
 }

@@ -32,5 +32,9 @@ public class SystemConstant {
 	public static final String WEB_USER = "0";
 
 	public static final String ADMIN_USER = "1";
+	
+	public static final String VNPAY = "vnpay";
+	
+	
 
 }

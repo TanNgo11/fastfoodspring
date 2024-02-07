@@ -14,6 +14,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="theme-color" content="#FF969A"/>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -44,10 +45,14 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="<c:url value='/template/css/style.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/css/detail.css'/>">
+
 <link rel="stylesheet" href="<c:url value='/template/css/boxchat.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/template/css/toastmsg.css'/>">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+ <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+ <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <c:if
 	test="${pageContext.request.localName =='http://localhost:8080/cart'}">
@@ -93,6 +98,7 @@
 		test="${fn:startsWith(pageContext.request.requestURI, '/detail')}">
 		<link rel="stylesheet" type="text/css"
 			href="<c:url value='/template/jquery-comments'/>/css/jquery-comments.css">
+			<link rel="stylesheet" href="<c:url value='/template/css/detail.css'/>">
 		<link rel="stylesheet" type="text/css"
 			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
@@ -153,9 +159,10 @@
 		<c:when
 			test="${fn:startsWith(pageContext.request.requestURI, '/cart')}">
 			<%@ include file="/common/web/header_withoutslider.jsp"%>
-			<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-			<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
+			<link rel="stylesheet"
+			href="<c:url value='/template/css/cart.css'/>">
+
+		
 
 		</c:when>
 
@@ -177,16 +184,14 @@
 	<div id="toasts">
 		<input id="message" type="hidden" value="${msg}">
 	</div>
-	<input id="cartItem" type="hidden"
-			value="${cartItem}">
+	<input id="cartItem" type="hidden" value="${cartItem}">
 
 	<security:authorize access="isAuthenticated()">
 		<input id="userId" type="hidden"
 			value="<%=SecurityUtils.getPrincipal().getId()%>">
 	</security:authorize>
 	<security:authorize access="isAnonymous()">
-		<input id="userId" type="hidden"
-			value="">
+		<input id="userId" type="hidden" value="">
 	</security:authorize>
 
 
@@ -231,9 +236,9 @@
 					$('#count_in_cart').html(data.items.length)
 					$('#message').val("success_add_to_cart");
 					let msg = document.getElementById("message");
-					if(msg.value!==""){
+					if (msg.value !== "") {
 						createToast(msg.value);
-						msg.value = "";	
+						msg.value = "";
 					}
 
 				}
@@ -241,7 +246,6 @@
 			});
 
 		}
-		
 	</script>
 	<script
 		src="<c:url value='/template/paging/jquery.twbsPagination.js'/>"></script>
@@ -251,15 +255,16 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 	<script src="<c:url value='/template/js/boxchat.js'/>"></script>
+	<script src="<c:url value='/template/js/searchByName.js'/>"></script>
 
 
 
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
 
-	<script src=""></script>
-	 <script src="<c:url value='/template/js/showMenuMobile.js'/>"></script>
-	 
 
+	<script src="<c:url value='/template/js/showMenuMobile.js'/>"></script>
+
+	
 	<!-- 
 
 	 <script src="resources/js/loadmore.js"></script>

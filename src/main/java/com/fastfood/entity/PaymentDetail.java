@@ -1,7 +1,5 @@
 package com.fastfood.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -27,10 +25,13 @@ public class PaymentDetail extends BaseEntity {
 
 	@Column
 	private String totalPrice;
+	
 	@Column
 	private String provider;
+	
 	@Column
 	private String paymentTime;
+	
 	@Column
 	private String transactionId;
 

@@ -18,6 +18,8 @@
 	background-attachment: fixed;
 }
 
+
+
 #overlay {
 	position: fixed;
 	display: none;
@@ -30,7 +32,6 @@
 	background-color: rgba(0, 0, 0, 0.2);
 	z-index: 2;
 	cursor: pointer;
-	
 }
 
 #text {
@@ -303,13 +304,17 @@ margin-left
 
 
 
+
+
 :
 
 
 
 
 
+
  
+
 
 
 
@@ -336,13 +341,17 @@ margin-left
 
 
 
+
+
 :
 
 
 
 
 
+
  
+
 
 
 
@@ -369,13 +378,17 @@ margin-left
 
 
 
+
+
 :
 
 
 
 
 
+
  
+
 
 
 
@@ -402,13 +415,17 @@ margin-right
 
 
 
+
+
 :
 
 
 
 
 
+
  
+
 
 
 
@@ -435,13 +452,17 @@ margin-right
 
 
 
+
+
 :
 
 
 
 
 
+
  
+
 
 
 
@@ -467,13 +488,17 @@ margin-right
 
 
 
+
+
 :
 
 
 
 
 
+
  
+
 
 
 

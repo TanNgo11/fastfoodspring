@@ -31,6 +31,8 @@ public interface IProductService {
 	ProductDTO update(ProductDTO dto);
 	
 	List<ProductDTO> findProductBySearchKeys(String searchQuery);
+	
+	void decreaseStock(long productId, int newStock);
 
 
 }

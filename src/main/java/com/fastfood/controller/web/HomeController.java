@@ -35,7 +35,7 @@ public class HomeController {
 	@Autowired
 	private INewsService newsService;
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
 	public ModelAndView homePage(@ModelAttribute("foodModel") ProductDTO foodModel,
 			@ModelAttribute("drinkModel") ProductDTO drinkModel) {
 		Pageable pageable = new PageRequest(0, 4);

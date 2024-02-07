@@ -1,30 +1,81 @@
 
-var totalPayment = 0;
+var totalPayment = $("#totalPayment").val()
 
-function usdToVnd(usdAmount, exchangeRate) {
-    if (usdAmount < 0 || exchangeRate <= 0) {
-        return "Invalid input. Amount and exchange rate must be positive numbers.";
+
+var formatter = new Intl.NumberFormat('vi-VN', {
+			    style: 'currency',
+			    currency: 'VND',
+			});
+
+
+function validateForm() {
+    var phoneNumber = document.getElementById('validationCustomPhoneNumber').value;
+    var email = document.getElementById('validationCustomEmail').value;
+    var address = document.getElementById('result').value;
+    
+  
+    var phoneRegex = /^0\d{9,10}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+    	let msg = document.getElementById("message");
+		msg.value= "error_validation_phonenumber"
+		if(msg.value!==""){
+			createToast(msg.value);
+			msg.value = "";	
+		}
+        return false;
     }
-
-    const vndAmount = usdAmount * exchangeRate;
-    return vndAmount;
+    
+   
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+    	let msg = document.getElementById("message");
+		msg.value= "error_validation_email"
+		if(msg.value!==""){
+			createToast(msg.value);
+			msg.value = "";	
+		}
+        
+        return false;
+    }
+    
+  
+    if (address.trim() === "") {
+    	let msg = document.getElementById("message");
+		msg.value= "error_validation_address"
+		if(msg.value!==""){
+			createToast(msg.value);
+			msg.value = "";	
+		}
+        return false;
+    }
+    
+    return true; 
 }
-
-
-
-
 
 
 $("#submitOrder").on("click", function(e){
     e.preventDefault();
+    totalPayment = $("#totalPayment").val();
+	   let  email = $("#validationCustomEmail").val();
+	   let phonenumber = $("#validationCustomPhoneNumber").val();
+	   let address = $("#result").val();
+	  
+	   
+	    
+	   
     $.ajax({
         url: "/api/v1/payment/neworder",
         type: "POST",
         data: {
-            amount: totalPayment
+            amount: totalPayment,
+            email:email,
+            phonenumber:phonenumber,
+            address:address
+            
+            
         },
         success: function(href) {
-        	if($("#cartItem").val()==0){
+        	if($("#cartItem").val()==0||  $("#totalPayment").val()==0){
         		let msg = document.getElementById("message");
 				msg.value= "error_empty"
 				if(msg.value!==""){
@@ -32,8 +83,13 @@ $("#submitOrder").on("click", function(e){
 					msg.value = "";	
 				}
         	}
-        	else if($("#userId").val()!=""){
-        		window.location.href = href;
+        	
+        	
+        	else if($("#userId").val()!="" &&  $("#totalPayment").val()!==0){
+        		if(validateForm()){
+        			window.location.href = href;
+        		}
+    	
         	}
         	
         	else{
@@ -69,6 +125,7 @@ function renderSumary() {
             var listItem = data.items
             doRenderSummary(listItem)
             renderTotalPayment(data)
+            totalPayment = data.totalPay
           
         }
     });
@@ -79,7 +136,11 @@ function doRenderSummary(listItem) {
 	   if(row!=null){
 		   var str=""
 				for (let item of listItem) {
-					var price =item.quantity * item.productDTO.price
+					
+					let price = formatter.format(item.productDTO.price);
+					if(item.productDTO.salePrice!=0 &&item.productDTO.salePrice<item.productDTO.price){
+						price = formatter.format(item.productDTO.salePrice);
+					}
 					str+=`<div class="row no-gutters mt-3">
 		         <div class="col-md-6 col-6">${item.productDTO.productName}</div>
 		         <div class="col-md-3 col-3">${item.quantity}</div>
@@ -104,7 +165,8 @@ function  doFunctionInCartByMode(id, mode) {
              doRenderSummary(listItem)
         	 renderTotalPayment(data)
         	 doRenderProduct(listItem)
-        	 totalPayment = usdToVnd(data.totalPay,24000);
+        	 $("#totalPayment").val(data.totalPay)
+        	
         		$('#count_in_cart').html(data.items.length)
 
         }
@@ -114,7 +176,8 @@ function  doFunctionInCartByMode(id, mode) {
 function  renderTotalPayment(data){
 	 var content = document.getElementById("totalPay");
     if(content!=null){
-    	content.innerHTML = `<h5>$ ${data.totalPay}</h5>`
+    	let totalPrice = formatter.format(data.totalPay)
+    	content.innerHTML = `<h5>${totalPrice}</h5>`
     }
 }
 
@@ -128,7 +191,7 @@ function renderProducts() {
 	
 		success : function(data) {
 			var listProduct = data.items
-			
+			 $("#totalPayment").val(data.totalPay)
 			doRenderProduct(listProduct)
 		}
 	
@@ -139,12 +202,20 @@ function doRenderProduct(listProduct) {
 	var row = document.getElementById("content");
 	if(row !=null){
 		var str = ""
-		
+			
 		for (let item of listProduct) {
 			var type ="Food"
 				if(item.productDTO.categoryID ===2){
 					type ="Drink"
 				}
+			let price = formatter.format(item.productDTO.price);
+			if(item.productDTO.salePrice!=0 &&item.productDTO.salePrice<item.productDTO.price){
+				price = formatter.format(item.productDTO.salePrice);
+			}
+			
+			
+			
+			
 	
 			str+=`<div class="row mb-4 d-flex justify-content-between align-items-center customDetail">
             <div class="col-md-2 col-4 col-lg-2  col-xl-2">
@@ -170,9 +241,9 @@ function doRenderProduct(listProduct) {
                 </button>
             </div>
             <div class="col-md-3 col-4 col-lg-2  col-xl-2 offset-lg-1 ">
-                <h6 class="mb-0">$ ${item.productDTO.price}</h6>
+                <h6 class="mb-0">${price}</h6>
             </div>
-            <div class="col-md-1 col-3 col-lg-1 col-xl-1 text-end ">
+            <div style="cursor: pointer;" class="col-md-1 col-3 col-lg-1 col-xl-1 text-end ">
                 <a onclick="doFunctionInCartByMode(${item.productDTO.id},'delete'); minusCountInCart()" class="text-muted"><i class="fa fa-trash-o  "></i></a>
             </div>
         </div>

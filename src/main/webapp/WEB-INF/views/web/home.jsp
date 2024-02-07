@@ -143,9 +143,41 @@
 
 						<div class="card-body">
 							<h5 class="card-title">${o.productName}</h5>
-							<p class="card-text">${o.price}$</p>
-							<button style="width: 90%" onClick="addToCart(${o.id})"
-								class="btn btn-primary addToCart">Add to cart</button>
+							<c:choose>
+								<c:when test="${o.salePrice < o.price && o.salePrice != 0}">
+									<p class="card-text sale-price">
+										<fmt:formatNumber value="${o.salePrice}" type="currency"
+											currencyCode="VND" />
+
+									</p>
+									<p class="card-text price">
+										<i style="color: #ff5b6a; margin-right: 5px"
+											class='bx bxs-discount bx-flip-horizontal bx-tada'></i><fmt:formatNumber value="${o.price}" type="currency"
+											currencyCode="VND" /></p>
+
+								</c:when>
+								<c:otherwise>
+
+									<p class="card-text sale-price">
+										<fmt:formatNumber value="${o.price}" type="currency"
+											currencyCode="VND" />
+									</p>
+								</c:otherwise>
+							</c:choose>
+
+
+
+							<c:choose>
+								<c:when test="${o.inStock>0}">
+									<button style="width: 90%" onClick="addToCart(${o.id})"
+										class="btn btn-primary addToCart">Add to cart</button>
+								</c:when>
+								<c:otherwise>
+									<p class="text-danger"
+										style="margin-bottom: 6px; width: 100%; text-align: center; font-weight: bold;">Out
+										of Stock</p>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 
@@ -158,7 +190,7 @@
 			</c:forEach>
 		</div>
 
-		<button class="btn btn-outline-primary mt-3"
+		<button style="color: #FF5B6A;border-color:#FF5B6A" class="btn btn-outline-primary mt-3 loadmore"
 			onClick="loadMoreProduct('food')">Load more</button>
 
 
@@ -180,9 +212,40 @@
 
 						<div class="card-body">
 							<h5 class="card-title">${o.productName}</h5>
-							<p class="card-text">${o.price}$</p>
-							<button style="width: 90%" onClick="addToCart(${o.id})"
-								class="btn btn-primary addToCart">Add to cart</button>
+							<c:choose>
+								<c:when test="${o.salePrice < o.price && o.salePrice != 0}">
+									<p class="card-text sale-price">
+										<fmt:formatNumber value="${o.salePrice}" type="currency"
+											currencyCode="VND" />
+
+									</p>
+									<p class="card-text price">
+										<i style="color: #ff5b6a; margin-right: 5px"
+											class='bx bxs-discount bx-flip-horizontal bx-tada'></i>${o.price}$</p>
+
+								</c:when>
+								<c:otherwise>
+
+									<p class="card-text sale-price">
+										<fmt:formatNumber value="${o.price}" type="currency"
+											currencyCode="VND" />
+									</p>
+								</c:otherwise>
+							</c:choose>
+
+
+
+							<c:choose>
+								<c:when test="${o.inStock>0}">
+									<button style="width: 90%" onClick="addToCart(${o.id})"
+										class="btn btn-primary addToCart">Add to cart</button>
+								</c:when>
+								<c:otherwise>
+									<p class="text-danger"
+										style="width: 90%; text-align: center; font-weight: bold;">Out
+										of Stock</p>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 
@@ -194,7 +257,7 @@
 
 		</div>
 
-		<button class="btn btn-outline-primary mt-3"
+		<button style="color: #FF5B6A;border-color:#FF5B6A" class="btn btn-outline-primary mt-3 loadmore"
 			onClick="loadMoreProduct('drink')">Load more</button>
 
 
@@ -205,26 +268,26 @@
 			<c:forEach items="${listNews}" var="news">
 
 				<div class="col-md-6 mt-3">
-					
-						<div style="max-height: 300px;"
-							class="card flex-md-row mb-4 box-shadow h-md-250">
-							<div class="card-body d-flex flex-column align-items-start">
-								<strong class="d-inline-block mb-2 text-primary">News</strong>
-								<h3 class="mb-0">
-									<a style="font-size: 24px; font-weight: bold;"
-										class="text-dark" href="/news/${news.slug}">${news.title}</a>
-								</h3>
-								<div class="mb-1 text-muted">${news.dateFormat}</div>
-								<div
-									style="font-size: 14px; margin-top: 10px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;"
-									class="card-text mb-auto">${news.description}</div>
-							</div>
-							<img class="card-img-right flex-auto d-none d-md-block"
-								data-src="holder.js/200x250?theme=thumb"
-								alt="Thumbnail [200x250]" style="width: 200px; height: 250px;"
-								src="${news.imageURL}" data-holder-rendered="true">
+
+					<div style="max-height: 300px;"
+						class="card flex-md-row mb-4 box-shadow h-md-250">
+						<div class="card-body d-flex flex-column align-items-start">
+							<strong class="d-inline-block mb-2 text-primary">News</strong>
+							<h3 class="mb-0">
+								<a style="font-size: 24px; font-weight: bold;" class="text-dark"
+									href="/news/${news.slug}">${news.title}</a>
+							</h3>
+							<div class="mb-1 text-muted">${news.dateFormat}</div>
+							<div
+								style="font-size: 14px; margin-top: 10px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;"
+								class="card-text mb-auto">${news.description}</div>
 						</div>
-				
+						<img class="card-img-right flex-auto d-none d-md-block"
+							data-src="holder.js/200x250?theme=thumb"
+							alt="Thumbnail [200x250]" style="width: 200px; height: 250px;"
+							src="${news.imageURL}" data-holder-rendered="true">
+					</div>
+
 				</div>
 
 			</c:forEach>

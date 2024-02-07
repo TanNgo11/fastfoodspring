@@ -23,7 +23,9 @@ public class CartAPI {
 	private IProductService productService;
 
 	@RequestMapping(value = "/api/cart", method = RequestMethod.POST)
-	public OrderDTO addToCart(@RequestParam(name = "idP") long idP, HttpServletRequest request, HttpSession session) {
+	public OrderDTO addToCart(@RequestParam(name = "idP") long idP,
+			@RequestParam(name = "quantity", required = false, defaultValue = "1") int quantity,
+			HttpServletRequest request, HttpSession session) {
 		session = request.getSession();
 		OrderDTO orderSession = new OrderDTO();
 		ProductDTO product = productService.findById(idP);
@@ -36,8 +38,12 @@ public class CartAPI {
 		List<ItemDTO> listItem = orderSession.getItems();
 		if (listItem.size() == 0) {
 			listItem = new ArrayList<>();
-			item.setQuantity(1);
-			item.setPrice(product.getPrice());
+			item.setQuantity(quantity);
+			double currentPrice = product.getPrice();
+			if(product.getSalePrice()!=0&&product.getSalePrice()<product.getPrice()) {
+				currentPrice = product.getSalePrice();
+			}
+			item.setPrice(currentPrice);
 			item.setProductDTO(product);
 			listItem.add(item);
 
@@ -45,15 +51,19 @@ public class CartAPI {
 			for (ItemDTO itemDTO : listItem) {
 
 				if (itemDTO.getProductDTO().getId().equals(product.getId())) {
-					itemDTO.setQuantity(itemDTO.getQuantity() + 1);
+					itemDTO.setQuantity(itemDTO.getQuantity() + quantity);
 
 					check = true;
 				}
 
 			}
 			if (check == false) {
-				item.setQuantity(1);
-				item.setPrice(product.getPrice());
+				item.setQuantity(quantity);
+				double currentPrice = product.getPrice();
+				if(product.getSalePrice()!=0&&product.getSalePrice()<product.getPrice()) {
+					currentPrice = product.getSalePrice();
+				}
+				item.setPrice(currentPrice);
 				item.setProductDTO(product);
 				listItem.add(item);
 
@@ -100,7 +110,6 @@ public class CartAPI {
 				if (quantity == 0)
 					listItem.remove(obj);
 				else
-
 					obj.setQuantity(quantity);
 				break;
 			} else if (obj.getProductDTO().getId() == idP.longValue() && mode.equals("delete")) {
@@ -114,6 +123,7 @@ public class CartAPI {
 		if (listItem != null) {
 			double total = 0;
 			for (ItemDTO obj : listItem) {
+				
 				total += obj.getPrice() * obj.getQuantity();
 			}
 			return total;

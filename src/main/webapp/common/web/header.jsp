@@ -28,7 +28,7 @@
 							alt="CrispTrek">
 						</a>
 					</h1>
-					
+
 				</div>
 				<div class="col-md-5">
 
@@ -38,34 +38,40 @@
 							<div class="input-group">
 								<div class="searchInput">
 									<input type="text" placeholder="Search your food">
-									<div class="resultBox">
-										
-									</div>
-									
+									<div class="resultBox"></div>
+
 									<div class="icon">
-									<a id="searchLink" href="/search?q="><i class="fa fa-search" aria-hidden="true"></i></a>
-										
+										<a id="searchLink" href="/search?q="><i
+											class="fa fa-search" aria-hidden="true"></i></a>
+
 									</div>
 								</div>
-								
-								
+
+
 
 
 
 							</div>
 						</div>
 
-						<div class="col-md-4 align-self-lg-center">
+						<div style="display: flex; align-items: center;"
+							class="col-md-4 align-self-lg-center">
 							<div href="" class="user">
-								
+
 								<security:authorize access="isAuthenticated()">
-									<div id="username" class="userName"><%=SecurityUtils.getPrincipal().getFullName()%><i class="fa fa-caret-down" aria-hidden="true"></i></div>
-									
+									<div
+										style="display: flex; text-align: center; align-items: center;"
+										id="username" class="userName">
+										<p 
+											style="margin-bottom:0px!important;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;"><%=SecurityUtils.getPrincipal().getFullName()%></p>
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</div>
+
 								</security:authorize>
 								<security:authorize access="isAnonymous()">
-										<i class="fa fa-2x fa-user"></i>
-									</security:authorize>
-								
+									<i class="fa fa-2x fa-user"></i>
+								</security:authorize>
+
 								<div class="userMenu">
 									<security:authorize access="isAuthenticated()">
 

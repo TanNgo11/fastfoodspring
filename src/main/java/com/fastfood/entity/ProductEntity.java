@@ -8,9 +8,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,5 +59,16 @@ public class ProductEntity extends BaseEntity {
 
 	@OneToMany(mappedBy = "productEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ImageEntity> imageEntities = new ArrayList<>();
+	
+	
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "product_relations",
+        joinColumns = { @JoinColumn(name = "product_id") },
+        inverseJoinColumns = { @JoinColumn(name = "related_product_id") }
+    )
+    private List<ProductEntity> relatedProducts = new ArrayList<>();
+
+
 
 }

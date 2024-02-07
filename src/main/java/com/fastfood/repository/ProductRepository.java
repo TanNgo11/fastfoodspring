@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fastfood.entity.ProductEntity;
 
@@ -24,8 +26,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 	ProductEntity findBySlug(String slug);
 
-	@Query("SELECT p FROM ProductEntity p WHERE " + "LOWER(p.productName) LIKE LOWER(CONCAT('%',:keyword,'%')) OR "
-			+ "LOWER(p.description) LIKE LOWER(CONCAT('%',:keyword,'%'))")
+	@Query("SELECT p FROM ProductEntity p WHERE " + "LOWER(p.productName) LIKE LOWER(CONCAT('%',:keyword,'%'))")
 	List<ProductEntity> findByProductNameOrDescriptionContainingIgnoreCase(@Param("keyword") String keyword);
 
+	
+	@Modifying
+    @Transactional
+    @Query("UPDATE ProductEntity p SET p.inStock = p.inStock - :amount WHERE p.id = :productId")
+    int decreaseStock(@Param("productId") Long productId, @Param("amount") int amount);
 }

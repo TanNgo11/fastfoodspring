@@ -30,8 +30,8 @@ public class AccountMapper {
 		result.setEmail(accountEntity.getEmail());
 		result.setUsername(accountEntity.getUserName());
 		result.setFullName(accountEntity.getFullName());
-		result.setOauth2Id(accountEntity.getOauth2Id());
-		result.setPassword(accountEntity.getPassword());
+		result.setOauth2Id("");
+		result.setPassword("");
 		result.setStatus(accountEntity.getStatus());
 		
 		return result;

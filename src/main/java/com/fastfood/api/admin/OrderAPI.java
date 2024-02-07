@@ -28,21 +28,29 @@ import com.fastfood.utils.OrderExcelExporter;
 public class OrderAPI {
 
 	@Autowired
-	IOrderService orderService;
+	private IOrderService orderService;
+
+	@Autowired
+	private DateUtil dateUtil;
 
 	@GetMapping
-	public ResponseEntity<OrderDTO> getAllOrdersByMonthAndYear(@RequestParam(name = "month", required = false) String month,
-			@RequestParam(name = "year", required = false) int year, @RequestParam("page") int page,
-			@RequestParam("limit") int limit) {
+	public ResponseEntity<OrderDTO> getAllOrdersByMonthAndYear(
+			@RequestParam(name = "month", required = false) String month,
+			@RequestParam(name = "year", required = false) Integer year,
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
 
-		DateUtil dateUtil = new DateUtil();
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<OrderDTO> listResult = orderService.findAll(pageable);
+		if (month != null && year !=null) {
+			listResult = orderService.findAllByMonthAndYear(dateUtil.getMonthInt(month), year, pageable);
+		}
 
 		OrderDTO result = new OrderDTO();
 		result.setPage(page);
 		result.setLimit(limit);
 
-		Pageable pageable = new PageRequest(page - 1, limit);
-		result.setListResult(orderService.findAllByMonthAndYear(dateUtil.getMonthInt(month), year, pageable));
+		result.setListResult(listResult);
 		result.setTotalItem(orderService.getTotalOrder());
 		result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
 
@@ -65,22 +73,21 @@ public class OrderAPI {
 	}
 
 	@GetMapping("/excel")
-	public void exportToExcel(HttpServletResponse response ,@RequestParam(name = "month", required = false) String month,
+	public void exportToExcel(HttpServletResponse response,
+			@RequestParam(name = "month", required = false) String month,
 			@RequestParam(name = "year", required = false) int year) throws IOException {
 		response.setContentType("application/octet-stream");
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String currentDateTime = dateFormatter.format(new Date());
 		List<OrderDTO> listUsers = orderService.findAll();
-		if(month!=null) {
+		if (month != null) {
 			DateUtil dateUtil = new DateUtil();
-			listUsers=orderService.findAllByMonthAndYear(dateUtil.getMonthInt(month), year);
+			listUsers = orderService.findAllByMonthAndYear(dateUtil.getMonthInt(month), year);
 		}
 
 		String headerKey = "Content-Disposition";
 		String headerValue = "attachment; filename=orders_" + currentDateTime + ".xlsx";
 		response.setHeader(headerKey, headerValue);
-		
-		
 
 		OrderExcelExporter excelExporter = new OrderExcelExporter(listUsers);
 

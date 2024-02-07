@@ -17,7 +17,7 @@
 					<div class="card card-registration card-registration-2">
 						<div class="card-body p-0">
 							<div class="row g-0">
-								<div class="col-lg-8">
+								<div class="col-lg-7">
 									<div class="p-5">
 										<div
 											class="d-flex justify-content-between align-items-center mb-5">
@@ -36,7 +36,7 @@
 
 
 
-								<div style="background-color: #f4e533;" class="col-lg-4 ">
+								<div style="background-color: #f4e533;" class="col-lg-5 ">
 
 									<div class="p-3">
 										<h5 style="color: red">${msgError}</h5>
@@ -64,15 +64,16 @@
 											modelAttribute="account">
 											<div class="row">
 												<div class="col-md-12 mb-3">
-													<label for="validationCustomUsername">Phone Number</label>
+													<label for="validationCustomPhoneNumber">Phone
+														Number</label>
 													<div class="input-group">
 														<div class="input-group-prepend">
 															<span class="input-group-text" id="inputGroupPrepend"><i
 																class="fa fa-phone" aria-hidden="true"></i></span>
 														</div>
 														<form:input type="text" cssClass="form-control"
-															id="validationCustomUsername" placeholder="Phone Number"
-															path="phoneNumber" />
+															id="validationCustomPhoneNumber"
+															placeholder="Phone Number" path="phoneNumber" />
 
 														<div class="invalid-feedback">Please choose a phone
 															number.</div>
@@ -118,8 +119,19 @@
 												</div>
 												<div class="col-md-12 mb-3">
 													<form:textarea path="address" id="result"
-														cssClass="form-control" placeholder="Your Street" />
+														cssClass="form-control" placeholder="Your Address" />
 												</div>
+
+												<div class="col-md-12 mb-3">
+
+													<label class="mr-sm-2" for="">Payment</label> <select
+														class="custom-select mr-sm-2" id="payment-type">
+														<option value="vn-pay" selected>VNPAY</option>
+													</select>
+
+												</div>
+
+
 											</div>
 
 											<hr class="my-4">
@@ -130,17 +142,21 @@
 											</div>
 
 
-											<button id="submitOrder" type="submit" class="btn btn-dark btn-block btn-lg"
-												data-mdb-ripple-color="dark">Buy Now</button>
+											
+
+											<button id="submitOrder" type="submit" class="Btn">
+												Pay
+												<svg class="svgIcon" viewBox="0 0 576 512">
+													<path
+														d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
+											</button>
 
 											<form:input type="hidden" path="id" />
 										</form:form>
 									</div>
 
 								</div>
-								<div id="toasts"></div>
-
-								<input id="message" type="hidden" value="${msg}">
+								<input id="totalPayment" type="hidden" value=0>
 
 
 							</div>
@@ -150,10 +166,14 @@
 			</div>
 		</div>
 	</section>
+	<div id="toasts">
+		<input id="message" type="hidden" value="${msg}">
+	</div>
 	</main>
-		<script src="<c:url value='/template/js/cart.js'/>"></script>
+	<script src="<c:url value='/template/js/cart.js'/>"></script>
+	<script src="<c:url value='/template/js/addressVNAPI.js'/>"></script>
 
-	
+
 
 </body>
 </html>

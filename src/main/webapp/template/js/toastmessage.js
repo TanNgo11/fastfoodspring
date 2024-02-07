@@ -58,6 +58,24 @@ const toasts = {
         msg: 'You need to login !',
         alert: 'error'
     },
+    error_validation_phonenumber: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Please enter a valid phonenumber',
+        alert: 'error'
+    },
+    
+    error_validation_email: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Please enter a valid email address.',
+        alert: 'error'
+    },
+    
+    
+    error_validation_address: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Please enter your address.',
+        alert: 'error'
+    },
     
     error_reset: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
@@ -67,6 +85,11 @@ const toasts = {
     error_empty: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
         msg: 'Your cart is empty !',
+        alert: 'error'
+    },
+    error_instock: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'The product is out of stock please comback later!',
         alert: 'error'
     },
     error_signUp: {
