@@ -27,7 +27,7 @@ public class OrderService implements IOrderService {
 
 	@Override
 	@Transactional
-	public OrderDTO save(OrderDTO dto ,PaymentDetail paymentDetail) {
+	public OrderDTO save(OrderDTO dto, PaymentDetail paymentDetail) {
 		OrderEntity entity = orderMapper.mapToEntity(dto);
 		entity.setPaymentDetail(paymentDetail);
 		return orderMapper.mapToDTO(orderRepository.save(entity));
@@ -49,8 +49,9 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public List<OrderDTO> findAllByMonthAndYear(int month, int year, Pageable pageable) {
-		List<OrderEntity> entities = orderRepository.findAllOrdersByMonthAndYear(month, year, pageable);
+	public List<OrderDTO> findAllByMonthAndYearAndStatus(int month, int year, int status, Pageable pageable) {
+		List<OrderEntity> entities = orderRepository.findAllOrdersByMonthAndYearAndStatus(month, year, status,
+				pageable);
 		if (entities.isEmpty()) {
 			throw new ResourceNotFoundException("Can not found current page");
 		}
@@ -73,6 +74,44 @@ public class OrderService implements IOrderService {
 			throw new ResourceNotFoundException("Can not found current page");
 		}
 		return entities.stream().map(order -> orderMapper.mapToDTO(order)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<OrderDTO> findAllByMonthAndYear(int month, int year, Pageable pageable) {
+		List<OrderEntity> entities = orderRepository.findAllOrdersByMonthAndYear(month, year, pageable);
+		if (entities.isEmpty()) {
+			throw new ResourceNotFoundException("Can not found current page");
+		}
+		return entities.stream().map(order -> orderMapper.mapToDTO(order)).collect(Collectors.toList());
+	}
+
+	@Override
+	public Integer countAllOrdersByMonthAndYear(int month, int year) {
+		Long count = orderRepository.countAllOrdersByMonthAndYear(month, year);
+
+		if (count != null && count <= Integer.MAX_VALUE) {
+			return count.intValue();
+		} else {
+
+			throw new IllegalStateException("Count is either null or exceeds the maximum value of an integer.");
+		}
+	}
+
+	@Override
+	public Integer countAllOrdersByMonthAndYearAndStatus(int month, int year, int status) {
+		Long count = orderRepository.countAllOrdersByMonthAndYearAndStatus(month, year, status);
+
+		if (count != null && count <= Integer.MAX_VALUE) {
+			return count.intValue();
+		} else {
+
+			throw new IllegalStateException("Count is either null or exceeds the maximum value of an integer.");
+		}
+	}
+
+	@Override
+	public OrderDTO getOrderbyId(long id) {
+		return orderMapper.mapToDTO(orderRepository.getOne(id));
 	}
 
 }

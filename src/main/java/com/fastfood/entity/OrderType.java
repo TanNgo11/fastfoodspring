@@ -1,6 +1,6 @@
 package com.fastfood.entity;
 
-public enum OrderStatus {
+public enum OrderType {
 	ONLINE, MANUAL
 
 }

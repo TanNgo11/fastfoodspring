@@ -3,10 +3,12 @@ package com.fastfood.api.user;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +23,11 @@ import com.fastfood.dto.AccountDTO;
 import com.fastfood.dto.ItemDTO;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.entity.AccountEntity;
+import com.fastfood.entity.OrderType;
 import com.fastfood.entity.PaymentDetail;
 import com.fastfood.mapper.AccountMapper;
 import com.fastfood.repository.UserRepository;
+import com.fastfood.service.IMailService;
 import com.fastfood.service.IOrderService;
 import com.fastfood.service.IVNPayService;
 import com.fastfood.service.impl.ProductService;
@@ -33,6 +37,9 @@ import com.fastfood.utils.SecurityUtils;
 @Controller
 @RequestMapping("/api/v1/payment")
 public class PaymentAPI {
+
+	@Autowired
+	private SimpMessagingTemplate messagingTemplate;
 
 	@Autowired
 	private IVNPayService VNPayService;
@@ -49,6 +56,9 @@ public class PaymentAPI {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private IMailService mailService;
+
 	@PostMapping("/neworder")
 	@ResponseBody
 	public String createPayemnt(@RequestParam String phonenumber, @RequestParam String email,
@@ -61,13 +71,13 @@ public class PaymentAPI {
 		if (userInfo == null) {
 			userInfo = new UserInfo(email, address, phonenumber);
 
-		}else {
+		} else {
 			userInfo.phonenumber = phonenumber;
 			userInfo.email = email;
 			userInfo.address = address;
-			
+
 		}
-		
+
 		session.setAttribute("userInfo", userInfo);
 
 		String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
@@ -79,7 +89,8 @@ public class PaymentAPI {
 
 	@GetMapping("/vnpay-payment")
 	@Transactional
-	public String GetMapping(HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String GetMapping(HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
+			throws MessagingException {
 		int paymentStatus = VNPayService.orderReturn(request);
 
 		String orderInfo = request.getParameter("vnp_OrderInfo");
@@ -123,6 +134,8 @@ public class PaymentAPI {
 			orderSession.setAccountDTO(account);
 			orderSession.setEmail(email);
 			orderSession.setAddress(address);
+			orderSession.setOrderType(OrderType.ONLINE);
+			orderSession.setStatus(SystemConstant.ORDER_STATUS_PENDING);
 			orderSession.setPhonenumber(phonenumber);
 			orderSession.setCustomerName(account.getFullName());
 			redirectAttributes.addFlashAttribute("msg", MessageUtil.SUCCESS_ORDER);
@@ -134,7 +147,10 @@ public class PaymentAPI {
 
 			}
 			orderSession.setItems(listItem);
-			orderService.save(orderSession, paymentDetail);
+			OrderDTO savedOrder = orderService.save(orderSession, paymentDetail);
+			messagingTemplate.convertAndSend("/topic/orders", savedOrder);
+			mailService.sendInvoiceTemplateMail(userEntity, savedOrder);
+
 		}
 
 		session.removeAttribute("cart");

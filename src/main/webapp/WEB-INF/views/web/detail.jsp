@@ -46,14 +46,14 @@
 							test="${productDetail.salePrice < productDetail.price && productDetail.salePrice != 0}">
 							<p class="sale-price">
 								<fmt:formatNumber value="${productDetail.getSalePrice()}"
-									type="currency" currencyCode="VND" />
+									type="currency" currencyCode="VND" pattern="###,###₫"/>
 
 							</p>
 							<p class="price">
 								<i style="color: #ff5b6a; margin-right: 5px"
 									class='bx bxs-discount bx-flip-horizontal bx-tada'></i>
 								<fmt:formatNumber value="${productDetail.getPrice()}"
-									type="currency" currencyCode="VND" />
+									type="currency" currencyCode="VND" pattern="###,###₫"/>
 							</p>
 
 						</c:when>
@@ -62,14 +62,14 @@
 
 							<p class="card-text sale-price">
 								<fmt:formatNumber value="${productDetail.getPrice()}"
-									type="currency" currencyCode="VND" />
+									type="currency" currencyCode="VND" pattern="###,###₫"/>
 							</p>
 
 							<p style="visibility: hidden;" class="price">
 								<i style="color: #ff5b6a; margin-right: 5px"
 									class='bx bxs-discount bx-flip-horizontal bx-tada'></i>
 								<fmt:formatNumber value="${productDetail.getPrice()}"
-									type="currency" currencyCode="VND" />
+									type="currency" currencyCode="VND" pattern="###,###₫"/>
 							</p>
 						</c:otherwise>
 					</c:choose>
@@ -138,13 +138,13 @@
 												test="${product.salePrice < product.price && product.salePrice != 0}">
 												<span class="sale-price">+ <fmt:formatNumber
 														value="${product.salePrice}" type="currency"
-														currencyCode="VND" /></span>
+														currencyCode="VND" pattern="###,###₫"/></span>
 
 
 
 												<span style="font-size: 12px !important" class="price">+
 													<fmt:formatNumber value="${product.price}" type="currency"
-														currencyCode="VND" />
+														currencyCode="VND" pattern="###,###₫"/>
 												</span>
 
 
@@ -154,7 +154,7 @@
 												<span style="display: block; margin-top: 8px;"
 													class="sale-price">+ <fmt:formatNumber
 														value="${product.price}" type="currency"
-														currencyCode="VND" />
+														currencyCode="VND" pattern="###,###₫"/>
 												</span>
 											</c:otherwise>
 										</c:choose>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.service.IOrderService;
 import com.fastfood.utils.DateUtil;
@@ -30,20 +32,24 @@ public class OrderAPI {
 	@Autowired
 	private IOrderService orderService;
 
-	@Autowired
-	private DateUtil dateUtil;
-
+	
 	@GetMapping
 	public ResponseEntity<OrderDTO> getAllOrdersByMonthAndYear(
 			@RequestParam(name = "month", required = false) String month,
 			@RequestParam(name = "year", required = false) Integer year,
+			@RequestParam(name = "status", required = false) Integer status,
 			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
-
-		Pageable pageable = new PageRequest(page - 1, limit);
+		Sort sort = new Sort(Sort.Direction.DESC, "createdDate");
+		Pageable pageable = new PageRequest(page - 1, limit, sort);
 		List<OrderDTO> listResult = orderService.findAll(pageable);
-		if (month != null && year !=null) {
-			listResult = orderService.findAllByMonthAndYear(dateUtil.getMonthInt(month), year, pageable);
+		int totalItem = orderService.getTotalOrder();
+		if (month != null && year != null && status != null ) {
+			listResult = orderService.findAllByMonthAndYearAndStatus(DateUtil.getMonthInt(month), year,status, pageable);
+			totalItem = orderService.countAllOrdersByMonthAndYearAndStatus(DateUtil.getMonthInt(month), year, status);
+		}else if(month != null && year != null) {
+			listResult = orderService.findAllByMonthAndYear(DateUtil.getMonthInt(month), year, pageable);
+			totalItem = orderService.countAllOrdersByMonthAndYear(DateUtil.getMonthInt(month), year);
 		}
 
 		OrderDTO result = new OrderDTO();
@@ -51,7 +57,7 @@ public class OrderAPI {
 		result.setLimit(limit);
 
 		result.setListResult(listResult);
-		result.setTotalItem(orderService.getTotalOrder());
+		result.setTotalItem(totalItem);
 		result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
 
 		return new ResponseEntity<>(result, HttpStatus.OK);

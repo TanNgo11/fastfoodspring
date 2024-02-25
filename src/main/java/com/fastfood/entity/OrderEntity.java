@@ -47,9 +47,6 @@ public class OrderEntity extends BaseEntity {
 	@Column(name = "status")
 	private int status;
 
-	@Column(name = "type")
-	private int type;
-
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "orders_item", joinColumns = @JoinColumn(name = "orderid"), inverseJoinColumns = @JoinColumn(name = "itemid"))
 	private List<ItemEntity> items = new ArrayList<ItemEntity>();
@@ -59,7 +56,7 @@ public class OrderEntity extends BaseEntity {
 	private AccountEntity accountEntity;
 
 	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;
+	private OrderType orderType;
 	
 	
 	@OneToOne(cascade = CascadeType.ALL)

@@ -25,7 +25,7 @@ public class SystemConstant {
 
 	public static final String MY_EMAIL = "cuong.nguyen.cit20@eiu.edu.vn";
 
-	public static final String MY_PASSWORD = "gcvg ossz rtle xnta";
+	public static final String MY_PASSWORD = "jayf ttcu qmcy neco";
 
 	public static final String FRIEND_EMAIL = "yourFriend@gmail.com";
 
@@ -34,6 +34,14 @@ public class SystemConstant {
 	public static final String ADMIN_USER = "1";
 	
 	public static final String VNPAY = "vnpay";
+	
+	public static final int ORDER_STATUS_COMPLETED = 1;
+	
+	public static final int ORDER_STATUS_CANCEL = 0;
+	
+	public static final int ORDER_STATUS_DELIVERY = 2;
+	
+	public static final int ORDER_STATUS_PENDING = 3;
 	
 	
 

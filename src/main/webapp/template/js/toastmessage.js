@@ -76,6 +76,11 @@ const toasts = {
         msg: 'Please enter your address.',
         alert: 'error'
     },
+    error_notfound: {
+        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+        msg: 'Can not find any orders',
+        alert: 'error'
+    },
     
     error_reset: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',

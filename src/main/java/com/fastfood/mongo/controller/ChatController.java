@@ -15,12 +15,12 @@ import com.fastfood.mongo.entity.ChatMessage;
 import com.fastfood.mongo.entity.ChatNotification;
 import com.fastfood.mongo.service.IChatMessageService;
 
-
 @Controller
 public class ChatController {
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
+	
 	@Autowired
 	private IChatMessageService chatMessageService;
 

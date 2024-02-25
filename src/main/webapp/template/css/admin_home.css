@@ -478,13 +478,30 @@ body {
 	display: flex;
 	align-items: center;
 	grid-gap: 16px;
+	margin-bottom:24px;
+}
+.nav-head{
 	margin-bottom: 24px;
 }
+
+.nav-head span{
+	margin-right: 20px;
+	cursor: pointer;
+	padding:10px;
+	border-radius: 8px;
+}
+
+.nav-head span.active{
+	color: #3c91e6;
+	background: #babab62b;
+}
+
 
 #content main .table-data .head h3 {
 	margin-right: auto;
 	font-size: 24px;
 	font-weight: 600;
+	
 }
 
 a,
@@ -524,14 +541,40 @@ a:hover {
 #content main .table-data .order table th {
 	padding-bottom: 12px;
 	font-size: 13px;
-	text-align: center;
+	text-align: left;
 	border-bottom: 1px solid var(--grey);
 }
 
 *#content main .table-data .order table td {
 	padding: 16px 0;
-	text-align: center;
+	text-align: left;
 }*
+
+#content main .table-data .order table td .order-status {
+	display: block;
+    background-color: #eee;
+    color: white;
+    text-align: center;
+    width: 120px;
+    height: 32px;
+    border-radius: 20px;
+    padding: 3px;
+}
+.order-status-pending {
+	color: #dccd55 !important;
+}
+
+.order-status-canceled {
+	color: #e63010 !important;
+}
+
+.order-status-delivery {
+	color: #362ad8 !important;
+}
+
+.order-status-complete {
+	color: #16ce47 !important;
+}
 
 #content main .table-data .order table td i {
 	cursor: pointer;

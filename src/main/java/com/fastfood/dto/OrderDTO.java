@@ -3,6 +3,8 @@ package com.fastfood.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fastfood.entity.OrderType;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,8 @@ public class OrderDTO extends AbstractDTO<OrderDTO> {
 	private String phonenumber;
 	private String address;
 	private Double totalPay;
+	private OrderType orderType;
+	private int status;
 	private List<ItemDTO> items = new ArrayList<ItemDTO>();
 	private AccountDTO accountDTO;
 	

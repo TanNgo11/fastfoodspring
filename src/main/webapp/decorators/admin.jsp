@@ -30,7 +30,10 @@
 	src="<c:url value='/template/ckeditor/ckeditor.js'/>"></script>
 	<script
 	src="<c:url value='/template/ckfinder/ckfinder.js'/>"></script>
-
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 
 
@@ -41,6 +44,23 @@
 
 
 
+<c:choose>
+	<c:when
+		test="${fn:startsWith(pageContext.request.requestURI, '/admin/order')}">
+		 <!-- MDB -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <!-- MDB -->
+        
+        <link rel="stylesheet"
+	href="<c:url value='/template/css/bill.css'/>">
+
+	</c:when>
+
+</c:choose>
 
 <title>AdminPage</title>
 

@@ -147,20 +147,20 @@
 								<c:when test="${o.salePrice < o.price && o.salePrice != 0}">
 									<p class="card-text sale-price">
 										<fmt:formatNumber value="${o.salePrice}" type="currency"
-											currencyCode="VND" />
+											currencyCode="VND" pattern="###,###₫" />
 
 									</p>
 									<p class="card-text price">
 										<i style="color: #ff5b6a; margin-right: 5px"
 											class='bx bxs-discount bx-flip-horizontal bx-tada'></i><fmt:formatNumber value="${o.price}" type="currency"
-											currencyCode="VND" /></p>
+											currencyCode="VND" pattern="###,###₫" /></p>
 
 								</c:when>
 								<c:otherwise>
 
 									<p class="card-text sale-price">
 										<fmt:formatNumber value="${o.price}" type="currency"
-											currencyCode="VND" />
+											currencyCode="VND" pattern="###,###₫" />
 									</p>
 								</c:otherwise>
 							</c:choose>
@@ -216,7 +216,7 @@
 								<c:when test="${o.salePrice < o.price && o.salePrice != 0}">
 									<p class="card-text sale-price">
 										<fmt:formatNumber value="${o.salePrice}" type="currency"
-											currencyCode="VND" />
+											currencyCode="VND" pattern="###,###₫" />
 
 									</p>
 									<p class="card-text price">
@@ -228,7 +228,7 @@
 
 									<p class="card-text sale-price">
 										<fmt:formatNumber value="${o.price}" type="currency"
-											currencyCode="VND" />
+											currencyCode="VND" pattern="###,###₫"/>
 									</p>
 								</c:otherwise>
 							</c:choose>

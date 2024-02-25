@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="/admin/order">
+            <a href="/admin/orders">
                 <i class='bx bxs-calculator'></i>
                 <span class="text">Orders</span>
             </a>

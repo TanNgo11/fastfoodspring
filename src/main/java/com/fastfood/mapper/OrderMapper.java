@@ -11,6 +11,7 @@ import com.fastfood.dto.ItemDTO;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.entity.ItemEntity;
 import com.fastfood.entity.OrderEntity;
+import com.fastfood.entity.OrderType;
 import com.fastfood.utils.DateUtil;
 
 @Component
@@ -24,12 +25,15 @@ public class OrderMapper {
 
 	public OrderDTO mapToDTO(OrderEntity orderEntity) {
 		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setId(orderEntity.getId());
 		orderDTO.setCustomerName(orderEntity.getCustomerName());
 		orderDTO.setEmail(orderEntity.getEmail());
 		orderDTO.setPhonenumber(orderEntity.getPhonenumber());
 		orderDTO.setAddress(orderEntity.getAddress());
 		orderDTO.setTotalPay(orderEntity.getTotalPay());
 		orderDTO.setCreatedDate(orderEntity.getCreatedDate());
+		orderDTO.setOrderType(orderEntity.getOrderType());
+		orderDTO.setStatus(orderEntity.getStatus());
 
 		orderDTO.setItems(mapToDTOList(orderEntity.getItems()));
 
@@ -45,6 +49,8 @@ public class OrderMapper {
 		orderEntity.setPhonenumber(orderDTO.getPhonenumber());
 		orderEntity.setAddress(orderDTO.getAddress());
 		orderEntity.setTotalPay(orderDTO.getTotalPay());
+		orderEntity.setOrderType(orderDTO.getOrderType());
+		orderEntity.setStatus(orderDTO.getStatus());
 	
 
 		

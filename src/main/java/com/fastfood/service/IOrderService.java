@@ -15,9 +15,17 @@ public interface IOrderService {
 	List<OrderDTO> findAll(Pageable pageable);
 
 	int getTotalOrder();
+	
+	Integer countAllOrdersByMonthAndYear(int month, int year);
+	
+	Integer countAllOrdersByMonthAndYearAndStatus(int month, int year, int status);
 
+	List<OrderDTO> findAllByMonthAndYearAndStatus(int month, int year, int status, Pageable pageable);
+	
 	List<OrderDTO> findAllByMonthAndYear(int month, int year, Pageable pageable);
 	
 	List<OrderDTO> findAllByMonthAndYear(int month, int year);
+	
+	OrderDTO getOrderbyId(long id);
 
 }

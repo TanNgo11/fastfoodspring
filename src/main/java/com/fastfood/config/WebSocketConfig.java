@@ -1,7 +1,5 @@
 package com.fastfood.config;
 
-
-
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer  {
+public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/user");
+		registry.enableSimpleBroker("/topic", "/user");
 		registry.setApplicationDestinationPrefixes("/app");
 		registry.setUserDestinationPrefix("/user");
 	}

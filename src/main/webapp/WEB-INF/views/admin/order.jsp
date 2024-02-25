@@ -11,16 +11,16 @@
 	<main>
 	<div class="head-title">
 		<div class="left">
-			<h1>Dashboard</h1>
+			<h1>Orders</h1>
 			<ul class="breadcrumb">
 				<li><a href="#">Dashboard</a></li>
 				<li><i class='bx bx-chevron-right'></i></li>
-				<li><a class="active" href="#">Bill</a></li>
+				<li><a class="active" href="#">Order</a></li>
 			</ul>
 		</div>
-		<a href="/admin/api/v1/orders/excel" class="btn-download" id="exportExcelLink"> <i
-			class='bx bxs-cloud-download'></i> <span class="text">Export
-				to excel</span>
+		<a href="/admin/api/v1/orders/excel" class="btn-download"
+			id="exportExcelLink"> <i class='bx bxs-cloud-download'></i> <span
+			class="text">Export to excel</span>
 		</a>
 	</div>
 
@@ -30,6 +30,9 @@
 		<div class="order">
 			<div class="head">
 				<h3>Product list</h3>
+				
+			
+				
 				<i class='bx bx-search'></i>
 
 				<div class="col-auto my-1">
@@ -40,10 +43,15 @@
 						</c:forEach>
 					</select>
 				</div>
-				<!-- add Product -->
-				<a href="#" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
-					<span>Add new product</span>
-				</a>
+
+			</div>
+			<div class="nav-head">
+			
+				<span class="active">All Orders</span>
+				<span>Completed</span>
+				<span>Delivery</span>
+				<span>Pending</span>
+				<span>Cancel</span>
 			</div>
 
 
@@ -53,13 +61,14 @@
 			<table>
 				<thead>
 					<tr>
-						<th>ID</th>
+						<th>#</th>
+						<th>Order ID</th>
 						<th>Customer Name</th>
 						<th>Address</th>
-						<th>Email</th>
-						<th>PhoneNumber</th>
+						<th>Date</th>
 						<th>Total Pay</th>
-						<th>Functions</th>
+						<th>Status</th>
+						
 					</tr>
 				</thead>
 				<tbody id="contentTable">
@@ -129,11 +138,9 @@
 				}
 			});
 		}
-		
-		
 	</script>
 
-	
+
 
 </body>
 </html>
