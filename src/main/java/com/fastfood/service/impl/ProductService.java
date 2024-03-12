@@ -1,17 +1,22 @@
 package com.fastfood.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.ProductDTO;
+import com.fastfood.dto.ProductSalesDTO;
 import com.fastfood.entity.ProductEntity;
 import com.fastfood.exception.ResourceNotFoundException;
 import com.fastfood.mapper.ProductMapper;
@@ -63,8 +68,10 @@ public class ProductService implements IProductService {
 
 	@Override
 	public ProductDTO findById(long id) {
-		ProductEntity product = productRepository.findByIdAndStatus(id, SystemConstant.ACTIVE_STATUS)
-				.orElseThrow(() -> new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + id));
+		ProductEntity product = productRepository.getOne(id);
+
+		if (product == null)
+			throw new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + id);
 		ProductDTO productDTO = productMapper.mapToDTO(product);
 		return productDTO;
 
@@ -103,13 +110,14 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
+	@Transactional
 	public ProductDTO save(ProductDTO dto) {
 		ProductEntity entity = new ProductEntity();
 
 		entity = productMapper.mapToEntity(dto);
 
 		entity = productRepository.save(entity);
-		
+
 		entity.setSlug(createSlug(entity.getId(), entity.getProductName()));
 
 		return productMapper.mapToDTO(productRepository.save(entity));
@@ -154,9 +162,10 @@ public class ProductService implements IProductService {
 	@Override
 	public List<ProductDTO> findProductBySearchKeys(String searchQuery) {
 		List<ProductDTO> result = new ArrayList<>();
-		
-		List<ProductEntity> listEntities  = productRepository.findByProductNameOrDescriptionContainingIgnoreCase(searchQuery);
-		
+
+		List<ProductEntity> listEntities = productRepository
+				.findByProductNameOrDescriptionContainingIgnoreCase(searchQuery);
+
 		for (ProductEntity productEntity : listEntities) {
 			result.add(productMapper.mapToDTO(productEntity));
 		}
@@ -165,12 +174,57 @@ public class ProductService implements IProductService {
 
 	@Override
 	public void decreaseStock(long productId, int amount) {
-		 int updatedRows = productRepository.decreaseStock(productId, amount);
-	        if (updatedRows == 0) {
-	            throw new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + productId);
-	        }
+		int updatedRows = productRepository.decreaseStock(productId, amount);
+		if (updatedRows == 0) {
+			throw new ResourceNotFoundException(MessageUtil.PRODUCT_ID_NOT_FOUND + productId);
+		}
 	}
-	
-	
+
+	@Override
+	public List<ProductSalesDTO> getTop10ProductsBySales() {
+		Pageable pageable = new PageRequest(0, 10);
+		List<Object[]> results = productRepository.findTop10ProductsByQuantity(pageable);
+
+		return results.stream().map(result -> {
+			ProductEntity product = (ProductEntity) result[0];
+			Long totalQuantity = (Long) result[1];
+
+			return new ProductSalesDTO(product.getId(), product.getProductName(), totalQuantity.doubleValue());
+		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<ProductDTO> getTop4ProductsBySales(Pageable pageable) {
+
+		List<Object[]> results = productRepository.findTop10ProductsByQuantity(pageable);
+
+		return results.stream().map(result -> {
+			ProductEntity product = (ProductEntity) result[0];
+			ProductDTO dto = productMapper.mapToDTO(product);
+
+			return dto;
+		}).collect(Collectors.toList());
+
+	}
+
+	@Override
+	public List<ProductDTO> findAllByStatus(int status) {
+		List<ProductEntity> entities = productRepository.findByStatus(status);
+		if (entities.isEmpty()) {
+			throw new ResourceNotFoundException("Can not found current page");
+		}
+		return entities.stream().map(product -> productMapper.mapToDTO(product)).collect(Collectors.toList());
+	}
+
+	@Override
+	public Page<ProductDTO> findDraftAndScheduledProducts(int page, int size) {
+		Pageable pageable = new PageRequest(page - 1, size);
+		List<Integer> statuses = Arrays.asList(SystemConstant.DRAFT, SystemConstant.SCHEDULED);
+
+		Page<ProductEntity> productEntities = productRepository.findByStatusIn(statuses, pageable);
+		Page<ProductDTO> productDTOs = productEntities.map(t -> productMapper.mapToDTO(t));
+
+		return productDTOs;
+	}
 
 }

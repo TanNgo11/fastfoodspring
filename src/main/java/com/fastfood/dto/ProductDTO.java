@@ -4,6 +4,7 @@
  */
 package com.fastfood.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -27,5 +28,8 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
 	private String slug;
 	private int inStock;
 	private List<ProductDTO> relatedProducts;
+	private List<Long> relatedProductsId;
+	private Date publishDate;
+	private String typeOfProduct;
 
 }

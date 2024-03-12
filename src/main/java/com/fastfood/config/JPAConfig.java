@@ -3,6 +3,7 @@ package com.fastfood.config;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -47,8 +48,8 @@ public class JPAConfig {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/fastfoodspringmvc");
+		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/fastfoodspringmvc2");
 		dataSource.setUsername("root");
 		dataSource.setPassword("");
 		return dataSource;
@@ -62,5 +63,6 @@ public class JPAConfig {
 		properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
 		return properties;
 	}
+
 
 }

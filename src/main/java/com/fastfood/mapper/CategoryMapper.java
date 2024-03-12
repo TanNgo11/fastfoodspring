@@ -14,7 +14,13 @@ public class CategoryMapper {
 	private ModelMapper modelMapper;
 
 	public CategoryDTO mapToDTO(CategoryEntity categoryEntity) {
-		return modelMapper.map(categoryEntity, CategoryDTO.class);
+		CategoryDTO dto = new CategoryDTO();
+		if (categoryEntity.getId() != 0)
+			dto.setId(categoryEntity.getId());
+		dto.setCreatedDate(categoryEntity.getCreatedDate());
+		dto.setType(categoryEntity.getType());
+
+		return dto;
 	}
 
 	public CategoryEntity mapToEntity(CategoryDTO categoryDTO) {

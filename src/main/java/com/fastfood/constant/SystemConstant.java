@@ -10,6 +10,8 @@ public class SystemConstant {
 	public static final int PUBLIC = 1;
 
 	public static final int REMOVED = 2;
+	
+	public static final int SCHEDULED = 3;
 
 	public static final String FACEBOOK = "FACEBOOK";
 
@@ -42,6 +44,12 @@ public class SystemConstant {
 	public static final int ORDER_STATUS_DELIVERY = 2;
 	
 	public static final int ORDER_STATUS_PENDING = 3;
+	
+	public static final String ROLE_STAFF = "STAFF";
+	
+	public static final String ROLE_USER = "USER";
+	
+	public static final String ROLE_ADMIN= "ADMIN";
 	
 	
 

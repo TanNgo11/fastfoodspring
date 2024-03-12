@@ -20,17 +20,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ProductDTO;
-import com.fastfood.service.impl.ProductService;
-import com.fastfood.utils.FileUploadUtil;
+import com.fastfood.service.IProductService;
 
 @Controller
 @RequestMapping("/file")
 public class FileController {
 	
 	@Autowired
-	private ProductService ProductService;
+	private IProductService ProductService;
 
     @GetMapping("/productImages/{id}")
     public ResponseEntity<List<ResponseEntity<byte[]>>> getProductImage(@PathVariable long id, HttpServletRequest request) throws IOException {

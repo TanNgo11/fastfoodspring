@@ -3,11 +3,13 @@ package com.fastfood.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -134,10 +136,11 @@ public class NewsService implements INewsService {
 
 	@Override
 	public List<NewsDTO> findTop2ByOrderByCreatedDateDesc() {
-		List<NewsEntity> listEntity = newsRepository.findTop2ByOrderByCreatedDateDesc();
+		List<NewsEntity> listEntity = newsRepository.findTop2ByStatusOrderByCreatedDateDesc(SystemConstant.PUBLIC);
 		List<NewsDTO> result = new ArrayList<>();
 
 		for (NewsEntity item : listEntity) {
+			
 			NewsDTO dto = newsMapper.mapToDTO(item);
 			dto.setDateFormat(formatDate(item.getCreatedDate()));
 			result.add(dto);
@@ -152,6 +155,17 @@ public class NewsService implements INewsService {
 		
 
 		return formattedDateString;
+	}
+
+	@Override
+	public Page<NewsDTO> findDraftAndScheduledNews(int page, int size) {
+		Pageable pageable = new PageRequest(page - 1, size);
+		List<Integer> statuses = Arrays.asList(SystemConstant.DRAFT, SystemConstant.SCHEDULED);
+
+		Page<NewsEntity> newsEntities = newsRepository.findByStatusIn(statuses, pageable);
+		Page<NewsDTO> newsDTOs = newsEntities.map(t -> newsMapper.mapToDTO(t));
+
+		return newsDTOs;
 	}
 
 }

@@ -22,6 +22,7 @@ public class OrderDTO extends AbstractDTO<OrderDTO> {
 	private String address;
 	private Double totalPay;
 	private OrderType orderType;
+	private String statusString;
 	private int status;
 	private List<ItemDTO> items = new ArrayList<ItemDTO>();
 	private AccountDTO accountDTO;

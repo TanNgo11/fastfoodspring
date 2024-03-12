@@ -15,24 +15,25 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fastfood.constant.SystemConstant;
+import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.service.IOrderService;
 import com.fastfood.utils.DateUtil;
 import com.fastfood.utils.OrderExcelExporter;
 
 @RestController(value = "BillAPIOfAdmin")
-@RequestMapping("admin/api/v1/orders")
+@RequestMapping("/admin/api/v1/orders")
 public class OrderAPI {
 
 	@Autowired
 	private IOrderService orderService;
 
-	
 	@GetMapping
 	public ResponseEntity<OrderDTO> getAllOrdersByMonthAndYear(
 			@RequestParam(name = "month", required = false) String month,
@@ -44,10 +45,11 @@ public class OrderAPI {
 		Pageable pageable = new PageRequest(page - 1, limit, sort);
 		List<OrderDTO> listResult = orderService.findAll(pageable);
 		int totalItem = orderService.getTotalOrder();
-		if (month != null && year != null && status != null ) {
-			listResult = orderService.findAllByMonthAndYearAndStatus(DateUtil.getMonthInt(month), year,status, pageable);
+		if (month != null && year != null && status != null) {
+			listResult = orderService.findAllByMonthAndYearAndStatus(DateUtil.getMonthInt(month), year, status,
+					pageable);
 			totalItem = orderService.countAllOrdersByMonthAndYearAndStatus(DateUtil.getMonthInt(month), year, status);
-		}else if(month != null && year != null) {
+		} else if (month != null && year != null) {
 			listResult = orderService.findAllByMonthAndYear(DateUtil.getMonthInt(month), year, pageable);
 			totalItem = orderService.countAllOrdersByMonthAndYear(DateUtil.getMonthInt(month), year);
 		}
@@ -98,6 +100,14 @@ public class OrderAPI {
 		OrderExcelExporter excelExporter = new OrderExcelExporter(listUsers);
 
 		excelExporter.export(response);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ApiResponse> changeOrderStatus(@PathVariable long id, @RequestParam String status) {
+		ApiResponse response = orderService.updateOrderStatus(id, status);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
 	}
 
 }

@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.CategoryDTO;
+import com.fastfood.dto.CategoryRevenueDTO;
+import com.fastfood.dto.NewsDTO;
 import com.fastfood.entity.CategoryEntity;
+import com.fastfood.entity.NewsEntity;
 import com.fastfood.exception.ResourceNotFoundException;
 import com.fastfood.mapper.CategoryMapper;
 import com.fastfood.repository.CategoryRepository;
@@ -99,9 +100,34 @@ public class CategoryService implements ICategoryService {
 
 	@Override
 	public CategoryDTO findByID(Long id) {
-		if(categoryRepository.findOne(id)==null)
-			throw new ResourceNotFoundException(MessageUtil.CATEGORY_ID_NOT_FOUND+id);
+		if (categoryRepository.findOne(id) == null)
+			throw new ResourceNotFoundException(MessageUtil.CATEGORY_ID_NOT_FOUND + id);
 		return categoryMapper.mapToDTO(categoryRepository.findOne(id));
+	}
+
+	@Override
+	public List<CategoryRevenueDTO> getRevenueByCategory() {
+		List<Object[]> results = categoryRepository.findRevenueByCategory();
+		List<CategoryRevenueDTO> revenueList = new ArrayList<>();
+		for (Object[] result : results) {
+			String categoryName = (String) result[0];
+			Double revenue = (Double) result[1];
+			revenueList.add(new CategoryRevenueDTO(categoryName, revenue));
+
+		}
+		return revenueList;
+	}
+
+	@Override
+	public List<CategoryDTO> findAllByPage(Pageable pageable) {
+		List<CategoryEntity> categories = categoryRepository.findAll(pageable).getContent();
+
+		List<CategoryDTO> result = new ArrayList<>();
+		for (CategoryEntity categoryEntity : categories) {
+			CategoryDTO dto = categoryMapper.mapToDTO(categoryEntity);
+			result.add(dto);
+		}
+		return result;
 	}
 
 }

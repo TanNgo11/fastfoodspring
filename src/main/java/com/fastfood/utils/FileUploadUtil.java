@@ -45,7 +45,7 @@ public class FileUploadUtil {
 
 		return result;
 	}
-	
+
 	public static List<String> saveNewsFiles(MultipartFile[] files, HttpServletRequest request, long id) {
 		ServletContext servletctx = request.getServletContext();
 		String ctxFullPath = servletctx.getRealPath("\\");
@@ -77,24 +77,27 @@ public class FileUploadUtil {
 	public static void removeExistingFiles(HttpServletRequest request, List<ImageDTO> listImage) {
 		ServletContext servletctx = request.getServletContext();
 		String ctxFullPath = servletctx.getRealPath("\\");
-		
+
 		for (ImageDTO image : listImage) {
-			
+
 			File file = new File(ctxFullPath + "\\WEB-INF\\" + replaceURL(image.getImageURL()));
 			if (file.exists()) {
 				if (file.delete()) {
-					
+
 				} else {
-					
+
 				}
-			}else {
-				
+			} else {
+
 			}
 		}
+
 	}
+
 	public static String replaceURL(String imageURL) {
 		return imageURL.replace("/", "\\");
 	}
+
 	public static String replaceURL2(String imageURL) {
 		return imageURL.replace("\\", "/");
 	}

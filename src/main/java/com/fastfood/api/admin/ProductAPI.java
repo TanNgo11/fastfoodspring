@@ -1,13 +1,17 @@
 package com.fastfood.api.admin;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,28 +29,33 @@ import com.fastfood.dto.ApiResponse;
 import com.fastfood.dto.CategoryDTO;
 import com.fastfood.dto.ImageDTO;
 import com.fastfood.dto.ProductDTO;
+import com.fastfood.repository.ProductRepository;
+import com.fastfood.service.ICategoryService;
 import com.fastfood.service.IImageService;
 import com.fastfood.service.IProductService;
 import com.fastfood.service.impl.CategoryService;
 import com.fastfood.utils.FileUploadUtil;
 
 @RestController(value = "productAPIOfAdmin")
-@RequestMapping("/admin/api/v1/products")
+@RequestMapping("/admin/api/v1/")
 public class ProductAPI {
 
 	@Autowired
-	IProductService productService;
+	private IProductService productService;
 
 	@Autowired
-	FileUploadUtil fileUploadUtil;
+	private FileUploadUtil fileUploadUtil;
 
 	@Autowired
-	CategoryService categoryService;
-	
+	private ICategoryService categoryService;
+
 	@Autowired
 	private IImageService imageService;
 
-	@GetMapping
+	@Autowired
+	private ProductRepository productRepository;
+
+	@GetMapping("/products")
 	public ResponseEntity<ProductDTO> getAllProducts(@RequestParam("page") int page, @RequestParam("limit") int limit) {
 
 		ProductDTO result = new ProductDTO();
@@ -61,7 +70,23 @@ public class ProductAPI {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{productId}")
+	@GetMapping("/draft/products")
+	public ResponseEntity<ProductDTO> getAllDraftProducts(@RequestParam("page") int page,
+			@RequestParam("limit") int limit) {
+
+		ProductDTO result = new ProductDTO();
+		result.setPage(page);
+		result.setLimit(limit);
+
+		Page<ProductDTO> pageResult = productService.findDraftAndScheduledProducts(page, limit);
+		result.setListResult(pageResult.getContent());
+		result.setTotalItem((int) pageResult.getTotalElements());
+		result.setTotalPage(pageResult.getTotalPages());
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/products/{productId}")
 	@Transactional
 	public ResponseEntity<ApiResponse> deleteProductById(@PathVariable("productId") long productId) {
 
@@ -70,13 +95,15 @@ public class ProductAPI {
 
 	}
 
-	@PostMapping()
+	@PostMapping("/products")
 	public ResponseEntity<ProductDTO> addNewProduct(@RequestParam("files") MultipartFile[] files,
-			
+
 			HttpServletRequest request, @RequestParam("productName") String productName,
 			@RequestParam("price") double price, @RequestParam("salePrice") double salePrice,
 			@RequestParam("description") String description, @RequestParam("category") String category,
-			@RequestParam("inStock") int inStock) {
+			@RequestParam("inStock") int inStock, @RequestParam("relatedProductsId") List<Long> relatedProductsId,
+			@RequestParam("status") int status,
+			@RequestParam(name = "publishDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date publishDate) {
 
 		ProductDTO result = new ProductDTO();
 		CategoryDTO cateDTO = categoryService.findByType(category);
@@ -87,13 +114,27 @@ public class ProductAPI {
 		result.setSalePrice(salePrice);
 		result.setDescription(description);
 		result.setInStock(inStock);
-		result.setStatus(SystemConstant.ACTIVE_STATUS);
+		result.setStatus(status);
+		result.setPublishDate(publishDate);
+
+		if (relatedProductsId != null) {
+			List<ProductDTO> listRelatedProduct = new ArrayList<>();
+			for (Long long1 : relatedProductsId) {
+				ProductDTO product = productService.findById(long1);
+
+				listRelatedProduct.add(product);
+			}
+			result.setRelatedProducts(listRelatedProduct);
+
+		}
+
 		result = productService.save(result);
 
 		if (result != null) {
+
 			List<String> imgs = fileUploadUtil.saveProductFiles(files, request, result.getId());
 			List<ImageDTO> listImageDTO = new ArrayList<ImageDTO>();
-			
+
 			for (String imgURL : imgs) {
 				ImageDTO imageDTO = new ImageDTO();
 				imageDTO.setImageURL(imgURL);
@@ -109,17 +150,13 @@ public class ProductAPI {
 
 	}
 
-	@PostMapping("/product/{id}")
-	public ResponseEntity<ProductDTO> updateProduct(
-			@RequestParam(required = false) MultipartFile[] files,
-			HttpServletRequest request, 
-			@RequestParam("productName") String productName,
-			@RequestParam("price") double price, 
-			@RequestParam("salePrice") double salePrice,
-			@RequestParam("description") String description, 
-			@RequestParam("category") String category,
-			@RequestParam("inStock") int inStock, 
-			@PathVariable long id) {
+	@PostMapping("/products/product/{id}")
+	public ResponseEntity<ProductDTO> updateProduct(@RequestParam(required = false) MultipartFile[] files,
+			HttpServletRequest request, @RequestParam("productName") String productName,
+			@RequestParam("price") double price, @RequestParam("salePrice") double salePrice,
+			@RequestParam("description") String description, @RequestParam("category") String category,
+			@RequestParam("inStock") int inStock, @PathVariable long id, @RequestParam("status") int status,
+			@RequestParam(name = "publishDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date publishDate) {
 
 		ProductDTO result = productService.findById(id);
 		CategoryDTO cateDTO = categoryService.findByType(category);
@@ -129,20 +166,25 @@ public class ProductAPI {
 		result.setInStock(inStock);
 		result.setSalePrice(salePrice);
 		result.setDescription(description);
-		result.setStatus(SystemConstant.ACTIVE_STATUS);
+		result.setStatus(status);
+		result.setPublishDate(publishDate);
 
-		if (files != null) {
+		if (files != null && files.length > 0 && !files[0].isEmpty()) {
 			fileUploadUtil.removeExistingFiles(request, result.getListImage());
-			result.getListImage().forEach(image->imageService.deleteById(image.getId()));
+			result.getListImage().forEach(image -> imageService.deleteById(image.getId()));
 			List<String> imgs = fileUploadUtil.saveProductFiles(files, request, result.getId());
-			List<ImageDTO> listImageDTO = new ArrayList<ImageDTO>();
-			for (String imgURL : imgs) {
-				ImageDTO imageDTO = new ImageDTO();
-				imageDTO.setImageURL(imgURL);
-				listImageDTO.add(imageDTO);
+
+			if (!imgs.isEmpty()) {
+				List<ImageDTO> listImageDTO = new ArrayList<ImageDTO>();
+				for (String imgURL : imgs) {
+					ImageDTO imageDTO = new ImageDTO();
+					imageDTO.setImageURL(imgURL);
+					listImageDTO.add(imageDTO);
+				}
+				result.setListImage(listImageDTO);
+
 			}
 
-			result.setListImage(listImageDTO);
 		}
 
 		productService.save(result);

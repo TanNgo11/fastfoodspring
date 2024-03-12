@@ -1,6 +1,7 @@
 package com.fastfood.api.user;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,16 +25,23 @@ public class ProductAPI {
 	@GetMapping("/products")
 	public ProductDTO loadMoreProduct(@RequestParam(name = "page") int page,
 			@RequestParam(name = "typeOfProduct") String typeOfProduct) {
-
-		int category_id = 1;
-		if (typeOfProduct.equals("drink")) {
-			category_id = 2;
-		}
-
 		ProductDTO result = new ProductDTO();
 		Pageable pageable = new PageRequest(page, 4);
-		result.setListResult(
-				productService.findByCategory_idAndStatus(category_id, pageable, SystemConstant.ACTIVE_STATUS));
+	
+		int category_id = 1;
+		List<ProductDTO> listResult = productService.findByCategory_idAndStatus(category_id, pageable, SystemConstant.ACTIVE_STATUS);
+		listResult.forEach(t->t.setTypeOfProduct("food"));
+		if (typeOfProduct.equals("drink")) {
+			category_id = 2;
+			listResult = productService.findByCategory_idAndStatus(category_id, pageable, SystemConstant.ACTIVE_STATUS);
+			listResult.forEach(t->t.setTypeOfProduct("drink"));
+		} else if(typeOfProduct.equals("topSales")) {
+			listResult = productService.getTop4ProductsBySales(pageable);
+			listResult= listResult.stream().filter(s->s.getStatus()==SystemConstant.ACTIVE_STATUS).collect(Collectors.toList());
+			listResult.forEach(t->t.setTypeOfProduct("topSales"));
+		}
+
+		result.setListResult(listResult);
 
 		return result;
 	}

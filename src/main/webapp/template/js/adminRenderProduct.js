@@ -23,17 +23,18 @@ window.onload= renderProducts();
 									var row = document.getElementById("contentTable")
 									
 									var str = ""
+										console.log(listResult)
 									for (let item of listResult) {
 										str+=`<tr>
 											<td>${item.id}</td>
 											<td>${item.productName}</td>
-											<td><img src="http://localhost:8080/${item.img}" alt=""></td>
+											<td><img src="${item.listImage[0].imageURL}" alt=""></td>
 											<td>${item.price}$</td>
 											<td>${item.salePrice}$</td>
 
-											<td><a href="#" onclick="viewProduct(${item.id})"
+											<td><a style="color:black" href="/admin/product/edit?id=${item.id}" 
 												class="edit"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
-												<a href="#" onclick="deleteProduct(${item.id})"><i class="fa fa-trash"></i></a></td>
+												<a style="color:black" href="#" onclick="deleteProduct(${item.id})"><i class="fa fa-trash"></i></a></td>
 										</tr>`
 									}
 									paging(totalPages,currentPage,function(){

@@ -40,7 +40,7 @@ public class CartAPI {
 			listItem = new ArrayList<>();
 			item.setQuantity(quantity);
 			double currentPrice = product.getPrice();
-			if(product.getSalePrice()!=0&&product.getSalePrice()<product.getPrice()) {
+			if (product.getSalePrice() != 0 && product.getSalePrice() < product.getPrice()) {
 				currentPrice = product.getSalePrice();
 			}
 			item.setPrice(currentPrice);
@@ -60,7 +60,7 @@ public class CartAPI {
 			if (check == false) {
 				item.setQuantity(quantity);
 				double currentPrice = product.getPrice();
-				if(product.getSalePrice()!=0&&product.getSalePrice()<product.getPrice()) {
+				if (product.getSalePrice() != 0 && product.getSalePrice() < product.getPrice()) {
 					currentPrice = product.getSalePrice();
 				}
 				item.setPrice(currentPrice);
@@ -70,6 +70,7 @@ public class CartAPI {
 			}
 
 		}
+
 		orderSession.setItems(listItem);
 
 		orderSession.setTotalPay(calculateTheTotal(listItem));
@@ -92,6 +93,7 @@ public class CartAPI {
 		if (mode != null) {
 			doFunctionByMode(listItem, idP, mode);
 		}
+		
 
 		orderSession.setItems(listItem);
 		orderSession.setTotalPay(calculateTheTotal(listItem));
@@ -123,7 +125,7 @@ public class CartAPI {
 		if (listItem != null) {
 			double total = 0;
 			for (ItemDTO obj : listItem) {
-				
+
 				total += obj.getPrice() * obj.getQuantity();
 			}
 			return total;

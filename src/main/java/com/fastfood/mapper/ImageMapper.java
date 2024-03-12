@@ -16,6 +16,8 @@ public class ImageMapper {
 	private ModelMapper modelMapper;
 
 	public ImageDTO mapToDTO(ImageEntity imageEntity) {
+		
+
 		return modelMapper.map(imageEntity, ImageDTO.class);
 	}
 

@@ -29,6 +29,7 @@ import com.fastfood.mapper.AccountMapper;
 import com.fastfood.repository.UserRepository;
 import com.fastfood.service.IMailService;
 import com.fastfood.service.IOrderService;
+import com.fastfood.service.IProductService;
 import com.fastfood.service.IVNPayService;
 import com.fastfood.service.impl.ProductService;
 import com.fastfood.utils.MessageUtil;
@@ -54,7 +55,7 @@ public class PaymentAPI {
 	private AccountMapper accountMapper;
 
 	@Autowired
-	private ProductService productService;
+	private IProductService productService;
 
 	@Autowired
 	private IMailService mailService;

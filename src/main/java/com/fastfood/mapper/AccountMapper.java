@@ -10,19 +10,20 @@ import com.fastfood.entity.AccountEntity;
 @Component
 public class AccountMapper {
 
-	private final ModelMapper modelMapper;
-
 	@Autowired
-	public AccountMapper(ModelMapper modelMapper) {
-		this.modelMapper = modelMapper;
+	private  ModelMapper modelMapper;
 
-		modelMapper.createTypeMap(AccountEntity.class, AccountDTO.class).addMapping(src -> src.getRoles(),
-				AccountDTO::setListRole);
 
-		modelMapper.createTypeMap(AccountDTO.class, AccountEntity.class).addMapping(scr -> scr.getListRole(),
-				AccountEntity::setRoles);
-
-	}
+//	public AccountMapper(ModelMapper modelMapper) {
+//		this.modelMapper = modelMapper;
+////
+////		modelMapper.createTypeMap(AccountEntity.class, AccountDTO.class).addMapping(src -> src.getRoles(),
+////				AccountDTO::setListRole);
+////
+////		modelMapper.createTypeMap(AccountDTO.class, AccountEntity.class).addMapping(scr -> scr.getListRole(),
+////				AccountEntity::setRoles);
+//
+//	}
 
 	public AccountDTO mapToDTO(AccountEntity accountEntity) {
 		AccountDTO result = modelMapper.map(accountEntity, AccountDTO.class);

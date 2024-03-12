@@ -85,15 +85,22 @@ public class LoginController {
 		return new ModelAndView("redirect:/home");
 	}
 
+//	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+//	@ResponseStatus(HttpStatus.FORBIDDEN)
+//	public @ResponseBody Map<String, String> accessDenied() {
+////		Map<String, String> response = new HashMap<>();
+////		response.put("error", "Access Denied");
+////		response.put("message", "You do not have permission to access this resource");
+//		return response;
+//	}
+
+	
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
-	public @ResponseBody Map<String, String> accessDenied() {
-		Map<String, String> response = new HashMap<>();
-		response.put("error", "Access Denied");
-		response.put("message", "You do not have permission to access this resource");
-		return response;
+	public ModelAndView  accessDeniedPage() {
+		ModelAndView mav = new ModelAndView("error403");
+		return mav;
 	}
-
 	@RequestMapping("/AccessFacebook/login-facebook")
 	public String loginFacebook(HttpServletRequest request) {
 		String code = request.getParameter("code");

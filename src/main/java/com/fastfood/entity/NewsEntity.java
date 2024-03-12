@@ -1,5 +1,7 @@
 package com.fastfood.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,26 +20,28 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "news")
-public class NewsEntity extends BaseEntity  {
-	
+public class NewsEntity extends BaseEntity {
+
 	@Column(name = "title")
 	private String title;
 
 	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
-	
+
 	@Column(name = "status")
 	private int status;
-	
+
 	@Column(name = "slug")
 	private String slug;
-	
+
 	@Column(name = "imageURL")
 	private String imageURL;
-	
+
+	@Column(name = "publish_date")
+	private Date publishDate;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_id")
 	private AccountEntity accountEntity;
-	
 
 }

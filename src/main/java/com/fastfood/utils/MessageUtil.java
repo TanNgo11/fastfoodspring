@@ -19,6 +19,7 @@ public class MessageUtil {
 	public static final String CHATROOM_NOT_FOUND = "Not found chat room!";
 	public static final String PRODUCT_ID_NOT_FOUND = "Not found product with id: ";
 	public static final String NEWS_ID_NOT_FOUND = "Not found news with id: ";
+	public static final String ORDER_ID_NOT_FOUND = "Not found bill with id: ";
 	
 	
 	public static final String DELETE_FAILURE = "Delete failure";

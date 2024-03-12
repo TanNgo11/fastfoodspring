@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fastfood.service.impl.PieChartService;
+import com.fastfood.service.impl.ChartService;
 @Controller
 public class ChartController {
 	@Autowired
-	private PieChartService chart;
+	private ChartService chart;
 	
 	
 	@RequestMapping(value = "/admin/chart", method = RequestMethod.GET)
 	public ModelAndView chartPage(ModelMap modelMap) {
-		List<List<Map<Object, Object>>> canvasjsDataList = chart.getCanvasjsChartData();
+		List<List<Map<Object, Object>>> canvasjsDataList = chart.getCanvasjsChartgetTotalPaymentsByMonthForYear(2024);
 		modelMap.addAttribute("dataPointsList", canvasjsDataList);
 		ModelAndView mav = new ModelAndView("admin/chart");
+		
 		return mav;
 	}
 	

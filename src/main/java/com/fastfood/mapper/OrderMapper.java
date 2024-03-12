@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fastfood.constant.SystemConstant;
 import com.fastfood.dto.ItemDTO;
 import com.fastfood.dto.OrderDTO;
 import com.fastfood.entity.ItemEntity;
@@ -16,7 +17,7 @@ import com.fastfood.utils.DateUtil;
 
 @Component
 public class OrderMapper {
-	
+
 	@Autowired
 	private AccountMapper accountMapper;
 
@@ -35,6 +36,9 @@ public class OrderMapper {
 		orderDTO.setOrderType(orderEntity.getOrderType());
 		orderDTO.setStatus(orderEntity.getStatus());
 
+		orderDTO.setStatusString(setStatusString(orderEntity.getStatus()));
+
+		
 		orderDTO.setItems(mapToDTOList(orderEntity.getItems()));
 
 		orderDTO.setAccountDTO(accountMapper.mapToDTO(orderEntity.getAccountEntity()));
@@ -51,12 +55,9 @@ public class OrderMapper {
 		orderEntity.setTotalPay(orderDTO.getTotalPay());
 		orderEntity.setOrderType(orderDTO.getOrderType());
 		orderEntity.setStatus(orderDTO.getStatus());
-	
 
-		
 		orderEntity.setItems(mapToEntityList(orderDTO.getItems()));
 
-		
 		orderEntity.setAccountEntity(accountMapper.mapToEntity(orderDTO.getAccountDTO()));
 
 		return orderEntity;
@@ -73,6 +74,29 @@ public class OrderMapper {
 		List<ItemEntity> listResult = new ArrayList<>();
 		listItemDTO.forEach(itemDTO -> listResult.add(itemMapper.mapToEntity(itemDTO)));
 		return listResult;
+	}
+
+	private String setStatusString(int status) {
+		String statusString = "";
+		switch (status) {
+		case SystemConstant.ORDER_STATUS_DELIVERY:
+			statusString = "Delivery";
+			break;
+		case SystemConstant.ORDER_STATUS_COMPLETED:
+			statusString = "Completed";
+			break;
+		case SystemConstant.ORDER_STATUS_PENDING:
+			statusString = "Pending";
+			break;
+		case SystemConstant.ORDER_STATUS_CANCEL:
+			statusString = "Canceled";
+			break;
+
+		default:
+			break;
+		}
+
+		return statusString;
 	}
 
 }

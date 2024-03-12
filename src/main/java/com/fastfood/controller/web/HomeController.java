@@ -35,16 +35,20 @@ public class HomeController {
 	@Autowired
 	private INewsService newsService;
 
-	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView homePage(@ModelAttribute("foodModel") ProductDTO foodModel,
-			@ModelAttribute("drinkModel") ProductDTO drinkModel) {
+			@ModelAttribute("drinkModel") ProductDTO drinkModel,
+			@ModelAttribute("top4ProductSales") ProductDTO top4ProductSales) {
 		Pageable pageable = new PageRequest(0, 4);
 		ModelAndView mav = new ModelAndView("web/home");
 		foodModel.setListResult(productService.findByCategory_idAndStatus(1, pageable, SystemConstant.ACTIVE_STATUS));
 
 		drinkModel.setListResult(productService.findByCategory_idAndStatus(2, pageable, SystemConstant.ACTIVE_STATUS));
 
+		top4ProductSales.setListResult(productService.getTop4ProductsBySales(pageable));
+
 		List<NewsDTO> listNews = newsService.findTop2ByOrderByCreatedDateDesc();
+		mav.addObject("top4ProductSales", top4ProductSales);
 		mav.addObject("foodModel", foodModel);
 		mav.addObject("drinkModel", drinkModel);
 		mav.addObject("listNews", listNews);
