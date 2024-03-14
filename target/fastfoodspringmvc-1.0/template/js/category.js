@@ -1,4 +1,12 @@
 var categoryName = null;
+
+function formatVND(amount) {
+	 
+	  amount = parseInt(amount, 10);
+
+	  
+	  return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+	}
 function loadByCategory(categoryName) {
 
 	$.ajax({
@@ -9,20 +17,54 @@ function loadByCategory(categoryName) {
 			let res = data.listResult;
 			let str = "";
 			for (let o of res) {
+				let tempStr = "";
+				let tempStrInStock = "";
+				let salesPrice = formatVND(o.salePrice)
+				let price =  formatVND(o.price)
+				let instock = o.inStock;
+				if(o.salePrice < o.price && o.salePrice != 0){
+					
+					tempStr=`<p class="card-text sale-price">
+										${salesPrice}
+
+									</p>
+									<p class="card-text price">
+										<i style="color: #ff5b6a; margin-right: 5px"
+											class='bx bxs-discount bx-flip-horizontal bx-tada'></i>${price}</p>`
+				}else{
+					tempStr = `<p style="margin-bottom: 60px !important;" class="card-text sale-price">
+										${price}
+									</p>`
+				}
+				
+				if(instock>0){
+					tempStrInStock = `<button style="width: 90%" onClick="addToCart(${o.id})"
+										class="btn btn-primary addToCart">Add to cart</button>`
+				}else{
+					tempStrInStock =`<p class="text-danger"
+										style="width: 90%; text-align: center; font-weight: bold;">Out
+										of Stock</p>`
+				}
+				
+				
+				
+				
 				str += `<div  style="position: static !important" class="col-md-3 col-12 mt-4 element-item" data-category="food">
 
 					<div class="card h-100 foodCard">
-						<a href="detail?pid=${o.id}"> <img class="card-img-top"
+						<a href="/detail?pid=${o.id}"> <img class="card-img-top"
 							src="http://localhost:8080/${o.listImage[0].imageURL}"
 							alt="Card image cap">
 
 						</a>
 
-						<div class="card-body">
+						<div style="height: 239px;" class="card-body">
 							<h5 class="card-title name">${o.productName}</h5>
-							<p style="font-size: 16px!important" class="card-text price">$${o.price}</p>
-							<button style="width: 90%" onClick="addToCart(${o.id})"
-								class="btn btn-primary addToCart">Add to cart</button>
+							
+							`+`${tempStr}`+`${tempStrInStock}`+`
+							
+							
+							
 						</div>
 					</div>
 

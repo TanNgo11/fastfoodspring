@@ -5,6 +5,13 @@ var homeConfig = {
 
 window.onload= renderProducts();
 
+function formatVND(amount) {
+	 
+	  amount = parseInt(amount, 10);
+
+	  
+	  return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+	}
 
  function renderProducts() {
 	
@@ -34,14 +41,15 @@ window.onload= renderProducts();
 											 status = "Schedule";
 											 statusCSS = "product-status-schedule"
 										}
-										
+										let salesPrice = formatVND(item.salePrice)
+										let price =  formatVND(item.price)
 										
 										str+=`<tr>
 											<td>${item.id}</td>
 											<td>${item.productName}</td>
 											<td><img src="http://localhost:8080/${item.listImage[0].imageURL}" alt=""></td>
-											<td>${item.price}$</td>
-											<td>${item.salePrice}$</td>
+											<td>${item.price}</td>
+											<td>${item.salePrice}</td>
 											<td><span class="order-status ${statusCSS}">${status}</span></td>
 												
 											<td><a style="color:black" href="/admin/product/edit?id=${item.id}" 

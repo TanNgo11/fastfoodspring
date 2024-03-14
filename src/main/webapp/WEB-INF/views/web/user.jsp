@@ -10,7 +10,17 @@
 
 
 	<main>
-	<div style="margin-top: 150px;" class="container">
+	<div style="margin-top: 54px;" class="container">
+		<nav class="mt-3" aria-label="breadcrumb">
+		<ol style="background-color: white; padding-left: 0px;"
+			class="breadcrumb">
+			<li class="breadcrumb-item"><a style="color: #007bff;"
+				href="/home">Home</a></li>
+			<li class="breadcrumb-item"><a href="#">News</a></li>
+
+		</ol>
+		</nav>
+
 		<form:form modelAttribute="user" ccsClass="needs-validation mt-5"
 			action="/user/" method="POST">
 
@@ -19,16 +29,15 @@
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
 					<label for="fullName">Name</label>
-					<form:input  path="fullName" type="text"
-						cssClass="form-control" id="fullName"
-						placeholder="full name" />
+					<form:input path="fullName" type="text" cssClass="form-control"
+						id="fullName" placeholder="full name" />
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please choose a name.</div>
 				</div>
 				<div class="col-md-6 mb-3">
-					<label for="validationCustom02">Last name</label> <input
-						type="text" cssClass="form-control" id="validationCustom02"
-						placeholder="last name" />
+					<label for="validationCustom02">Username</label>
+						<form:input path="username" type="text" cssClass="form-control"
+							id="validationCustom02" placeholder="last name" disabled="true" />
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please choose a last name.</div>
 				</div>
@@ -89,35 +98,31 @@
 			</div>
 
 
-			<button id="changeUserProfile" class="btn btn-primary btn-sm" type="submit">Submit
-				form</button>
+			<button id="changeUserProfile" class="btn btn-primary btn-sm"
+				type="submit">Submit form</button>
 		</form:form>
 	</div>
 
 	</main>
 	<script>
-		$('#changeUserProfile').click(
-				function(e) {
-					e.preventDefault();
-					
-						var data = {};
-						var id = $('#id').val().trim();
-						var fullName = $('#fullName').val().trim();
-						var email = $('#email').val().trim();
-						var address = $('#result').val().trim();
-						var phoneNumber = $('#phoneNumber').val().trim();
-						data["id"] = id
-						data["fullName"] = fullName
-						data["email"] = email;
-						data["address"] = address;
-						data["phoneNumber"] = phoneNumber;
+		$('#changeUserProfile').click(function(e) {
+			e.preventDefault();
 
-						
-							changeUserData(data)
-						
+			var data = {};
+			var id = $('#id').val().trim();
+			var fullName = $('#fullName').val().trim();
+			var email = $('#email').val().trim();
+			var address = $('#result').val().trim();
+			var phoneNumber = $('#phoneNumber').val().trim();
+			data["id"] = id
+			data["fullName"] = fullName
+			data["email"] = email;
+			data["address"] = address;
+			data["phoneNumber"] = phoneNumber;
 
-					
-				});
+			changeUserData(data)
+
+		});
 		function changeUserData(data) {
 			$.ajax({
 				url : '/api/user',
@@ -126,12 +131,12 @@
 				data : JSON.stringify(data),
 				dataType : 'json',
 				success : function(result) {
-					window.location.href = "/user/"
-						+ result.id + "?msg=success_change";
+					window.location.href = "/user/" + result.id
+							+ "?msg=success_change";
 				},
 				error : function(error) {
-					window.location.href = "/user/"
-						+ result.id + "?msg=error_change";
+					window.location.href = "/user/" + result.id
+							+ "?msg=error_change";
 				}
 			});
 		}

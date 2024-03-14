@@ -11,8 +11,8 @@
 
 	<main>
 	<div class="container">
-	
-	<nav style="margin-top: 54px" aria-label="breadcrumb">
+
+		<nav style="margin-top: 54px" aria-label="breadcrumb">
 			<ol style="background-color: white; padding-left: 0px;"
 				class="breadcrumb">
 				<li class="breadcrumb-item"><a style="color: #007bff;"
@@ -21,7 +21,7 @@
 
 			</ol>
 		</nav>
-		<h1  class="text-md-center">Order History</h1>
+		<h1 class="text-md-center">Order History</h1>
 		<div class="table-responsive">
 			<table
 				class="table table-striped table-borderless border-0 border-b-2 brc-default-l1">
@@ -31,12 +31,13 @@
 						<th class="opacity-2">OrderID</th>
 						<th>Customer Name</th>
 						<th>Order Date</th>
+						<th>Status</th>
 						<th width="140">Total Pay</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody id="contentTable" class="text-95 text-secondary-d3">
-					
+
 				</tbody>
 			</table>
 			<ul id="pagination" class="pagination"></ul>

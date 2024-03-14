@@ -3,9 +3,10 @@
     Created on : Jul 18, 2023, 8:59:06 PM
     Author     : TAN
 --%>
+<%@ page import="com.fastfood.utils.SecurityUtils"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<footer>
+<footer style="margin-top: 100px;">
 	<div class="info-footer">
 		<div class="container">
 			<div class="row">
@@ -61,65 +62,70 @@
 <div class="overlay-mobile-menu">
 	<ul class="menu-mobile">
 
-		<c:if test="${sessionScope.logedUser==null}">
+		<security:authorize access="isAnonymous()">
 
 
 			<li><a href="login" class="user"> <i
 					style="color: blue; margin-bottom: 30px;"
-					class="fa fa-user-circle fa-2x icon-mobile-menu" aria-hidden="true"></i>Login
+					class="fa fa-user-circle fa-2x icon-mobile-menu" aria-hidden="true"></i>
+					<span>Login</span>
 			</a></li>
 
-		</c:if>
-		<c:if test="${sessionScope.logedUser!=null}">
+		</security:authorize>
+		<security:authorize access="isAuthenticated()">
 
 
 			<li><a style="font-weight: bold"> <i
 					style="color: blue; margin-bottom: 30px;"
-					class="fa fa-user-circle fa-2x icon-mobile-menu" aria-hidden="true"></i>${sessionScope.logedUser.username}</a>
+					class="fa fa-user-circle fa-2x icon-mobile-menu" aria-hidden="true"></i><span><%=SecurityUtils.getPrincipal().getFullName()%></span></a>
 			</li>
 
-		</c:if>
+		</security:authorize>
+
 		<li><a href="#introduction"><i
-				class="fa fa-2x fa-home icon-mobile-menu" aria-hidden="true"></i>Home</a></li>
-		<c:if test="${sessionScope.logedUser!=null}">
+				class="fa fa-2x fa-home icon-mobile-menu" aria-hidden="true"></i><span>Home</span></a></li>
+		<security:authorize access="isAuthenticated()">
 			<li><a href="user-view?mode=view"><i
 					class="fa fa fa-address-book fa-2x icon-mobile-menu"
-					aria-hidden="true"></i>Change Profile</a></li>
+					aria-hidden="true"></i><span>Change Profile</span></a></li>
 			<li><a href="view-bill"><i
-					class="fa fa fa-history fa-2x icon-mobile-menu" aria-hidden="true"></i>View
-					Bills</a></li>
+					class="fa fa fa-history fa-2x icon-mobile-menu" aria-hidden="true"></i><span>View
+						Bills</span></a></li>
 
-		</c:if>
+		</security:authorize>
+
 
 
 		<li><a href=""><i
 				class="fa fa fa-shopping-cart fa-2x icon-mobile-menu"
-				aria-hidden="true"></i>View Cart</a></li>
+				aria-hidden="true"></i><span>View Cart</span></a></li>
 
 
 		<li><a href="#product"><i
-				class="fa fa-2x fa-list icon-mobile-menu" aria-hidden="true"></i>Category<i
+				class="fa fa-2x fa-list icon-mobile-menu" aria-hidden="true"></i><span>Category</span><i
 				class="fa fa fa-angle-down  angle-right-icon" aria-hidden="true"></i></a>
 			<ul class="sub-menu-mobile">
-				<li><a href="">Food </a></li>
-				<li><a href="">Drink</a></li>
+				<li style="padding-left: 73px;"><a href="">Food </a></li>
+				<li style="padding-left: 73px;"><a href="">Drink</a></li>
 
 			</ul></li>
-		<li><a href="tel:+0929234798" title="Booking"><i
-				class="fa fa-2x fa-phone-square icon-mobile-menu" aria-hidden="true"></i>Contact
-				us</a></li>
-		<c:if test="${sessionScope.logedUser!=null}">
+		<li><a href="/contact" title="Booking"><i
+				class="fa fa-2x fa-phone-square icon-mobile-menu" aria-hidden="true"></i><span>Contact
+					us</span></a></li>
+		<security:authorize access="isAuthenticated()">
 			<form style="padding: 10px 8px;" method="POST" action="login">
 				<input type="hidden" name="mode" value="logout">
 				<button class="logout-btn" type="submit">
-					<i class="fa fa-2x fa-sign-out icon-mobile-menu" aria-hidden="true"></i>Logout
+					<i class="fa fa-2x fa-sign-out icon-mobile-menu" aria-hidden="true"></i><span
+						style="line-height: 6px; height: 15px; display: inline-block; vertical-align: middle;">Log
+						out </span>
 				</button>
 			</form>
 
 
 
 			<!--            <li><a href="">Sign out</a></li> -->
-		</c:if>
+		</security:authorize>
 
 
 	</ul>

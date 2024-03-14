@@ -16,7 +16,7 @@
 			<ol style="background-color: white; padding-left: 0px;"
 				class="breadcrumb">
 				<li class="breadcrumb-item"><a style="color:#007bff;" href="/home">Home</a></li>
-				<li class="breadcrumb-item"><a style="color:#007bff;" href="#">Category</a></li>
+				<li class="breadcrumb-item"><a style="color:#6c757d;" href="#">Category</a></li>
 				<li id="breadcrumb-data" class="breadcrumb-item active"
 					aria-current="page">Data</li>
 			</ol>

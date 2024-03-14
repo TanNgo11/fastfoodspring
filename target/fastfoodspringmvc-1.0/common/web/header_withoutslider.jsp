@@ -14,8 +14,8 @@
 								role="button" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false"> Categories </a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a href="/category/food" class="dropdown-item" >Drink</a>
-									<a href="/category/drink" class="dropdown-item">Food</a>
+									<a href="/category/food" class="dropdown-item" >Food</a>
+									<a href="/category/drink" class="dropdown-item">Drink</a>
 								</div></li>
 						</ul>
 					</nav>

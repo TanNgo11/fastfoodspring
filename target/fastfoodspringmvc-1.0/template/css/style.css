@@ -964,3 +964,50 @@ body {
 	color: #cc0344;
 	cursor: pointer;
 }
+.order-status {
+	display: block;
+    background-color: #5899e6;
+    color: white;
+    text-align: center;
+    width: 120px;
+    height: 32px;
+    border-radius: 20px;
+    padding: 3px;
+}
+.order-status-pending {
+	color: #ffea42 !important;
+}
+.product-status-schedule {
+	color: #dccd55 !important;
+}
+
+.order-status-pending-background {
+	background-color: #dccd55 !important;
+}
+
+.order-status-canceled {
+	color: #e63010 !important;
+}
+.product-status-remove {
+	color: #e63010 !important;
+}
+
+.order-status-canceled-background {
+	background-color: #e63010 !important;
+}
+
+.order-status-delivery {
+	color: #362ad8 !important;
+}
+
+.order-status-delivery-background {
+	background-color:#362ad8 !important;
+}
+
+.order-status-complete {
+	color: #16ce47 !important;
+}
+
+.order-status-complete-background{
+	background-color: #16ce47 !important;
+}

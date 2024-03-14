@@ -32,12 +32,25 @@ window.onload= renderOrders();
 									for (let item of listResult) {
 										let date = formatDate(item.createdDate)
 										let totalPay = formatToVND(item.totalPay)
+										let status = "Pending";
+										let statusCSS = "order-status-pending";
+										if(item.status==0){
+											 status = "Canceled";
+											 statusCSS = "order-status-canceled"
+										}else if(item.status==1){
+											 status = "Complete";
+											 statusCSS = "order-status-complete"
+										}else if(item.status==2){
+											 status = "Delivery";
+											 statusCSS = "order-status-delivery"
+										}
 										str+=`<tr>
 											<td>${noStart++}</td>
 											<td>${item.id}</td>
 											<td>${item.customerName}</td>
 											<td>${date}</td>
 											<td>${totalPay}</td>
+												<td><span class="order-status ${statusCSS}">${status}</span></td>
 
 											<td><a style="color:black" href="/bill/${item.id}" 
 												class="edit"><i class="fa fa-pencil mr-4 ml-2 "></i></a>

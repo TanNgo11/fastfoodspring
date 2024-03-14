@@ -5,7 +5,7 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<footer>
+<footer style="margin-top: 100px;">
 	<div class="info-footer">
 		<div class="container">
 			<div class="row">

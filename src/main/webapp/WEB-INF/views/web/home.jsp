@@ -132,7 +132,7 @@
 			<c:forEach items="${top4ProductSales.listResult}" var="o">
 
 
-				<div class="col-md-3 col-12 mt-4">
+				<div class="col-md-3 col-6 mt-4">
 
 					<div class="card h-100 topSales">
 						<a href="/detail/${o.slug}"> <img class="card-img-top"
@@ -141,7 +141,7 @@
 						</a>
 
 						<div class="card-body">
-							<h5 class="card-title">${o.productName}</h5>
+							<h4 class="card-title">${o.productName}</h4>
 							<c:choose>
 								<c:when test="${o.salePrice < o.price && o.salePrice != 0}">
 									<p class="card-text sale-price">
@@ -212,7 +212,7 @@
 			<c:forEach items="${foodModel.listResult}" var="o">
 
 
-				<div class="col-md-3 col-12 mt-4">
+				<div class="col-md-3 col-6 mt-4">
 
 					<div class="card h-100 foodCard">
 						<a href="/detail/${o.slug}"> <img class="card-img-top"
@@ -285,7 +285,7 @@
 
 			<c:forEach items="${drinkModel.listResult}" var="o">
 
-				<div class="col-md-3 col-12 mt-4">
+				<div class="col-md-3 col-6 mt-4">
 
 					<div class="card h-100 drinkCard">
 						<a href="/detail/${o.slug}"> <img class="card-img-top"

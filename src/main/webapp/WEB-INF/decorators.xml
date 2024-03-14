@@ -5,6 +5,7 @@
 	<decorator name="web" page="web.jsp">
 		<pattern>/*</pattern>
 	</decorator>
+	
 	<decorator name="ckfinder" page="ckfinder.jsp">
 		<pattern>/template*</pattern>
 	</decorator>

@@ -5,7 +5,13 @@ var homeConfig = {
 
 window.onload= renderProducts();
 
+function formatVND(amount) {
+	 
+	  amount = parseInt(amount, 10);
 
+	  
+	  return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+	}
  function renderProducts() {
 	
 						$.ajax({
@@ -25,12 +31,14 @@ window.onload= renderProducts();
 									var str = ""
 										console.log(listResult)
 									for (let item of listResult) {
+										let salesPrice = formatVND(item.salePrice)
+										let price =  formatVND(item.price)
 										str+=`<tr>
 											<td>${item.id}</td>
 											<td>${item.productName}</td>
 											<td><img src="${item.listImage[0].imageURL}" alt=""></td>
-											<td>${item.price}$</td>
-											<td>${item.salePrice}$</td>
+											<td>${price}</td>
+											<td>${salesPrice}</td>
 
 											<td><a style="color:black" href="/admin/product/edit?id=${item.id}" 
 												class="edit"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
