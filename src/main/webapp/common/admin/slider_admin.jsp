@@ -76,8 +76,8 @@
       
        <li>
             <a href="/admin/contact">
-              <i class='bx bxs-contact' ></i>
-                <span class="text">Contact</span>
+            	<i class='bx bx-comment'></i>
+                <span class="text">Comment Management</span>
             </a>
         </li>
         <li>

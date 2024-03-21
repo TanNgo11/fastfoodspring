@@ -26,7 +26,7 @@ import com.fastfood.utils.SecurityUtils;
 
 @Controller(value = "cartControllerOfWeb")
 public class CartController {
-	
+
 	@Autowired
 	private IOrderService orderService;
 
@@ -38,25 +38,27 @@ public class CartController {
 
 	@Autowired
 	AccountMapper accountMapper;
-	
-	
+
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public ModelAndView cartPage(HttpSession session) {
+	public ModelAndView cartPage(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView("web/cart");
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		AccountDTO account = null;
+		
+		
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			account = new AccountDTO();
+			session.setAttribute("redirectUrlAfterLogin", request.getRequestURI());
+
 		} else {
 			AccountEntity userEntity = userRepository.findOneByUserNameAndStatus(
 					SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
 			account = accountMapper.mapToDTO(userEntity);
 		}
-		
-		
+
 		OrderDTO orderSession = (OrderDTO) session.getAttribute("cart");
-		if(orderSession==null) {
+		if (orderSession == null) {
 			orderSession = new OrderDTO();
 		}
 		mav.addObject("cartItem", orderSession.getItems().size());

@@ -29,7 +29,7 @@ function formatVND(amount) {
 									var row = document.getElementById("contentTable")
 									
 									var str = ""
-										console.log(listResult)
+										console.log(data)
 									for (let item of listResult) {
 										let salesPrice = formatVND(item.salePrice)
 										let price =  formatVND(item.price)

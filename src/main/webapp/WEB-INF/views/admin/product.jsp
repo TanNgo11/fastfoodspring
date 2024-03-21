@@ -30,8 +30,9 @@
 				<h3>Product list</h3>
 				<i class='bx bx-search'></i> <i class='bx bx-filter'></i>
 				<!-- add Product -->
-				<a  href="/admin/product/edit" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
-					<span>Add new product</span>
+				<a href="/admin/product/edit" id="add"> <i
+					class="fa fa-plus-circle fa-2x mr-2"></i> <span>Add new
+						product</span>
 				</a>
 			</div>
 
@@ -39,7 +40,7 @@
 
 
 
-			<table >
+			<table>
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -79,21 +80,18 @@
 
 			$.confirm({
 				title : 'Confirm!',
-				content : 'Simple confirm!',
+				content : 'Do you want to delete!',
 				buttons : {
-					confirm : function() {
-						$.alert('Confirmed!');
-						doDeleteById(id)
-					},
 					cancel : function() {
 						$.alert('Canceled!');
 					},
 					somethingElse : {
-						text : 'Something else',
-						btnClass : 'btn-blue',
+						text : 'Delete',
+						btnClass : 'btn-red',
 						keys : [ 'enter', 'shift' ],
 						action : function() {
-							$.alert('Something else?');
+							$.alert('Confirmed!');
+							doDeleteById(id)
 						}
 					}
 				}

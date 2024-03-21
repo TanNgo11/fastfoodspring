@@ -39,25 +39,62 @@ function loadMoreProduct(type) {
 								
 								
 								var str = ""
-								for (let item of listResult) {
-									str+=`<div class="col-md-3 col-12 mt-4">
+								for (let o of listResult) {
+									let tempStr = "";
+									let tempStrInStock = "";
+									let salesPrice = formatVND(o.salePrice)
+									let price =  formatVND(o.price)
+									let instock = o.inStock;
+									if(o.salePrice < o.price && o.salePrice != 0){
+										
+										tempStr=`<p class="card-text sale-price">
+															${salesPrice}
 
-										<div class="card h-100 ${typeCard}">
-											<a href="detail?pid=${item.id}"> <img class="card-img-top"
-												src="${item.img}" alt="Card image cap">
+														</p>
+														<p class="card-text price">
+															<i style="color: #ff5b6a; margin-right: 5px"
+																class='bx bxs-discount bx-flip-horizontal bx-tada'></i>${price}</p>`
+									}else{
+										tempStr = `<p style="margin-bottom: 60px !important;" class="card-text sale-price">
+															${price}
+														</p>`
+									}
+									
+									if(instock>0){
+										tempStrInStock = `<button style="width: 90%" onClick="addToCart(${o.id})"
+															class="btn btn-primary addToCart">Add to cart</button>`
+									}else{
+										tempStrInStock =`<p class="text-danger"
+															style="width: 90%; text-align: center; font-weight: bold;">Out
+															of Stock</p>`
+									}
+									
+									
+									
+									
+									str += `<div  style="position: static !important" class="col-md-3 col-6 mt-4 element-item" data-category="food">
+
+										<div class="card h-100 foodCard">
+											<a href="/detail/${o.slug}"> <img class="card-img-top"
+												src="${o.listImage[0].imageURL}"
+												alt="Card image cap">
+
 											</a>
 
-											<div class="card-body">
-												<h5 class="card-title">${item.productName}</h5>
-												<p class="card-text">${item.price}$</p>
-												<button style="width: 90%" onClick="addToCart(${item.id})"
-													class="btn btn-primary addToCart">Add to cart</button>
+											<div style="height: 239px;" class="card-body">
+												<h5 class="card-title name">${o.productName}</h5>
+												
+												`+`${tempStr}`+`${tempStrInStock}`+`
+												
+												
+												
 											</div>
 										</div>
 
 
 
-									</div>`
+									</div>
+								` 
 								}
 								
 								row.innerHTML += str
@@ -71,5 +108,11 @@ function loadMoreProduct(type) {
 
 		}
 
+function formatVND(amount) {
+	 
+	  amount = parseInt(amount, 10);
 
+	  
+	  return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+	}
 

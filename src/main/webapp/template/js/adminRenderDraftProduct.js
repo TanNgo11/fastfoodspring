@@ -54,7 +54,7 @@ function formatVND(amount) {
 												
 											<td><a style="color:black" href="/admin/product/edit?id=${item.id}" 
 												class="edit"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
-												<a style="color:black" href="#" onclick="deleteProduct(${item.id})"><i class="fa fa-trash"></i></a></td>
+												</td>
 										</tr>`
 									}
 									paging(totalPages,currentPage,function(){

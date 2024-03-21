@@ -65,7 +65,7 @@
 		<security:authorize access="isAnonymous()">
 
 
-			<li><a href="login" class="user"> <i
+			<li><a href="/login" class="user"> <i
 					style="color: blue; margin-bottom: 30px;"
 					class="fa fa-user-circle fa-2x icon-mobile-menu" aria-hidden="true"></i>
 					<span>Login</span>
@@ -82,13 +82,13 @@
 
 		</security:authorize>
 
-		<li><a href="#introduction"><i
+		<li><a href="/home"><i
 				class="fa fa-2x fa-home icon-mobile-menu" aria-hidden="true"></i><span>Home</span></a></li>
 		<security:authorize access="isAuthenticated()">
-			<li><a href="user-view?mode=view"><i
+			<li><a href="/user/<%=SecurityUtils.getPrincipal().getId()%>"><i
 					class="fa fa fa-address-book fa-2x icon-mobile-menu"
 					aria-hidden="true"></i><span>Change Profile</span></a></li>
-			<li><a href="view-bill"><i
+			<li><a href="/bill"><i
 					class="fa fa fa-history fa-2x icon-mobile-menu" aria-hidden="true"></i><span>View
 						Bills</span></a></li>
 
@@ -96,31 +96,34 @@
 
 
 
-		<li><a href=""><i
+		<li><a href="/cart"> <i
 				class="fa fa fa-shopping-cart fa-2x icon-mobile-menu"
-				aria-hidden="true"></i><span>View Cart</span></a></li>
+				aria-hidden="true"> </i> <span>View Cart</span></a></li>
 
 
 		<li><a href="#product"><i
 				class="fa fa-2x fa-list icon-mobile-menu" aria-hidden="true"></i><span>Category</span><i
 				class="fa fa fa-angle-down  angle-right-icon" aria-hidden="true"></i></a>
 			<ul class="sub-menu-mobile">
-				<li style="padding-left: 73px;"><a href="">Food </a></li>
-				<li style="padding-left: 73px;"><a href="">Drink</a></li>
+				<li style="padding-left: 73px;"><a href="/category/food">Food
+				</a></li>
+				<li style="padding-left: 73px;"><a href="/category/drink">Drink</a></li>
 
 			</ul></li>
 		<li><a href="/contact" title="Booking"><i
 				class="fa fa-2x fa-phone-square icon-mobile-menu" aria-hidden="true"></i><span>Contact
 					us</span></a></li>
 		<security:authorize access="isAuthenticated()">
-			<form style="padding: 10px 8px;" method="POST" action="login">
-				<input type="hidden" name="mode" value="logout">
-				<button class="logout-btn" type="submit">
-					<i class="fa fa-2x fa-sign-out icon-mobile-menu" aria-hidden="true"></i><span
-						style="line-height: 6px; height: 15px; display: inline-block; vertical-align: middle;">Log
-						out </span>
-				</button>
-			</form>
+
+			<li><a href="/logout"><i
+					class="fa fa-2x fa-sign-out icon-mobile-menu" aria-hidden="true"></i>
+					
+					<span>Log out </span>
+					</a>
+
+				</li>
+
+
 
 
 

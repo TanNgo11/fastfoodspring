@@ -48,19 +48,18 @@ public class NewsAPI {
 	private FileUploadUtil fileUploadUtil;
 
 	@GetMapping("/news")
-	public ResponseEntity<NewsDTO> loadAllNews(@RequestParam("page") int page, @RequestParam("limit") int limit) {
-		NewsDTO newsDTO = new NewsDTO();
-		newsDTO.setPage(page);
-		newsDTO.setLimit(limit);
-		Sort sort = new Sort(Sort.Direction.DESC, "createdDate");
+	public ResponseEntity<NewsDTO> loadAllNewsByStatus(@RequestParam("page") int page,
+			@RequestParam("limit") int limit) {
+		NewsDTO result = new NewsDTO();
+		result.setPage(page);
+		result.setLimit(limit);
 
-		Pageable pageable = new PageRequest(page - 1, limit, sort);
-		newsDTO.setListResult(service.findAllByPage(pageable));
-		newsDTO.setTotalItem(service.getTotalNews());
+		Page<NewsDTO> pageResult = service.findActiveNews(page, limit);
+		result.setListResult(pageResult.getContent());
+		result.setTotalItem((int) pageResult.getTotalElements());
+		result.setTotalPage(pageResult.getTotalPages());
 
-		newsDTO.setTotalPage((int) Math.ceil((double) newsDTO.getTotalItem() / newsDTO.getLimit()));
-
-		return new ResponseEntity<>(newsDTO, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PostMapping("/news")
@@ -113,7 +112,7 @@ public class NewsAPI {
 	public ResponseEntity<ApiResponse> disableNewsByID(@PathVariable Long id) {
 		return new ResponseEntity<>(service.softDeleteNews(id), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/draft/news")
 	public ResponseEntity<NewsDTO> getAllDraftProducts(@RequestParam("page") int page,
 			@RequestParam("limit") int limit) {

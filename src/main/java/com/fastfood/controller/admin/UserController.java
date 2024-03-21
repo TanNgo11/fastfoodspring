@@ -25,6 +25,9 @@ public class UserController {
 
 	@Autowired
 	private IAccountService accountService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@RequestMapping(value = "/admin/users", method = RequestMethod.GET)
 	public ModelAndView userPage() {
@@ -66,7 +69,7 @@ public class UserController {
 	public ModelAndView profileStaffPage(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("/admin/staff-edit");
 		Optional<AccountDTO> user = accountService.findByIdAndRoleName(id, SystemConstant.ROLE_STAFF);
-		if (accountService.findById(id).getListRole().get(0).getName().equals(SystemConstant.ROLE_ADMIN)) {
+		if (userRepository.getOne(id).getRoles().get(0).getName().equals(SystemConstant.ROLE_ADMIN)) {
 			user = accountService.findByIdAndRoleName(id, SystemConstant.ROLE_ADMIN);
 		}
 

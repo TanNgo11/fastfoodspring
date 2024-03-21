@@ -100,13 +100,15 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public List<ProductDTO> findAllByStatus(Pageable pageable, int status) {
-		List<ProductEntity> entities = productRepository.findByStatus(pageable, status);
-		if (entities.isEmpty()) {
-			throw new ResourceNotFoundException("Can not found current page");
-		}
-		return entities.stream().map(product -> productMapper.mapToDTO(product)).collect(Collectors.toList());
+	public Page<ProductDTO> findAllByStatus(Pageable pageable, int status) {
+		Page<ProductEntity> entityPage = productRepository.findByStatus(pageable, status);
 
+		if (entityPage.getTotalElements() == 0) {
+			throw new ResourceNotFoundException(
+					"Cannot find any products with the current status on the requested page.");
+		}
+
+		return entityPage.map(productMapper::mapToDTO);
 	}
 
 	@Override

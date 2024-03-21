@@ -18,14 +18,10 @@
 	background-attachment: fixed;
 }
 
-
-
 #overlay {
 	position: fixed;
 	display: none;
-	width: 100%;
-	height: 100%;
-	top: 0;
+	top: 44px;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -306,6 +302,8 @@ margin-left
 
 
 
+
+
 :
 
 
@@ -313,7 +311,9 @@ margin-left
 
 
 
+
  
+
 
 
 
@@ -343,6 +343,8 @@ margin-left
 
 
 
+
+
 :
 
 
@@ -350,7 +352,9 @@ margin-left
 
 
 
+
  
+
 
 
 
@@ -380,6 +384,8 @@ margin-left
 
 
 
+
+
 :
 
 
@@ -387,7 +393,9 @@ margin-left
 
 
 
+
  
+
 
 
 
@@ -417,6 +425,8 @@ margin-right
 
 
 
+
+
 :
 
 
@@ -424,7 +434,9 @@ margin-right
 
 
 
+
  
+
 
 
 
@@ -454,6 +466,8 @@ margin-right
 
 
 
+
+
 :
 
 
@@ -461,7 +475,9 @@ margin-right
 
 
 
+
  
+
 
 
 
@@ -490,6 +506,8 @@ margin-right
 
 
 
+
+
 :
 
 
@@ -497,7 +515,9 @@ margin-right
 
 
 
+
  
+
 
 
 

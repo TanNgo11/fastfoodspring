@@ -16,7 +16,7 @@ import com.fastfood.entity.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
-	List<ProductEntity> findByStatus(Pageable pageable, int status);
+	Page<ProductEntity> findByStatus(Pageable pageable, int status);
 
 	List<ProductEntity> findByStatus(int status);
 

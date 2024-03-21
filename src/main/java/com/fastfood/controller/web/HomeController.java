@@ -2,6 +2,9 @@ package com.fastfood.controller.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,8 +60,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/detail/{slug}", method = RequestMethod.GET)
-	public ModelAndView detailPage(@PathVariable String slug) {
+	public ModelAndView detailPage(@PathVariable String slug, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView("web/detail");
+
+		session.setAttribute("redirectUrlAfterLogin", request.getRequestURI());
+
+		
 		ProductDTO productDetail = productService.findBySlug(slug);
 		mav.addObject("productId", productDetail.getId());
 		mav.addObject("productDetail", productDetail);

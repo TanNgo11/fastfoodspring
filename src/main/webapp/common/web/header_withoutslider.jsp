@@ -7,8 +7,6 @@
 					<nav class="top-nav">
 						<ul>
 							<li class=""><a title="Home" href="/home">Home</a></li>
-							<li class=""><a href="/about-us" title="Booking">About Us</a></li>
-							<li class=""><a href="/contact" title="Booking">Contact</a></li>
 							<li class="nav-item dropdown"><a
 								class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 								role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -17,6 +15,9 @@
 									<a href="/category/food" class="dropdown-item" >Food</a>
 									<a href="/category/drink" class="dropdown-item">Drink</a>
 								</div></li>
+							<li class=""><a href="/about-us" title="Booking">About Us</a></li>
+							<li class=""><a href="/contact" title="Booking">Contact</a></li>
+							
 						</ul>
 					</nav>
 				</div>

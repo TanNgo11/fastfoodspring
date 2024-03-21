@@ -47,6 +47,7 @@
 						<th>Title</th>
 						<th>Created Day</th>
 						<th>Author</th>
+						<th>Status</th>
 
 						<th>Functions</th>
 					</tr>

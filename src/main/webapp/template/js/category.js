@@ -49,11 +49,11 @@ function loadByCategory(categoryName) {
 				
 				
 				
-				str += `<div  style="position: static !important" class="col-md-3 col-12 mt-4 element-item" data-category="food">
+				str += `<div  style="position: static !important" class="col-md-3 col-6 mt-4 element-item" data-category="food">
 
 					<div class="card h-100 foodCard">
-						<a href="/detail?pid=${o.id}"> <img class="card-img-top"
-							src="http://localhost:8080/${o.listImage[0].imageURL}"
+						<a href="/detail/${o.slug}"> <img class="card-img-top"
+							src="${o.listImage[0].imageURL}"
 							alt="Card image cap">
 
 						</a>
@@ -119,12 +119,12 @@ function isotope(){
 		getSortData : {
 			name : '.name',
 			price : function(itemElem) {
-				var priceText = $(itemElem).find('.price').text();
-				var match = priceText.match(/\$(\d+)/);
+				var priceText = $(itemElem).find('.sale-price').text();
+				var match = priceText.match(/(\d+)\.(\d+)\s₫/);
 
 				
 				if (match) {
-				    var price = parseFloat(match[1]);
+					var price = match[1] + match[2];
 				    console.log(price);
 				   
 				return price;

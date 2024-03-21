@@ -115,6 +115,46 @@
 
 	</main>
 
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Category
+								Name:</label> <input type="text" class="form-control"
+								id="recipient-name">
+						</div>
+
+						<div class="form-group">
+							<label for="exampleFormControlFile1">Status: </label> <select
+								class="custom-select" id="action-status">
+								<c:forEach var="entry" items="${mapAction}">
+									<option value="${entry.key}">${entry.value}</option>
+
+								</c:forEach>
+							</select>
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<button id="editBtn" type="button" class="btn btn-primary">Change</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
 		$('#addNewCategory').click(function(e) {
 			e.preventDefault();
@@ -192,6 +232,45 @@
 					let msg = document.getElementById("message");
 					createToast(msg.value);
 					msg.value = "";
+				}
+			});
+		}
+		var currentCategoryId;
+		var status;
+		$('#editModal').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var recipient = button.data('whatever')
+			var categoryId = button.data('id');
+			currentCategoryId = categoryId;
+			status = $("#action-status").val();
+			var modal = $(this)
+			modal.find('.modal-title').text('Edit category: ' + recipient)
+			modal.find('.modal-body input').val(recipient)
+		})
+
+		$("#editBtn").click(function() {
+
+			var newName = $('#recipient-name').val().trim();
+			if (newName.length > 0) {
+				updateCategoryName(currentCategoryId, newName, status);
+			}
+		});
+
+		function updateCategoryName(categoryId, newName, status) {
+			console.log(status)
+			$.ajax({
+				url : '/admin/api/v1/categories/' + categoryId + "?type="
+						+ newName + "&status=" + status,
+				type : 'PUT',
+				success : function(result) {
+					$('#editModal').modal('hide');
+					createToast("success_change");
+					document.getElementById("message").value = ""
+					window.onload = renderCategories();
+				},
+				error : function(error) {
+
+					console.error("Error updating category:", error);
 				}
 			});
 		}

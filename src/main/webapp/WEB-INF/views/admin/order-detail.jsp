@@ -74,7 +74,7 @@
 											id="status-order" class="badge px-25"><div
 												class="input-group">
 												<select class="custom-select" id="orderStatusSelect">
-													<option selected>${order.getStatusString()}</option>
+													
 													<option value="0">Canceled</option>
 													<option value="1">Completed</option>
 													<option value="2">Delivery</option>

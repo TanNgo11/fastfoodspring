@@ -26,7 +26,7 @@
 					type="radio" id="image2" name="image"> <input type="radio"
 					id="image3" name="image">
 
-				<div class="container">
+				<div class="container1">
 					<div class="featured-wrapper">
 						<ul class="featured-list">
 
@@ -187,7 +187,14 @@
 		</c:if>
 
 		<div style="margin-top: 100px; margin-bottom: 100px;"
-			id="comments-container"></div>
+			id="comments-container">
+
+			<div style="text-align: center; font-size: 24px;">
+				<a href="/login" referrerpolicy="origin"
+					style="text-decoration: underline; color: #007bff; cursor: pointer;">Please
+					login see the comments</a>
+			</div>
+		</div>
 	</div>
 	</main>
 	<input id="productCommentId" type="hidden"
@@ -201,6 +208,10 @@
 
 		<input id="commentFullname" type="hidden"
 			value="<%=SecurityUtils.getPrincipal().getFullName()%>">
+	</security:authorize>
+
+	<security:authorize access="isAnonymous()">
+		<input id="commentUserId" type="hidden" value="0">
 	</security:authorize>
 
 	<script src="/template/js/comment.js"></script>

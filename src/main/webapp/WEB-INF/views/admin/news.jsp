@@ -72,6 +72,52 @@
 
 	</main>
 	<script src="/template/js/adminRenderNews.js"></script>
+	<script>
+		function deleteNews(id) {
+
+			$.confirm({
+				title : 'Confirm!',
+				content : 'Do you want to delete!',
+				buttons : {
+					cancel : function() {
+						$.alert('Canceled!');
+					},
+					somethingElse : {
+						text : 'Delete',
+						btnClass : 'btn-red',
+						keys : [ 'enter', 'shift' ],
+						action : function() {
+							$.alert('Confirmed!');
+							doDeleteById(id)
+						}
+					}
+				}
+			});
+
+		}
+		function doDeleteById(id) {
+			
+			$.ajax({
+				url : '/admin/api/v1/news/' + id,
+				type : 'DELETE',
+				contentType : 'application/json',
+				success : function(result) {
+					document.getElementById("message").value = "success_delete"
+					let msg = document.getElementById("message");
+					createToast(msg.value);
+					msg.value = "";
+					window.onload = loadAllNews();
+				},
+				error : function(error) {
+					document.getElementById("message").value = "error_delete"
+					let msg = document.getElementById("message");
+					createToast(msg.value);
+					msg.value = "";
+				}
+			});
+		}
+	</script>
+	
 
 	
 

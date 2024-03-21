@@ -195,12 +195,12 @@
 				data : JSON.stringify(data),
 				dataType : 'json',
 				success : function(result) {
-					//window.location.href = "/admin/staffs/" + result.id
-							//+ "?msg=success_change";
+					window.location.href = "/admin/staffs/" + result.id
+							+ "?msg=success_change";
 				},
 				error : function(error) {
-					//window.location.href = "/admin/staffs/" + result.id
-							//+ "?msg=error_change";
+					window.location.href = "/admin/staffs/" + result.id
+							+ "?msg=error_change";
 				}
 			});
 		}

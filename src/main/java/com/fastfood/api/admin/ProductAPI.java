@@ -63,9 +63,9 @@ public class ProductAPI {
 		result.setLimit(limit);
 
 		Pageable pageable = new PageRequest(page - 1, limit);
-		result.setListResult(productService.findAllByStatus(pageable, SystemConstant.ACTIVE_STATUS));
-		result.setTotalItem(productService.getTotalItem());
-		result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
+		result.setListResult(productService.findAllByStatus(pageable, SystemConstant.ACTIVE_STATUS).getContent());
+		result.setTotalItem((int) productService.findAllByStatus(pageable, SystemConstant.ACTIVE_STATUS).getTotalElements());
+		result.setTotalPage(productService.findAllByStatus(pageable, SystemConstant.ACTIVE_STATUS).getTotalPages());
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

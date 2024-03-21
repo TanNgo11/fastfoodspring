@@ -10,7 +10,7 @@
 <body>
 
 
-	<section class="contact spad">
+	<section style="padding-bottom:0px !important" class="contact spad">
 
 		<div class="container">
 			<nav class="mt-3" aria-label="breadcrumb">
@@ -18,9 +18,8 @@
 					class="breadcrumb">
 					<li class="breadcrumb-item"><a style="color: #007bff;"
 						href="/home">Home</a></li>
-					<li class="breadcrumb-item"><a 
-						href="#">Contact</a></li>
-					
+					<li class="breadcrumb-item"><a href="#">Contact</a></li>
+
 				</ol>
 			</nav>
 
@@ -33,11 +32,11 @@
 					<div class="row d-flex justify-content-center">
 						<div class="col-lg-4 col-md-7">
 							<div class="map__inner">
-								<h6>COlorado</h6>
+								<h6>EIU Fastfood</h6>
 								<ul>
-									<li>1000 Lakepoint Dr, Frisco, CO 80443, USA</li>
-									<li>Sweetcake@support.com</li>
-									<li>+1 800-786-1000</li>
+									<li>Thủ Dầu Một, Bình Dương</li>
+									<li>Cuong.nguyen.cit20@eiu.eud.vn</li>
+									<li>+84 800-786-1000</li>
 								</ul>
 							</div>
 						</div>
@@ -45,7 +44,7 @@
 				</div>
 				<div class="map__iframe">
 					<iframe
-						src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10784.188505644011!2d19.053119335158936!3d47.48899529453826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1543907528304"
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31325.804539225563!2d106.65318249912107!3d11.059190093753799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1d7df763eaf%3A0xf4323e44f2867057!2sEastern%20International%20University!5e0!3m2!1sen!2s!4v1688627613028!5m2!1sen!2s"
 						height="300" style="border: 0;" allowfullscreen=""
 						aria-hidden="false" tabindex="0"></iframe>
 				</div>
@@ -93,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-lg-4">
 					<div class="contact__text">
 						<h3>Contact With us</h3>
@@ -125,6 +124,7 @@
 					</div>
 				</div>
 			</div>
+			 -->
 		</div>
 	</section>
 

@@ -16,7 +16,7 @@
 .product-detail {
 	padding: 30px;
 	height: 95%;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+	box-shadow: 0px 0px 4px 0 rgba(0, 0, 0, .3);
 	border-radius: 10px;
 }
 
@@ -355,46 +355,46 @@ px
 
 /* MIMIC CLICK EVENT
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-[id="image1"]:checked ~ .container .featured-list li:nth-child(1), [id="image2"]:checked 
-	 ~ .container .featured-list li:nth-child(2), [id="image3"]:checked ~
-	.container .featured-list li:nth-child(3), [id^="image"]:checked ~
-	.container .arrows [for^="image"]:hover::before, [id^="image"]:checked 
-	 ~ .container .arrows [for^="image"]:hover::after {
+[id="image1"]:checked ~ .container1 .featured-list li:nth-child(1), [id="image2"]:checked 
+	 ~ .container1 .featured-list li:nth-child(2), [id="image3"]:checked ~
+	.container1 .featured-list li:nth-child(3), [id^="image"]:checked ~
+	.container1 .arrows [for^="image"]:hover::before, [id^="image"]:checked 
+	 ~ .container1 .arrows [for^="image"]:hover::after {
 	opacity: 1;
 }
 
-[id="image1"]:checked ~ .container .arrows [for="image3"]::before, [id="image2"]:checked 
-	 ~ .container .arrows [for="image1"]::before, [id="image3"]:checked ~
-	.container .arrows [for="image2"]::before {
+[id="image1"]:checked ~ .container1 .arrows [for="image3"]::before, [id="image2"]:checked 
+	 ~ .container1 .arrows [for="image1"]::before, [id="image3"]:checked ~
+	.container1 .arrows [for="image2"]::before {
 	content: '';
 	background-image:
 		url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow-prev-slideshow.svg);
 	background-color: white;
 }
 
-[id="image1"]:checked ~ .container .arrows [for="image2"]::after, [id="image2"]:checked 
-	 ~ .container .arrows [for="image3"]::after, [id="image3"]:checked ~
-	.container .arrows [for="image1"]::after {
+[id="image1"]:checked ~ .container1 .arrows [for="image2"]::after, [id="image2"]:checked 
+	 ~ .container1 .arrows [for="image3"]::after, [id="image3"]:checked ~
+	.container1 .arrows [for="image1"]::after {
 	content: '';
 	background-image:
 		url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/arrow-next-slideshow.svg);
 	background-color: white;
 }
 
-[id="image1"]:checked ~ .container .dots [for="image1"], [id="image2"]:checked 
-	 ~ .container .dots [for="image2"], [id="image3"]:checked ~ .container .dots [for="image3"]
+[id="image1"]:checked ~ .container1 .dots [for="image1"], [id="image2"]:checked 
+	 ~ .container1 .dots [for="image2"], [id="image3"]:checked ~ .container1 .dots [for="image3"]
 	{
 	background: yellow;
 }
 
-[id="image1"]:checked ~ .container [for="image1"] .outer, [id="image2"]:checked 
-	 ~ .container [for="image2"] .outer, [id="image3"]:checked ~ .container [for="image3"] .outer
+[id="image1"]:checked ~ .container1 [for="image1"] .outer, [id="image2"]:checked 
+	 ~ .container1 [for="image2"] .outer, [id="image3"]:checked ~ .container1 [for="image3"] .outer
 	{
 	background: var(- -overlay);
 }
 
-[id="image1"]:checked ~ .container [for="image1"] .inner, [id="image2"]:checked 
-	 ~ .container [for="image2"] .inner, [id="image3"]:checked ~ .container [for="image3"] .inner
+[id="image1"]:checked ~ .container1 [for="image1"] .inner, [id="image2"]:checked 
+	 ~ .container1 [for="image2"] .inner, [id="image3"]:checked ~ .container1 [for="image3"] .inner
 	{
 	opacity: 1;
 	transform: none;

@@ -168,4 +168,26 @@ public class NewsService implements INewsService {
 		return newsDTOs;
 	}
 
+	@Override
+	public Page<NewsDTO> findActiveNews(int page, int size) {
+		Pageable pageable = new PageRequest(page - 1, size);
+		List<Integer> statuses = Arrays.asList(SystemConstant.PUBLIC);
+
+		Page<NewsEntity> newsEntities = newsRepository.findByStatusIn(statuses, pageable);
+		Page<NewsDTO> newsDTOs = newsEntities.map(t -> newsMapper.mapToDTO(t));
+
+		return newsDTOs;
+	}
+
+	@Override
+	public Page<NewsDTO> findActiveNews(Pageable pageable) {
+		
+		List<Integer> statuses = Arrays.asList(SystemConstant.PUBLIC);
+
+		Page<NewsEntity> newsEntities = newsRepository.findByStatusIn(statuses, pageable);
+		Page<NewsDTO> newsDTOs = newsEntities.map(t -> newsMapper.mapToDTO(t));
+
+		return newsDTOs;
+	}
+
 }

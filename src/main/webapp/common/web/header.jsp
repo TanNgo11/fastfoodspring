@@ -9,16 +9,18 @@
 					<nav class="top-nav">
 						<ul>
 							<li class=""><a title="Home" href="/home">Home</a></li>
-							<li class=""><a href="/about-us" title="Booking">About Us</a></li>
-							<li class=""><a href="/contact" title="Booking">Contact</a></li>
 							<li class="nav-item dropdown"><a
 								class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 								role="button" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false"> Categories </a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a href="/category/food" class="dropdown-item" >Food</a>
-									<a href="/category/drink" class="dropdown-item">Drink</a>
+									<a href="/category/food" class="dropdown-item">Food</a> <a
+										href="/category/drink" class="dropdown-item">Drink</a>
 								</div></li>
+							<li class=""><a href="/about-us" title="Booking">About
+									Us</a></li>
+							<li class=""><a href="/contact" title="Booking">Contact</a></li>
+							
 						</ul>
 					</nav>
 				</div>
@@ -63,8 +65,8 @@
 									<div
 										style="display: flex; text-align: center; align-items: center;"
 										id="username" class="userName">
-										<p 
-											style="margin-bottom:0px!important;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;"><%=SecurityUtils.getPrincipal().getFullName()%></p>
+										<p
+											style="margin-bottom: 0px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;"><%=SecurityUtils.getPrincipal().getFullName()%></p>
 										<i class="fa fa-caret-down" aria-hidden="true"></i>
 									</div>
 
@@ -135,14 +137,15 @@
 				<div style="text-align: end" class="col-4">
 
 
-
-
-
-
-
-
-					<a href="cart-view" class="cart"> <i
-						class="fa fa-3x fa-shopping-cart"></i>
+					<a href="/cart" class="cart"> <span class="cc_cart_count">
+							<c:if test="${sessionScope.cart !=null }">
+								<span id="count_in_cart" class="cc_cart_count_child">${sessionScope.cart.items.size()}</span>
+								<i class="fa fa-3x fa-shopping-cart"></i>
+					</span> </c:if> <c:if test="${sessionScope.cart ==null }">
+							<span id="count_in_cart" class="cc_cart_count_child">0</span>
+							<i class="fa fa-3x fa-shopping-cart"></i>
+							</span>
+						</c:if>
 					</a>
 				</div>
 			</div>

@@ -35,25 +35,25 @@ function loadAllNews() {
 
             var totalPages = data.totalPage;
             var currentPage = data.page;
-            var listResult = data.listResult;
+            let listResult = data.listResult;
          
             var str = "";
-          console.log(listResult)
+      
             const content = document.querySelector("#contentTable");
             var i = 1;
             for (let item of listResult) {
-            	
+            	let truncatedTitle = truncateTitle(item.title);
             item.createdDate = formatDateTime(item.createdDate)
 
                 str += `<tr>
                     <td style="width:50px" scope="row">${item.id}</td>
-                    <td>${item.title}</td>
+                    <td>${truncatedTitle}</td>
                   
                     
                     <td>${item.createdDate}</td>
                     <td>${item.createdBy}</td>
-                    <td><a href="/admin/news/edit?id=${item.id}"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
-                          <span onclick ="disableNewsByID(${item.id})"><i class="fa fa-trash"></i></span></td>
+                    <td><a style="color:black" href="/admin/news/edit?id=${item.id}"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
+                          <span onclick ="deleteNews(${item.id})"><i class="fa fa-trash"></i></span></td>
                 </tr>`
             }
             paging(totalPages, currentPage, function () {
@@ -66,32 +66,14 @@ function loadAllNews() {
     });
 }
 
-function disableNewsByID(id) {
-    $.ajax({
-        url: "/admin/api/v1/news/" + id,
-        type: "delete",
-        success: function (data) {
-            console.log(data);
-            window.onload = loadAllNews();
-        }
 
-    });
+function truncateTitle(title, limit = 5) {
+    const words = title.split(' '); 
+    if (words.length > limit) {
+        return words.slice(0, limit).join(' ') + '...';
+    }
+    return title; 
 }
-function activeNewsByID(id) {
-    $.ajax({
-        url: "/admin/api/v1/news/" + id,
-        type: "put",
-        success: function (data) {
-            console.log(data);
-            window.onload = loadAllNews();
-
-
-
-        }
-
-    });
-}
-
 
 
 function paging(totalPages, currentPage, callback) {

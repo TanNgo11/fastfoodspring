@@ -13,6 +13,8 @@ public interface ICategoryService {
 
 	CategoryDTO findByType(String type);
 
+	ApiResponse changeCategoryNameById(Long id, String type, int status);
+
 	ApiResponse softDeleteCategory(Long id);
 
 	ApiResponse activeCategory(Long id);
@@ -26,6 +28,6 @@ public interface ICategoryService {
 	CategoryDTO findByID(Long id);
 
 	List<CategoryRevenueDTO> getRevenueByCategory();
-	
+
 	List<CategoryDTO> findAllByPage(Pageable pageable);
 }

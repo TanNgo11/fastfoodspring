@@ -28,5 +28,9 @@ public interface INewsService {
 	ApiResponse activeNews(Long id);
 	
 	Page<NewsDTO> findDraftAndScheduledNews(int page, int size);
+	
+	Page<NewsDTO> findActiveNews(int page, int size);
+	
+	Page<NewsDTO> findActiveNews(Pageable pageable);
 
 }

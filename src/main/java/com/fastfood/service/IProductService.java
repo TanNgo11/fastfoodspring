@@ -12,7 +12,7 @@ import com.fastfood.dto.ProductSalesDTO;
 public interface IProductService {
 	List<ProductDTO> findAll(Pageable pageable);
 
-	List<ProductDTO> findAllByStatus(Pageable pageable, int status);
+	Page<ProductDTO> findAllByStatus(Pageable pageable, int status);
 	
 	List<ProductDTO> findAllByStatus(int status);
 

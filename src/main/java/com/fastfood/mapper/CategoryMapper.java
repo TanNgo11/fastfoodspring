@@ -19,6 +19,7 @@ public class CategoryMapper {
 			dto.setId(categoryEntity.getId());
 		dto.setCreatedDate(categoryEntity.getCreatedDate());
 		dto.setType(categoryEntity.getType());
+		dto.setStatus(categoryEntity.getStatus());
 
 		return dto;
 	}

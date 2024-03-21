@@ -100,11 +100,11 @@ $("#submitOrder").on("click", function(e){
 					createToast(msg.value);
 					msg.value = "";	
 				}
-				localStorage.setItem('redirectTo', window.location.href);
+				
 		        
 		       setTimeout(() => {
 		    	   window.location.href = '/login';
-			}, 2000);
+			}, 1000);
 		        
         	}
           

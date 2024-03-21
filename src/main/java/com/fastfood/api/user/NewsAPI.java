@@ -1,6 +1,7 @@
 package com.fastfood.api.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,11 +30,12 @@ public class NewsAPI {
 		Sort sort = new Sort(Sort.Direction.DESC, "createdDate");
 
 		Pageable pageable = new PageRequest(page - 1, limit, sort);
-		newsDTO.setListResult(service.findAllByPage(pageable));
-		newsDTO.setTotalItem(service.getTotalNews());
-
-		newsDTO.setTotalPage((int) Math.ceil((double) newsDTO.getTotalItem() / newsDTO.getLimit()));
-
+		Page<NewsDTO> pageResult = service.findActiveNews(page, limit);
+		newsDTO.setListResult(pageResult.getContent());
+		newsDTO.setTotalItem((int) pageResult.getTotalElements());
+		newsDTO.setTotalPage(pageResult.getTotalPages());
+		
+		
 		return new ResponseEntity<>(newsDTO, HttpStatus.OK);
 	}
 

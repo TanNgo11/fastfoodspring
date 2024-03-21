@@ -30,7 +30,7 @@ public class UserService implements IUserService{
 	}
 
 	public List<User> findConnectedUsers() {
-		return repository.findAllByStatus(Status.ONLINE);
+		return repository.findAll();
 	}
 
 	

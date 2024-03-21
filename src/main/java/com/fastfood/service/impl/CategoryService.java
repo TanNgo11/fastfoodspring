@@ -64,11 +64,19 @@ public class CategoryService implements ICategoryService {
 			CategoryDTO dto = categoryMapper.mapToDTO(categoryEntity);
 			dto.setStatus(SystemConstant.INACTIVE_STATUS);
 			categoryRepository.save(categoryMapper.mapToEntity(dto));
-			return new ApiResponse().builder().success(true).http(HttpStatus.OK).message("Disable category success")
+			return new ApiResponse()
+					.builder()
+					.success(true)
+					.http(HttpStatus.OK)
+					.message("Disable category success")
 					.build();
 		}
-		return new ApiResponse().builder().success(false).http(HttpStatus.ALREADY_REPORTED)
-				.message("Disable category failed!").build();
+		return new ApiResponse()
+				.builder()
+				.success(false)
+				.http(HttpStatus.ALREADY_REPORTED)
+				.message("Disable category failed!")
+				.build();
 
 	}
 
@@ -128,6 +136,21 @@ public class CategoryService implements ICategoryService {
 			result.add(dto);
 		}
 		return result;
+	}
+
+	@Override
+	public ApiResponse changeCategoryNameById(Long id, String type, int status) {
+		CategoryEntity entity = categoryRepository.getOne(id);
+		
+		entity.setType(type);
+		entity.setStatus(status);
+		if(categoryRepository.save(entity)!=null) {
+			return new ApiResponse().builder().success(true).http(HttpStatus.OK).message("Change category name success")
+					.build();
+		}
+		
+		return new ApiResponse().builder().success(false).http(HttpStatus.ALREADY_REPORTED)
+				.message("Change category name failed!").build();
 	}
 
 }

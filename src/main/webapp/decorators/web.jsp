@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="<c:url value='/inc/logo.jpg'/>">
+
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"

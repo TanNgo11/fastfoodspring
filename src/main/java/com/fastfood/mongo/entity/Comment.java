@@ -1,6 +1,8 @@
 package com.fastfood.mongo.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,11 +25,15 @@ public class Comment {
 	private String productId;
 	private String parent;
 	private String content;
+	private String creator;
 	private Date created;
 	private Date modified;
 	private String fullname;
-	private String createdByCurrentUser;
-	private int upvoteCount;
-	private boolean userHasUpvoted;
+	private boolean isActive;
+	private boolean created_by_current_admin;
+	private boolean created_by_current_user;
+	private int upvote_count;
+	private boolean user_has_upvoted;
+	private List<String> userUpvotes = new ArrayList<String>(); 
 
 }

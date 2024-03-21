@@ -99,7 +99,8 @@
 												<option value="${entry.key}">${entry.value}</option>
 
 											</c:forEach>
-										</select> <label style="margin-top: 20px" for="exampleFormControlFile1">Schedule:
+										</select> 
+										<label style="margin-top: 20px" for="exampleFormControlFile1">Schedule:
 										</label> <input
 											style="display: none; background-color: white; border: 1px solid black;"
 											type="text" class="form-control" id="datepicker">

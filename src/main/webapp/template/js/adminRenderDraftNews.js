@@ -42,18 +42,28 @@ function loadAllNews() {
             const content = document.querySelector("#contentTable");
             var i = 1;
             for (let item of listResult) {
+            	let status = "Pending";
+				let statusCSS = "product-status-remove";
+				if(item.status==0){
+					 status = "Removed";
+					 statusCSS = "order-status-canceled"
+				}else if(item.status==3){
+					 status = "Schedule";
+					 statusCSS = "product-status-schedule"
+				}
             	
+				let truncatedTitle = truncateTitle(item.title);
             item.createdDate = formatDateTime(item.createdDate)
 
                 str += `<tr>
                     <td style="width:50px" scope="row">${item.id}</td>
-                    <td>${item.title}</td>
-                  
-                    
+                    <td>${truncatedTitle}</td>
+                 
                     <td>${item.createdDate}</td>
                     <td>${item.createdBy}</td>
-                    <td><a href="/admin/news/edit?id=${item.id}"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
-                          <span onclick ="disableNewsByID(${item.id})"><i class="fa fa-trash"></i></span></td>
+                    <td><span class="order-status ${statusCSS}">${status}</span></td>
+                    <td><a style="color:black" href="/admin/news/edit?id=${item.id}"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
+                          </td>
                 </tr>`
             }
             paging(totalPages, currentPage, function () {
@@ -90,6 +100,14 @@ function activeNewsByID(id) {
         }
 
     });
+}
+
+function truncateTitle(title, limit = 5) {
+    const words = title.split(' '); 
+    if (words.length > limit) {
+        return words.slice(0, limit).join(' ') + '...';
+    }
+    return title; 
 }
 
 

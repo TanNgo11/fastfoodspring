@@ -16,48 +16,51 @@
 			<div class="row g-4">
 				<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s"
 					style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
-					<div class="service-item rounded pt-3">
+					<div style="height: 315px;" class="service-item rounded pt-3">
 						<div class="p-4">
 
 							<i style="color: #FEA116" class="fa fa-user-circle fa-3x mb-3"
 								aria-hidden="true"></i>
 							<h5 class="mt-3">Master Chefs</h5>
-							<p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-								clita amet diam</p>
+							<p>Embark on a culinary adventure with Master Chefs, where
+								every dish is a masterpiece of creativity and skill.</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s"
 					style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-					<div class="service-item rounded pt-3">
+					<div style="height: 315px;" class="service-item rounded pt-3">
 						<div class="p-4">
 							<i style="color: #FEA116" class="fa fa-cutlery fa-3x mb-3"
 								aria-hidden="true"></i>
 							<h5 class="mt-3">Quality Food</h5>
-							<p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-								clita amet diam</p>
+							<p>Experience the essence of quality food, where every
+								ingredient is selected with care and every dish crafted to
+								perfection, embodying both taste and tradition.</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s"
 					style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-					<div class="service-item rounded pt-3">
+					<div style="height: 315px;" class="service-item rounded pt-3">
 						<div class="p-4">
 							<i style="color: #FEA116" class="fa fa-cart-plus fa-3x mb-3 "></i>
 							<h5 class="mt-3">Online Order</h5>
-							<p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-								clita amet diam</p>
+							<p>Indulge in the convenience of online ordering, bringing
+								the excellence of quality food directly to your doorstep with
+								just a few clicks.</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s"
 					style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
-					<div class="service-item rounded pt-3">
+					<div style="height: 315px;" class="service-item rounded pt-3">
 						<div class="p-4">
 							<i style="color: #FEA116" class="fa fa-phone fa-3x mb-3"></i>
 							<h5 class="mt-3">24/7 Service</h5>
-							<p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-								clita amet diam</p>
+							<p>Enjoy the unparalleled convenience of 24/7 service,
+								ensuring that exquisite culinary experiences are available to
+								you at any hour, day or night.</p>
 						</div>
 					</div>
 				</div>
@@ -79,32 +82,24 @@
 					<div
 						class="col-lg-7 position-relative about-img aos-init aos-animate"
 						style="background-image: url(<c:url value='/inc/Other/about.jpg'/>) ;"
-						data-aos="fade-up" data-aos-delay="150">
-						<div class="call-us position-absolute">
-							<h4>Book a Table</h4>
-							<p>+1 5589 55488 55</p>
-						</div>
-					</div>
+						data-aos="fade-up" data-aos-delay="150"></div>
 					<div class="col-lg-5 d-flex align-items-end aos-init aos-animate"
 						data-aos="fade-up" data-aos-delay="300">
 						<div class="content ps-0 ps-lg-5">
-							<p class="fst-italic">Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore magna aliqua.</p>
+							<p class="fst-italic">At the core of our fast food ethos, we
+								blend speed with unmatched quality, transforming every meal into
+								a culinary delight.</p>
 							<ul>
-								<li><i class="bi bi-check2-all"></i> Ullamco laboris nisi
-									ut aliquip ex ea commodo consequat.</li>
-								<li><i class="bi bi-check2-all"></i> Duis aute irure dolor
-									in reprehenderit in voluptate velit.</li>
-								<li><i class="bi bi-check2-all"></i> Ullamco laboris nisi
-									ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-									reprehenderit in voluptate trideta storacalaperda mastiro
-									dolore eu fugiat nulla pariatur.</li>
+								<li><i class="bi bi-check2-all"></i> Our commitment to
+									excellence is evident in our carefully sourced ingredients,
+									innovative recipes, and the seamless online ordering system
+									that caters to your cravings 24/7.</li>
+								<li><i class="bi bi-check2-all"></i> We're more than just
+									fast food; we're a movement towards elevating quick dining to
+									gourmet experiences.</li>
+								
 							</ul>
-							<p>Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-								Duis aute irure dolor in reprehenderit in voluptate velit esse
-								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-								cupidatat non proident</p>
+							<p>Join us in redefining convenience with a taste of luxury, anytime, anywhere.</p>
 
 							<div class="position-relative mt-4">
 								<img src="<c:url value='/inc/Other/about-2.jpg'/>"
@@ -417,8 +412,9 @@
 			</div>
 		</div>
 	</div>
-
 	
+
+
 
 
 	</main>

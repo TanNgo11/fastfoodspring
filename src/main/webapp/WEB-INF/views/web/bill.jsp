@@ -40,8 +40,9 @@
 
 				</tbody>
 			</table>
-			<ul id="pagination" class="pagination"></ul>
+			
 		</div>
+		<ul id="pagination" class="pagination"></ul>
 	</div>
 	</main>
 	<script src="/template/js/userRenderBill.js"></script>

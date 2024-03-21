@@ -30,16 +30,21 @@ window.onload= renderCategories();
 									if(homeConfig.currentPage!=1)
 										noStart = homeConfig.pageSize * (homeConfig.currentPage - 1) +1
 									for (let item of listResult) {
-										let status = "Publish"
+										let status = "Active";
+										let statusCSS = "order-status-complete";
 										if(item.status==0){
-											 status = "Inactive"
+											 status = "Removed";
+											 statusCSS = "order-status-canceled"
+										}else if(item.status==3){
+											 status = "Schedule";
+											 statusCSS = "product-status-schedule"
 										}
 										
 										str+=`<tr>
 											<td>${noStart++}</td>
 											<td>${item.type}</td>
-											<td>${status}</td>
-											<td><a style="color:black" href="/admin/users/${item.id}" 
+											<td><span class="order-status ${statusCSS}">${status}</span></td>
+											<td><a style="color:black"  data-toggle="modal" data-target="#editModal" data-id="${item.id}" data-whatever="${item.type}"
 												class="edit"><i class="fa fa-pencil mr-4 ml-2 "></i></a>
 												<a style="color:black" href="#" onclick="deleteCategory(${item.id}, '${item.type}')"><i class="fa fa-trash"></i></a>
 												

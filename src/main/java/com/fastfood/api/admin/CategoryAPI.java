@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,5 +75,12 @@ public class CategoryAPI {
 	@PutMapping("/category/{id}")
 	public ResponseEntity<ApiResponse> activeCategoryByID(@PathVariable Long id) {
 		return new ResponseEntity<>(cateService.activeCategory(id), HttpStatus.OK);
+	}
+	
+	@PutMapping("/categories/{id}")
+	public ResponseEntity<ApiResponse> changeCategoryNameByID(@PathVariable Long id, @RequestParam String type, @RequestParam int status) {
+		
+		System.out.println(status);
+		return new ResponseEntity<>(cateService.changeCategoryNameById(id, type,status ), HttpStatus.OK);
 	}
 }
